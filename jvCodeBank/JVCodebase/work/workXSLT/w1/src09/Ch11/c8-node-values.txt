@@ -1,0 +1,151 @@
+...Value of root= 
+
+  
+    The Beatles' Story on Capitol Records: Part Two: the Albums
+    
+    
+      
+        Bruce
+        Spizer
+      
+    
+    Discography
+    2000
+    Fascinating 250-page account of the covers, track selections, and variations of their U.S. 14+ record albums. Part One covers the U.S. singles.
+    
+    50.00
+  
+  
+    
+      Ken
+      Sall
+    
+    
+      123 Milky Way Dr.
+      Columbia
+      MD
+      20794
+    
+  
+
+...Value of /Collection= 
+
+  
+    The Beatles' Story on Capitol Records: Part Two: the Albums
+    
+    
+      
+        Bruce
+        Spizer
+      
+    
+    Discography
+    2000
+    Fascinating 250-page account of the covers, track selections, and variations of their U.S. 14+ record albums. Part One covers the U.S. singles.
+    
+    50.00
+  
+  
+    
+      Ken
+      Sall
+    
+    
+      123 Milky Way Dr.
+      Columbia
+      MD
+      20794
+    
+  
+
+... name() = Book
+... name(child::*[4]) = Published
+
+... select="//text()"  results:
+1. name = {}, value = []
+2. name = {}, value = []
+3. name = {}, value = []
+4. name = {}, value = [The Beatles' Story on Capitol Records: Part Two: the Albums]
+5. name = {}, value = []
+6. name = {}, value = []
+7. name = {}, value = []
+8. name = {}, value = []
+9. name = {}, value = [Bruce]
+10. name = {}, value = []
+11. name = {}, value = [Spizer]
+12. name = {}, value = []
+13. name = {}, value = []
+14. name = {}, value = []
+15. name = {}, value = [Discography]
+16. name = {}, value = []
+17. name = {}, value = [2000]
+18. name = {}, value = []
+19. name = {}, value = [Fascinating 250-page account of the covers, track selections, and variations of their U.S. 14+ record albums. Part One covers the U.S. singles.]
+20. name = {}, value = []
+21. name = {}, value = [50.00]
+22. name = {}, value = []
+23. name = {}, value = []
+24. name = {}, value = []
+25. name = {}, value = []
+26. name = {}, value = [Ken]
+27. name = {}, value = []
+28. name = {}, value = [Sall]
+29. name = {}, value = []
+30. name = {}, value = []
+31. name = {}, value = []
+32. name = {}, value = [123 Milky Way Dr.]
+33. name = {}, value = []
+34. name = {}, value = [Columbia]
+35. name = {}, value = []
+36. name = {}, value = [MD]
+37. name = {}, value = []
+38. name = {}, value = [20794]
+39. name = {}, value = []
+40. name = {}, value = []
+41. name = {}, value = []
+
+... select="child::*"  results:
+1. name = {Title}, value = [The Beatles' Story on Capitol Records: Part Two: the Albums]
+2. name = {Author}, value = [Bruce Spizer]
+3. name = {Type}, value = [Discography]
+4. name = {Published}, value = [2000]
+5. name = {Notes}, value = [Fascinating 250-page account of the covers, track selections, and variations of their U.S. 14+ record albums. Part One covers the U.S. singles.]
+6. name = {ListPrice}, value = [50.00]
+
+... select="child::node()"  results:
+1. name = {}, value = [
+    ]
+2. name = {Title}, value = [The Beatles' Story on Capitol Records: Part Two: the Albums]
+3. name = {}, value = [
+    ]
+4. name = {appSpecificPI}, value = [crossRefType="Book"
+    crossRefTitle="The Beatles' Story on Capitol Records: Part One" ]
+5. name = {}, value = [
+    ]
+6. name = {Author}, value = [
+      
+        Bruce
+        Spizer
+      
+    ]
+7. name = {}, value = [
+    ]
+8. name = {Type}, value = [Discography]
+9. name = {}, value = [
+    ]
+10. name = {Published}, value = [2000]
+11. name = {}, value = [
+    ]
+12. name = {Notes}, value = [Fascinating 250-page account of the covers, track selections, and variations of their U.S. 14+ record albums. Part One covers the U.S. singles.
+    ]
+13. name = {}, value = [
+    ]
+14. name = {ListPrice}, value = [50.00]
+15. name = {}, value = [
+  ]
+
+...Value of processing-instruction(appSpecificPI) = crossRefType="Book"
+    crossRefTitle="The Beatles' Story on Capitol Records: Part One" 
+...Value of /Collection/Book/Published= 2000
+...Value of /Collection/Book/Published/@publisher= 498 Productions, L.L.C.
+...Value of comment=  Reminder: Get Spizer's "Beatles Records on Vee-Jay" (1998) and "Beatles on Apple Records" (2002). 

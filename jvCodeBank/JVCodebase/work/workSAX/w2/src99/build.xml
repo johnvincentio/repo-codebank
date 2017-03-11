@@ -1,0 +1,72 @@
+<!-- Comment -->
+
+<project name="w2" default="compile" basedir=".">
+   <target name="init">
+	   <echo message="init"/>
+      <property name="appDir" value="app"/>
+      <property name="deployDir" value="deploy"/>
+	  <property name="cpath" value="${deployDir}"/>
+   </target>
+
+   <target name="clean" depends="init">
+	   <echo message="clean"/>
+	   <delete>
+		   <fileset dir="${deployDir}" includes="**/*.class"/>
+	   </delete>
+   </target>
+
+   <target name="compile" depends="clean">
+	   <echo message="compile"/>
+     <javac destdir="${deployDir}" classpath="{cpath}">
+		<src path="${appDir}"/>
+	</javac>
+   </target>
+
+   <target name="domecho1" depends="init">
+	   <echo message="run echo1"/>
+	   <java classname="DomEcho01" fork="yes">
+			<arg line="xml/slideSample01.xml"/>
+			<classpath>
+				<pathelement location="${cpath}"/>
+			</classpath>
+		</java>
+   </target>
+   <target name="domecho2" depends="init">
+	   <echo message="run echo2"/>
+	   <java classname="DomEcho02" fork="yes">
+			<arg line="xml/slideSample01.xml"/>
+			<classpath>
+				<pathelement location="${cpath}"/>
+			</classpath>
+		</java>
+   </target>
+   <target name="domecho2-10" depends="init">
+	   <echo message="run echo2"/>
+	   <java classname="DomEcho02" fork="yes">
+			<arg line="xml/slideSample10.xml"/>
+			<classpath>
+				<pathelement location="${cpath}"/>
+			</classpath>
+		</java>
+   </target>
+   <target name="domecho3" depends="init">
+	   <echo message="run echo3"/>
+	   <java classname="DomEcho03" fork="yes">
+			<arg line="xml/slideSample01.xml"/>
+			<classpath>
+				<pathelement location="${cpath}"/>
+			</classpath>
+		</java>
+   </target>
+   <target name="domecho4" depends="init">
+	   <echo message="run echo4"/>
+	   <java classname="DomEcho04" fork="yes">
+			<arg line="xml/slideSample01.xml"/>
+			<classpath>
+				<pathelement location="${cpath}"/>
+			</classpath>
+		</java>
+   </target>
+
+</project>
+

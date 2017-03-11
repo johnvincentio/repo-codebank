@@ -1,0 +1,26 @@
+<!ELEMENT Employees ( Employee+ ) >
+
+<!ELEMENT Employee ( Name, Title, Projects, Email, PhoneNumbers, Address ) >
+<!ATTLIST Employee sex NMTOKEN #REQUIRED >
+
+<!ELEMENT Name ( First, Last ) >
+<!ELEMENT First ( #PCDATA ) >
+<!ELEMENT Last ( #PCDATA ) >
+
+<!ELEMENT Title ( #PCDATA ) >
+
+<!ELEMENT Projects ( Project+ ) >
+<!ELEMENT Project ( #PCDATA ) >
+
+<!ELEMENT Email ( #PCDATA ) >
+
+<!ELEMENT PhoneNumbers ( Home, Office, Cell ) >
+<!ELEMENT Home ( #PCDATA ) >
+<!ELEMENT Office ( #PCDATA ) >
+<!ELEMENT Cell ( #PCDATA ) >
+
+<!ELEMENT Address ( Street, City, State, Zip ) >
+<!ELEMENT Street ( #PCDATA ) >
+<!ELEMENT City ( #PCDATA ) >
+<!ELEMENT State ( #PCDATA ) >
+<!ELEMENT Zip ( #PCDATA ) >

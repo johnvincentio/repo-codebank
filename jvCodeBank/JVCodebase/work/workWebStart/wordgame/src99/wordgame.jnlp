@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jnlp spec="1.0+"
+	codebase="file:///home/jv/workWebStart/wordgame/src99" 
+	href="wordgame.jnlp">
+<information>
+	<title>WordGame</title>
+	<vendor>JV Inc</vendor>
+	<homepage href="http://bob.marlboro.edu/~jvincent"/>
+	<description>A little pleasure</description>
+</information>
+<security>
+	<all-permissions/>
+</security>
+<!--
+needs jar signing etc
+<security>
+  <j2ee-application-client-permissions/>
+</security>
+-->
+<resources>
+	<j2se version="1.4+"/>
+	<jar href="wordgame.jar"/>
+</resources>
+<application-desc main-class="App"/>
+</jnlp>
+
+

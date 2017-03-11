@@ -1,0 +1,3 @@
+#!/bin/csh
+/usr/local/java/latest/bin/java -classpath /usr/local/java/latest/lib/classes.zip:/usr/local/java/swing-1.0.2/swing.jar:. FileExplorer
+

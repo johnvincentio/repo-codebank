@@ -1,0 +1,56 @@
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>XSLT: Disable Output Escaping</title>
+</head>
+<body>
+<h1>XSLT: Disable Output Escaping</h1>
+<h3>View HTML Source for output pattern 
+       "&amp;copy;"</h3>
+<p>Book title: <i>Complete Beatles Chronicle, The</i>
+<br>  
+   default:  &nbsp; &nbsp; &nbsp; &nbsp;
+   Copyright &copy;
+Copyright &copy; α β γ © ˆ1992<br>  
+   disable=no:&nbsp;
+   Copyright &copy;1992<br>  
+   disable=yes: 
+   Copyright ©1992<br>  
+   default:  &nbsp; &nbsp; &nbsp; &nbsp;
+   Copyright &amp;copy;1992<br>  
+   disable=no: &nbsp;
+   Copyright &amp;copy;1992<br>  
+   disable=yes: 
+   Copyright &copy;1992</p>
+<p>Book title: <i>Many Years From Now</i>
+<br>  
+   default:  &nbsp; &nbsp; &nbsp; &nbsp;
+   Copyright &copy;
+Copyright &copy; α β γ © ˆ1997<br>  
+   disable=no:&nbsp;
+   Copyright &copy;1997<br>  
+   disable=yes: 
+   Copyright ©1997<br>  
+   default:  &nbsp; &nbsp; &nbsp; &nbsp;
+   Copyright &amp;copy;1997<br>  
+   disable=no: &nbsp;
+   Copyright &amp;copy;1997<br>  
+   disable=yes: 
+   Copyright &copy;1997</p>
+<p>Book title: <i>Beatles Anthology, The</i>
+<br>  
+   default:  &nbsp; &nbsp; &nbsp; &nbsp;
+   Copyright &copy;
+Copyright &copy; α β γ © ˆ2000<br>  
+   disable=no:&nbsp;
+   Copyright &copy;2000<br>  
+   disable=yes: 
+   Copyright ©2000<br>  
+   default:  &nbsp; &nbsp; &nbsp; &nbsp;
+   Copyright &amp;copy;2000<br>  
+   disable=no: &nbsp;
+   Copyright &amp;copy;2000<br>  
+   disable=yes: 
+   Copyright &copy;2000</p>
+</body>
+</html>

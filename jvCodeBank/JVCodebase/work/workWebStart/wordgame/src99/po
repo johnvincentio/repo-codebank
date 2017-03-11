@@ -1,0 +1,12 @@
+#ant compile
+rm wordgame.jar
+#jar -cf wordgame.jar deploy Unabr.dict
+#(cd deploy; jar -cf ../wordgame.jar  Unabr.dict *.class)
+#jar -cf wordgame.jar Unabr.dict -C deploy *.class
+#
+set -x
+jar -cf wordgame.jar Unabr.dict
+(cd deploy; jar -uf ../wordgame.jar *.class)
+jar tf wordgame.jar
+#
+jarsigner -keystore myKeys wordgame.jar jdc

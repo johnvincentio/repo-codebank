@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 20001102//EN" 
+"http://www.w3.org/TR/2000/CR-SVG-20001102/DTD/svg-20001102.dtd" [
+ <!ENTITY st01 "font-size:32;letter-spacing:0.2em;">
+ <!ENTITY st02 'font-family:"Courier-Bold";'>
+ <!ENTITY stGrad "fill:url(#gradient1);">
+]>
+<svg xml:space="preserve" width="5in" height="4in" viewBox="0 0 300 300"
+  style="fill-opacity:0.75;" >
+<!-- ZOOMED IN: viewBox="10 75 100 50" -->
+  <defs>
+	<radialGradient id="gradient1" cx="150.0005"
+	 cy="100" r="113.7914" fx="150.0005" fy="100">
+	        <stop offset="0.19" style=
+	         "stop-color:#FFFF00"/>
+	        <stop offset="0.4782" style=
+	         "stop-color:#FFD00D"/>
+	        <stop offset="1" style=
+	         "stop-color:#FE7312"/>
+	</radialGradient>
+
+	<filter id="BlurFilter">
+	        <feGaussianBlur in="SourceAlpha" stdDeviation="8" result="blur"/>
+	</filter>
+  </defs>
+
+  <g style="&st01; &st02;" >
+
+    <rect x="10" y="10" width="3.5in" height="3.0in" style="fill:#ffff00; fill-opacity:0.25;" />
+    <circle  cx="140" cy="150" r="1.0in" style="fill:#aaaaaa; fill-opacity:0.50;" /> 
+    <rect x="90" y="100" width="1.5in" height="1.5in" style="&stGrad;" />
+    <circle cx="30" cy="30" r="30" style="filter:url(#BlurFilter)" />
+
+    <text style="fill:#ff0000;" transform="matrix(2.0 0 0 1  65.0 110.0)">S</text>
+    <text transform="matrix(2.0 0 1 1 141.0 110.0)">V</text>
+    <text style="fill:#0000ff;" transform="matrix(2.0 1 0 1 190.0 110.0)">G</text>
+    <!-- text x="65" y="150" -->
+    <text
+        style="fill-opacity:0.5; stroke-width:0.25; stroke:#00ff00;" 
+        transform="matrix(-1 0 0 -1 230.0 140.0)" >is cool!</text>
+  </g>
+</svg>

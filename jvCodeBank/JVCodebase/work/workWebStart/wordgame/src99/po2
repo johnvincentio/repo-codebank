@@ -1,0 +1,5 @@
+set -x
+#keytool -genkey -keystore myKeys -alias jdc
+#3. Third, sign the JAR. Be sure to remember your password from the previous step.
+#jarsigner -keystore myKeys wordgame.jar jdc
+

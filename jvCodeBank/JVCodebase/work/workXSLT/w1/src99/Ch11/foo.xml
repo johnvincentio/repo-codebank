@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Book.List seller="Ken Sall" city="Columbia" state="MD">
+   <Book.Title kind="Chronology" price="24.95">Complete Beatles Chronicle, The</Book.Title>
+   <Book.Author>Lewisohn, Mark</Book.Author>
+   <Book.Publisher publicationYear="1992">Harmony Books</Book.Publisher>
+   <Chronology/>
+   <Book.Title kind="Autobiographical" price="27.50">Many Years From Now</Book.Title>
+   <Book.Author>McCartney, Paul</Book.Author>
+   <Book.Publisher publicationYear="1997">Henry Holt and Company</Book.Publisher>
+   <Autobiographical/>
+   <Book.Title kind="Autobiographical" price="60.00">Beatles Anthology, The</Book.Title>
+   <Book.Author>McCartney, Paul</Book.Author>
+   <Book.Publisher publicationYear="2000">Chronicle Books</Book.Publisher>
+   <Autobiographical/>
+</Book.List>

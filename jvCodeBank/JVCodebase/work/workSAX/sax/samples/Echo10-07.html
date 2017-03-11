@@ -1,0 +1,43 @@
+<html>
+<body><pre>
+Echo10 ../../../xml/samples/slideSample07.xml
+LOCATOR
+ SYS ID: file:/java/pubs/dev/tutorial/examples/jaxp/sax/work/../../../xml/samples/slideSample07.xml
+
+START DOCUMENT
+&lt;?xml version='1.0' encoding='UTF-8'?>
+    ELEMENT: &lt;slideshow
+       ATTR: title	"WonderWidget Slide Show"
+       ATTR: date	"Date of publication"
+       ATTR: author	"Yours Truly"
+    >
+    PROCESS: &lt;?my.presentation.Program QUERY="exec, tech, all"?>
+        ELEMENT: &lt;slide
+           ATTR: type	"all"
+        >
+            ELEMENT: &lt;title>
+            CHARS:   Wake up to WonderWidgets!
+            END_ELM: &lt;/title>
+        END_ELM: &lt;/slide>
+        ELEMENT: &lt;slide
+           ATTR: type	"all"
+        >
+** Parsing error, line 28, uri file:/java/pubs/dev/tutorial/examples/jaxp/sax/work/../../../xml/samples/slideSample07.xml
+   Element "slide" does not allow "item" here.
+org.xml.sax.SAXParseException: Element "slide" does not allow "item" here.
+	at org.apache.crimson.parser.Parser2.error(Parser2.java:3317)
+	at org.apache.crimson.parser.ValidatingParser$ChildrenValidator.consume(ValidatingParser.java:349)
+	at org.apache.crimson.parser.Parser2.maybeElement(Parser2.java:1464)
+	at org.apache.crimson.parser.Parser2.content(Parser2.java:1926)
+	at org.apache.crimson.parser.Parser2.maybeElement(Parser2.java:1654)
+	at org.apache.crimson.parser.Parser2.content(Parser2.java:1926)
+	at org.apache.crimson.parser.Parser2.maybeElement(Parser2.java:1654)
+	at org.apache.crimson.parser.Parser2.parseInternal(Parser2.java:634)
+	at org.apache.crimson.parser.Parser2.parse(Parser2.java:333)
+	at org.apache.crimson.parser.XMLReaderImpl.parse(XMLReaderImpl.java:448)
+	at javax.xml.parsers.SAXParser.parse(SAXParser.java:345)
+	at javax.xml.parsers.SAXParser.parse(SAXParser.java:281)
+	at Echo10.main(Echo10.java:64)
+
+</pre></body>
+</html>

@@ -1,0 +1,4 @@
+ant > x.x
+ls -lRa build >> x.x
+ls -lRa dist >> x.x
+gvim x.x &

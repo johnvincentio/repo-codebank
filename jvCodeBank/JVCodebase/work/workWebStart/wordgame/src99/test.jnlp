@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jnlp spec="1.0+"
+	codebase="file:///home/jv/workWebStart/test1" 
+	href="test.jnlp">
+<information>
+	<title>JNLP Test</title>
+	<vendor>JV JJJInc</vendor>
+	<homepage href="http://bob.marlboro.edu/~jvincent"/>
+	<description>Just a noddy</description>
+</information>
+<resources>
+	<j2se version="1.4+"/>
+	<jar href="JNLPTest.jar"/>
+</resources>
+<application-desc main-class="JNLPTest"/>
+</jnlp>
+

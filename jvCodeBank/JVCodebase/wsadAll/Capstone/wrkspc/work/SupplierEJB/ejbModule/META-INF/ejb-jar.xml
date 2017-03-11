@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ejb-jar id="ejb-jar_ID" version="2.1" xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/ejb-jar_2_1.xsd">
+	<display-name>SupplierEJB</display-name>
+	<enterprise-beans>
+		<session id="Abcd">
+			<ejb-name>Abcd</ejb-name>
+			<home>jvejb2.AbcdHome</home>
+			<remote>jvejb2.Abcd</remote>
+			<ejb-class>jvejb2.AbcdBean</ejb-class>
+			<session-type>Stateless</session-type>
+			<transaction-type>Container</transaction-type>
+			<env-entry>
+				<description>
+				</description>
+				<env-entry-name>dbservlet/DataSource</env-entry-name>
+				<env-entry-type>java.lang.String</env-entry-type>
+				<env-entry-value>jdbc/SupplierResource</env-entry-value>
+			</env-entry>
+			<resource-ref>
+				<description>
+				</description>
+				<res-ref-name>jdbc/SupplierResource</res-ref-name>
+				<res-type>javax.sql.DataSource</res-type>
+				<res-auth>Container</res-auth>
+				<res-sharing-scope>Shareable</res-sharing-scope>
+			</resource-ref>
+		</session>
+		<message-driven id="SimpleMessage">
+			<ejb-name>SimpleMessage</ejb-name>
+			<ejb-class>jvmsg1.SimpleMessageBean</ejb-class>
+			<messaging-type>javax.jms.MessageListener</messaging-type>
+			<transaction-type>Container</transaction-type>
+			<message-destination-type>javax.jms.Queue</message-destination-type>
+			<message-destination-link>SupplierMdb1QueueConnectionFactory</message-destination-link>
+			<ejb-ref id="EjbRef_1127181396168">
+				<description>
+				</description>
+				<ejb-ref-name>ejb/TheSupplierBean</ejb-ref-name>
+				<ejb-ref-type>Session</ejb-ref-type>
+				<home>jvejb2.AbcdHome</home>
+				<remote>jvejb2.Abcd</remote>
+				<ejb-link>Abcd</ejb-link>
+			</ejb-ref>
+		</message-driven>
+	</enterprise-beans>
+	<assembly-descriptor id="AssemblyDescriptor_1127181889238">
+		<message-destination>
+			<description>
+			</description>
+			<message-destination-name>SupplierMdb1QueueConnectionFactory</message-destination-name>
+		</message-destination>
+	</assembly-descriptor>
+	<ejb-client-jar>SupplierEJBClient.jar</ejb-client-jar>
+</ejb-jar>

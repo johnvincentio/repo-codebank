@@ -1,0 +1,50 @@
+<?xml encoding="UTF-8"?>
+<!--	Collection DTD, Version 2	-->
+<!--    Added Notes to CD -->
+<!ELEMENT Collection ((Book | CD)*, Owner?)>
+<!ATTLIST Collection
+	version CDATA "2"
+>
+<!ELEMENT Owner (Name, Address?)>
+<!ELEMENT Address (Street, City, State, Zip)>
+<!ELEMENT Street (#PCDATA)>
+<!ELEMENT City (#PCDATA)>
+<!ELEMENT State (#PCDATA)>
+<!ELEMENT Zip (#PCDATA)>
+<!ELEMENT Book (Title, Author, Type, Published, Rating?, Notes?, ListPrice?)>
+<!ELEMENT Title (#PCDATA)>
+<!-- Title defined under CD; applies to Book also. -->
+<!-- Name defined under Owner; applies to Book also. -->
+<!ELEMENT ListPrice (#PCDATA)>
+<!ELEMENT Author (Name)>
+<!ELEMENT Name (First, Last)>
+<!ATTLIST Name
+	sex (male | female) "male"
+>
+<!ELEMENT First (#PCDATA)>
+<!ELEMENT Last (#PCDATA)>
+<!ELEMENT Type (#PCDATA)>
+<!ELEMENT Published (#PCDATA)>
+<!ATTLIST Published
+	publisher CDATA #REQUIRED
+>
+<!ELEMENT Rating (#PCDATA)>
+<!ELEMENT Notes (#PCDATA)>
+<!ELEMENT CD (Title, Artist, Chart, Type, Label+, AlbumReleased, Remastered+, Notes?, ListPrice?)>
+<!ELEMENT Artist (#PCDATA)>
+<!ELEMENT Chart (Peak+)>
+<!--WAS: ATTLIST Label country NMTOKEN #IMPLIED-->
+<!ELEMENT Peak (#PCDATA)>
+<!ATTLIST Peak
+	country NMTOKEN "US"
+	weeks NMTOKEN #IMPLIED
+>
+<!ELEMENT Label (#PCDATA)>
+<!ATTLIST Label
+	country NMTOKEN "US"
+>
+<!ELEMENT AlbumReleased (#PCDATA)>
+<!ELEMENT Remastered (#PCDATA)>
+<!ATTLIST Remastered
+	format CDATA #REQUIRED
+>

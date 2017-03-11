@@ -1,0 +1,21 @@
+XSLT: Disable Output EscapingXSLT: Disable Output EscapingView HTML Source for DifferencesBook title: Beatles Anthology, The  
+   default:  &nbsp; &nbsp; &nbsp; &nbsp;
+   Copyright ©2000  
+   disable=no:&nbsp;
+   Copyright ©2000  
+   disable=yes: 
+   Copyright &copy;2000
+
+   Copyright as hex (xA9): © and as decimal (169): © 
+   disable=no (numeric):
+    α β γ © ˆ 
+   disable=yes (numeric): 
+    α β γ © ˆ
+   disable=no (internally defined symbols):
+    α β γ © ˆ 
+   disable=yes (internally defined symbols): 
+    α β γ © ˆ
+   disable=no:
+   3 nbsp:[   ] < > & " ' 
+   disable=yes: 
+   3 nbsp:[   ] < > & " '

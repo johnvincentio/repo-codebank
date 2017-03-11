@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<modulemap:EARProjectMap xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:application="application.xmi" xmlns:modulemap="modulemap.xmi" xmi:id="EARProjectMap_1122777149592">
+  <mappings xmi:id="ModuleMapping_1122777149592" projectName="NeroEJB">
+    <module xmi:type="application:EjbModule" href="META-INF/application.xml#EjbModule_1122777149592"/>
+  </mappings>
+  <mappings xmi:id="ModuleMapping_1122777254241" projectName="NeroWAR">
+    <module xmi:type="application:WebModule" href="META-INF/application.xml#WebModule_1122777254241"/>
+  </mappings>
+  <utilityJARMappings xmi:id="UtilityJARMapping_1122777149846" projectName="NeroEJBClient" uri="NeroEJBClient.jar"/>
+  <utilityJARMappings xmi:id="UtilityJARMapping_1125252058624" projectName="Common5" uri="Common5.jar"/>
+  <utilityJARMappings xmi:id="UtilityJARMapping_1125252058625" projectName="Common4" uri="Common4.jar"/>
+  <utilityJARMappings xmi:id="UtilityJARMapping_1125252058626" projectName="Common3" uri="Common3.jar"/>
+  <utilityJARMappings xmi:id="UtilityJARMapping_1125252058627" projectName="Common2" uri="Common2.jar"/>
+  <utilityJARMappings xmi:id="UtilityJARMapping_1125252058628" projectName="Common1" uri="Common1.jar"/>
+</modulemap:EARProjectMap>

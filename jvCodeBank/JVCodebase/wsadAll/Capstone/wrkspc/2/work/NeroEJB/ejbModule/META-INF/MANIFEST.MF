@@ -1,0 +1,5 @@
+Manifest-Version: 1.0
+Class-Path: NeroEJBClient.jar 
+ Common4.jar 
+ Common2.jar
+

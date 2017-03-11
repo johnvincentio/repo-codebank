@@ -1,0 +1,74 @@
+License agreement
+Activetree Inc.
+http://www.activetree.com
+Email: sales@activetree.com
+
+--------------------------------------------------------------------------------
+
+LICENSE TO USE
+
+ActiveTree grants you the license to use the software with a license file automatically
+attached with the downloaded archive. The binary, the demo examples, and others
+accompanying with the media or electronically downloaded archives are collectively known
+as "Software". Each of such software product when delivered with media or electronically
+received from ActiveTree needs a separate product license which is usually included into
+the delivered archive or emailed to you seperately. If this is a trial version, the license
+attached to the product might expire after the designated period and you will not be able
+to run the product. You might consider buying a permanently licensed product to avoid such
+expiry. If you think the software is not licensed by you or your organization you should
+discontinue using it.
+
+LICENSE TO DISTRIBUTE
+
+You can distribute the component with your product as long as the license you bought entitled
+you to do so. If the license you bought is not eligible for redistribution make sure you
+buy or upgrade the license in order to be eligible for distribution.
+
+Install the activetree software along with your application/IDE in order to support the
+functioning of your application. The end user (potentially your customers) can not further
+develop, deploy and distribute it from your product installation. Your tool/application can
+not attach activetree component to the software developed by your customers while using your
+tool (e.g. an IDE)/application.
+
+In no case, you should share the library and the license key to other business entity (another
+company or organization).
+
+Note: You are not allowed to wrap the functionality of the product into your product and resale
+your product for the same purpose as we do.
+
+LIMITATION OF LIABILITY
+
+In NO EVENT will activetree be liable for any kind of loss of revenue, data, profit, or potential
+loss or damage that might have happened directly, indirectly, incidentally, intentionally, and
+other kinds of loss or damage. ActiveTree is not going to compensate or refund any loss or damage
+because of installing and using our software in any system either yourself or by some one else.
+
+SOURCE CODE
+
+Software may contain source code that is provided solely for reference purpose pursuant to the
+terms of this agreement. However, you are free to copy and distribute part or full of the sources
+to any other users or vendors for their reference.
+
+RESTRICTIONS
+
+This software is confidential and copyrighted. Title to software and all associated intellectual
+property rights is retained by activetree Inc. Under no circumstances, you/your customers are allowed
+to modify, decompile, or reverse engineer the software that is distributed in non-text format such
+as binary (not applicable to source codes in text format distributed with the software, if any). No
+right, title or interest in or to any trademark, service mark, logo or trade name of activetree is
+granted under this agreement.
+
+TERMINATION
+
+This agreement is effective until terminated. You may terminate this agreement at any time by destroying
+all copies of software. This agreement will terminate immediately without notice from activetree if you
+violate any provision of this agreement. Upon termination, you must destroy all copies of the software.
+
+EXPORT REGULATIONS
+
+All software and technical data delivered under this agreement are subject to US export control laws
+and may be subject to export or import regulations in other countries. You must agree to all such laws
+and regulations and acknowledge that you have the responsibility to obtain such licenses to export,
+re-export, or import as may be required.
+
+For inquiries please contact us at: sales@activetree.com

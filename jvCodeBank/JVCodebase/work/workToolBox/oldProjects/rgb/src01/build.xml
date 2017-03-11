@@ -1,0 +1,35 @@
+<!-- Comment -->
+
+<project name="simpleCompile" default="compile" basedir=".">
+   <target name="init">
+	   <echo message="init"/>
+      <property name="appDir" value="app"/>
+      <property name="deployDir" value="deploy"/>
+	  <property name="cpath" value="${deployDir}"/>
+   </target>
+
+   <target name="clean" depends="init">
+	   <echo message="clean"/>
+	   <delete>
+		   <fileset dir="${deployDir}" includes="**/*.class"/>
+	   </delete>
+   </target>
+
+   <target name="compile" depends="clean">
+	   <echo message="compile"/>
+     <javac destdir="${deployDir}" classpath="{cpath}">
+		<src path="${appDir}"/>
+	</javac>
+   </target>
+
+   <target name="app" depends="init">
+	   <echo message="run app"/>
+	   <java classname="App" fork="yes">
+			<classpath>
+				<pathelement location="${cpath}"/>
+			</classpath>
+		</java>
+   </target>
+</project>
+
+

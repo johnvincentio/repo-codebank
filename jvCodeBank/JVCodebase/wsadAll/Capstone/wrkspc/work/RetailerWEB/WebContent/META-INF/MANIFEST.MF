@@ -1,0 +1,6 @@
+Manifest-Version: 1.0
+Class-Path: Common1.jar 
+ Common3.jar 
+ Common4.jar 
+ RetailerEJB.jar
+

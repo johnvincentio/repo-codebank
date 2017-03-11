@@ -1,0 +1,46 @@
+...Value of root=   The Beatles' Story on Capitol
+Records: Part Two: the AlbumsBruce
+SpizerDiscography2000Fascinating 
+250-page account of the covers, track selections, and
+variations of their U.S. 14+ record albums. Part One covers the U.S.
+singles. 50.00   Ken Sall  
+123 Milky Way Dr. Columbia
+MD 20794   
+...Value of /Collection=   The Beatles' Story on Capitol
+Records: Part Two: the AlbumsBruce
+SpizerDiscography2000Fascinating 
+250-page account of the covers, track selections, and
+variations of their U.S. 14+ record albums. Part One covers the U.S.
+singles. 50.00   Ken Sall  
+123 Milky Way Dr. Columbia
+MD 20794   
+... select="child::*"  results:
+1. name = {Title}, value = [The Beatles' Story on Capitol Records: Part Two: the Albums]
+2. name = {Author}, value = [Bruce Spizer]
+3. name = {Type}, value = [Discography]
+4. name = {Published}, value = [2000]
+5. name = {Notes}, value = [Fascinating 250-page account of the covers, track selections, and variations of their U.S. 14+ record albums. Part One covers the U.S. singles.]
+6. name = {ListPrice}, value = [50.00]
+
+... select="child::node()"  results:
+1. name = {Title}, value = [The Beatles' Story on Capitol
+Records: Part Two: the Albums]
+2. name = {appSpecificPI}, value = [crossRefType="Book" crossRefTitle="The Beatles' Story on Capitol
+Records: Part One" ]
+3. name = {Author}, value = [Bruce
+Spizer]
+4. name = {Type}, value = [Discography]
+5. name = {Published}, value = [2000]
+6. name = {Notes}, value = [Fascinating 
+250-page account of the covers, track selections, and
+variations of their U.S. 14+ record albums. Part One covers the U.S.
+singles. ]
+7. name = {ListPrice}, value = [50.00]
+
+...Value of processing-instruction(appSpecificPI) = crossRefType="Book" crossRefTitle="The Beatles' Story on Capitol
+Records: Part One" 
+...Value of /Collection/Book/Published= 2000
+...Value of /Collection/Book/Published/@publisher= 498 Productions, L.L.C.
+...Value of comment=  Reminder: Get
+Spizer's "Beatles Records on Vee-Jay" (1998) and "Beatles on Apple
+Records" (2002). 

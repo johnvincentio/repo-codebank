@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<appdeployment:Deployment xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:appdeployment="http://www.ibm.com/websphere/appserver/schemas/5.0/appdeployment.xmi" xmi:id="Deployment_1122347642661">
+  <deployedObject xmi:type="appdeployment:ApplicationDeployment" xmi:id="ApplicationDeployment_1122347642661" startingWeight="10">
+    <modules xmi:type="appdeployment:WebModuleDeployment" xmi:id="WebModuleDeployment_1122347642661" startingWeight="10000" uri="HadrianWAR.war"/>
+    <modules xmi:type="appdeployment:EJBModuleDeployment" xmi:id="EJBModuleDeployment_1122347642661" startingWeight="5000" uri="HadrianEJB.jar"/>
+    <classloader xmi:id="Classloader_1122347642662" mode="PARENT_FIRST"/>
+  </deployedObject>
+</appdeployment:Deployment>

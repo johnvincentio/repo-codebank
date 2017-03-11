@@ -1,0 +1,19 @@
+<Invoice custid="123">
+  <ShipTo>
+    <Name>Nick Danger</Name>
+    <Address>
+      <Street>101 The Old Same Place</Street>
+      <CityAndState>San Jose, CA</CityAndState>
+    </Address>
+  </ShipTo>
+  <Items count="2">
+    <Item id="abc">
+      <Description>brown paper bag</Description>
+      <Price>.02</Price>
+    </Item>
+    <Item id="xyz">
+      <Description>pickle</Description>
+      <Price>.55</Price>
+    </Item>
+  </Items>
+</Invoice>

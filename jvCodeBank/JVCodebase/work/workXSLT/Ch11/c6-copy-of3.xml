@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CD.Collection owner="Ken Sall" sex="male" state="MD"><CD xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:html="http://www.w3.org/TR/REC-html40">
+    <Title>Band on the Run</Title>
+    <Artist>McCartney, Paul and Wings</Artist>
+    <Chart>
+      <Peak weeks="4">1</Peak>
+      <Peak country="UK">1</Peak>
+      <!-- guess -->
+    </Chart>
+    <Type>Rock</Type>
+    <Label>Capitol</Label>
+    <Label country="UK">EMI</Label>
+    <AlbumReleased>1973</AlbumReleased>
+    <Remastered format="gold CD">1993</Remastered>
+    <Remastered format="2 disc box set with booklet">1999</Remastered>
+    <ListPrice>16.97</ListPrice>
+  </CD><CD xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:html="http://www.w3.org/TR/REC-html40">
+    <Title>Venus and Mars</Title>
+    <Artist>McCartney, Paul and Wings</Artist>
+    <Chart>
+      <Peak weeks="1">1</Peak>
+      <Peak country="UK">2</Peak>
+      <!-- guess -->
+    </Chart>
+    <Type>Rock</Type>
+    <Label>Capitol</Label>
+    <Label country="UK">EMI</Label>
+    <AlbumReleased>1975</AlbumReleased>
+    <Remastered format="gold CD with 3 bonus tracks">1994</Remastered>
+    <ListPrice>16.97</ListPrice>
+  </CD><?bogus-pi attr1="foo" attr2="foobar" ?><CD xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:html="http://www.w3.org/TR/REC-html40">
+    <Title>Beatles 1</Title>
+    <Artist>Beatles</Artist>
+    <Chart>
+      <Peak weeks="10" country="US">1</Peak>
+    </Chart>
+    <Type>Rock</Type>
+    <Label country="US">Capitol</Label>
+    <AlbumReleased>November 14, 2000</AlbumReleased>
+    <ListPrice>18.97</ListPrice>
+  </CD></CD.Collection>

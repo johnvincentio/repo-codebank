@@ -1,0 +1,401 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+<?xml:stylesheet href="Ch10-CSS-orig.css" type="text/css" charset="UTF-8"?>
+-->
+<XML>
+<TITLE> </TITLE><HA>
+<A ID="pgfId-1015709"></A>
+</HA>
+<HB>
+<A ID="pgfId-1002361"></A>
+Styling XML Using CSS2</HB>
+<HB>
+<A ID="pgfId-1032813"></A>
+</HB>
+<BXT>
+<A ID="pgfId-1032820"></A>
+<HC>
+<A ID="pgfId-1032912"></A>
+What is CSS?</HC>
+<Body>
+<A ID="pgfId-1035723"></A>
+Cascading Style Sheets, Level 2 (CSS2) became a W3C Recommendation in May 1998. It was a significant improvement over the also impressive Cascading Style Sheets, Level 1 (CSS1) Recommendation from December 1996 (subsequently revised in January 1999). Both specs facilitate the separation of presentation (appearance) from structure (content), which immediately suggests a good fit with XML. Fourth generation browsers generally support only CSS1, but Netscape 6 and IE 5.5 (to a lesser degree) support CSS2. Prior to Netscape 4.0 and IE 4.0, browser support for CSS was to limited to be useful.</Body>
+<Body>
+<A ID="pgfId-1036022"></A>
+The abstract of the CSS2 spec<A href="#id(pgfId-1035783)" xml:link="simple" show="replace" actuate="user" CLASS="footnote">1</A> clearly states the purpose of CSS2 and how it extends CSS1 capabilities:<A href="#id(pgfId-1036384)" xml:link="simple" show="replace" actuate="user" CLASS="footnote">2</A></Body>
+<Quotation>
+<A ID="pgfId-1035813"></A>
+CSS2 is a style sheet language that allows authors and users to attach style (e.g., fonts, spacing, and aural cues) to structured documents (e.g., HTML documents and XML applications). By separating the presentation style of documents from the content of documents, CSS2 simplifies Web authoring and site maintenance. CSS2 builds on CSS1 .... and, with very few exceptions, all valid CSS1 style sheets are valid CSS2 style sheets. CSS2 supports media-specific style sheets so that authors may tailor the presentation of their documents to visual browsers, aural devices, printers, braille devices, handheld devices, etc.</Quotation>
+<Body>
+<A ID="pgfId-1035829"></A>
+CSS permits web developers to control various presentational properties, such as:</Body>
+<BLList>
+<BL>
+<A ID="pgfId-1035830"></A>
+font family, size, colors, variants, decorations, style, and weight</BL>
+<BL>
+<A ID="pgfId-1035832"></A>
+line and text spacing, line height</BL>
+<BL>
+<A ID="pgfId-1035833"></A>
+margins, padding, borders, text indentation</BL>
+<BL>
+<A ID="pgfId-1035834"></A>
+background colors and images (much better than in HTML: transparent, repeat, scroll, etc.) </BL>
+<BL>
+<A ID="pgfId-1035836"></A>
+link rendering</BL>
+<BL>
+<A ID="pgfId-1035818"></A>
+and includes at least nine different unit types: </BL>
+</BLList>
+[Lots of stuff deleted]
+</BXT>
+<Body>
+<A ID="pgfId-1036879"></A>
+</Body>
+<HC>
+<A ID="pgfId-1036881"></A>
+<A ID="42864"></A>
+For Further Exploration <!-- moved /HC -->
+<Link-Title>
+<A ID="pgfId-1036395"></A>
+Cascading Style Sheets, Designing for the Web, by Håkon Wium Lie and Bert Bos (2nd edition, 1999, Addison Wesley, ISBN 0-201-59625-3)</Link-Title>
+<Link-URL>
+<A ID="pgfId-1036401"></A>
+http://cseng.aw.com/book/0,3828,0201596253,00.html</Link-URL>
+<Link-Title>
+<A ID="pgfId-1036418"></A>
+Cascading Style Sheets, Designing for the Web, Chapter 2 online [great overview]</Link-Title>
+<Link-URL>
+<A ID="pgfId-1036419"></A>
+http://www.w3.org/Style/LieBos2e/enter/</Link-URL>
+<Link-Title>
+<A ID="pgfId-1037522"></A>
+Document Style Semantics and Specification Language (DSSSL) [James Clark’s links]</Link-Title>
+<Link-URL>
+<A ID="pgfId-1037531"></A>
+http://www.jclark.com/dsssl/</Link-URL>
+<Link-Title>
+<A ID="pgfId-1037520"></A>
+CSS Pointers Group [collection of CSS resources]</Link-Title>
+<Link-URL>
+<A ID="pgfId-1037542"></A>
+http://css.nu/index.html</Link-URL>
+<Link-Title>
+<A ID="pgfId-1037537"></A>
+W3C: Web Style Sheets [CSS, XSL, etc.]</Link-Title>
+<Link-URL>
+<A ID="pgfId-1033248"></A>
+http://www.w3.org/Style/</Link-URL>
+<Link-Title>
+<A ID="pgfId-1033247"></A>
+W3C: Cascading Style Sheets (CSS home page)</Link-Title>
+<Link-URL>
+<A ID="pgfId-1032966"></A>
+http://www.w3.org/Style/CSS/</Link-URL>
+<Link-Title>
+<A ID="pgfId-1032965"></A>
+W3C: Style Sheets Activity Statement</Link-Title>
+<Link-URL>
+<A ID="pgfId-1033103"></A>
+http://www.w3.org/Style/Activity</Link-URL>
+<Link-Title>
+<A ID="pgfId-1033102"></A>
+W3C: Cascading Style Sheets, Level 2 (CSS2) Specification [May 1998 Recommendation]</Link-Title>
+<Link-URL>
+<A ID="pgfId-1033124"></A>
+http://www.w3.org/TR/REC-CSS2</Link-URL>
+<Link-Title>
+<A ID="pgfId-1033125"></A>
+W3C: Cascading Style Sheets Level 1 (CSS1) Specification [Dec. 1996 Recommendation, revised Jan. 1999]</Link-Title>
+<Link-URL>
+<A ID="pgfId-1033027"></A>
+http://www.w3.org/TR/REC-CSS1</Link-URL>
+<Link-Title>
+<A ID="pgfId-1033014"></A>
+W3C: CSS2 Appendix B. Changes from CSS1</Link-Title>
+<Link-URL>
+<A ID="pgfId-1033157"></A>
+http://www.w3.org/TR/REC-CSS2/changes.html</Link-URL>
+<Link-Title>
+<A ID="pgfId-1033417"></A>
+W3C: CSS2 Selectors</Link-Title>
+<Link-URL>
+<A ID="pgfId-1033418"></A>
+http://www.w3.org/TR/REC-CSS2/selector.html</Link-URL>
+<Link-Title>
+<A ID="pgfId-1033419"></A>
+W3C: Associating Style Sheets with XML documents Version 1.0 [June 1999 Recommendation]</Link-Title>
+<Link-URL>
+<A ID="pgfId-1033139"></A>
+http://www.w3.org/TR/xml-stylesheet/</Link-URL>
+<Link-Title>
+<A ID="pgfId-1036248"></A>
+W3C: Assigning property values, Cascading, and Inheritance [from CSS2 Recommendation]</Link-Title>
+<Link-URL>
+<A ID="pgfId-1037574"></A>
+http://www.w3.org/TR/REC-CSS2/cascade.html</Link-URL>
+<Link-Title>
+<A ID="pgfId-1037849"></A>
+W3C: Generated content, automatic numbering, and lists [from CSS2 Recommendation]</Link-Title>
+<Link-URL>
+<A ID="pgfId-1037859"></A>
+http://www.w3.org/TR/CSS2/generate.html</Link-URL>
+<Link-Title>
+<A ID="pgfId-1037847"></A>
+W3C: How to Add Style to XML</Link-Title>
+<Link-URL>
+<A ID="pgfId-1037582"></A>
+http://www.w3.org/Style/styling-XML</Link-URL>
+<Link-Title>
+<A ID="pgfId-1037581"></A>
+W3C: Which Should I Use? CSS or XML?</Link-Title>
+<Link-URL>
+<A ID="pgfId-1037648"></A>
+http://www.w3.org/Style/CSS-vs-XSL</Link-URL>
+<Link-Title>
+<A ID="pgfId-1037649"></A>
+W3C: Using XSL and CSS Together</Link-Title>
+<Link-URL>
+<A ID="pgfId-1037657"></A>
+http://www.w3.org/TR/NOTE-XSL-and-CSS</Link-URL>
+<Link-Title>
+<A ID="pgfId-1037650"></A>
+W3C: CSS3 introduction (Roadmap)</Link-Title>
+<Link-URL>
+<A ID="pgfId-1037566"></A>
+http://www.w3.org/TR/css3-roadmap</Link-URL>
+<Link-Title>
+<A ID="pgfId-1033054"></A>
+W3C: CSS3 module: W3C selectors</Link-Title>
+<Link-URL>
+<A ID="pgfId-1033064"></A>
+http://www.w3.org/TR/css3-selectors/</Link-URL>
+<Link-Title>
+<A ID="pgfId-1033032"></A>
+W3C: CSS Current Work</Link-Title>
+<Link-URL>
+<A ID="pgfId-1033089"></A>
+http://www.w3.org/Style/CSS/current-work</Link-URL>
+<Link-Title>
+<A ID="pgfId-1033090"></A>
+W3C: Simple API for CSS (SAC) - Java, C, and perl Implementations</Link-Title>
+<Link-URL>
+<A ID="pgfId-1033101"></A>
+http://www.w3.org/Style/CSS/SAC/</Link-URL>
+<Link-Title>
+<A ID="pgfId-1033094"></A>
+W3C: Simple API for CSS (SAC)</Link-Title>
+<Link-URL>
+<A ID="pgfId-1038958"></A>
+http://www.w3.org/TR/SAC/</Link-URL>
+<Link-Title>
+<A ID="pgfId-1038963"></A>
+W3C: CSS Validation Service</Link-Title>
+<Link-URL>
+<A ID="pgfId-1035281"></A>
+http://jigsaw.w3.org/css-validator/</Link-URL>
+<Link-Title>
+<A ID="pgfId-1035287"></A>
+W3C: Core Styles [pre-made style sheets called Chocolate, Midnight, Modernist, Oldstyle, Steely, Swiss, Traditional, and Ultramarine]</Link-Title>
+<Link-URL>
+<A ID="pgfId-1035283"></A>
+http://www.w3.org/StyleSheets/Core/</Link-URL>
+<Link-Title>
+<A ID="pgfId-1035271"></A>
+Zvon: CSS2 Reference</Link-Title>
+<Link-URL>
+<A ID="pgfId-1033091"></A>
+http://zvon.org/xxl/CSS2Reference/Output/index.html</Link-URL>
+<Link-Title>
+<A ID="pgfId-1032971"></A>
+Zvon: CSS1 Reference</Link-Title>
+<Link-URL>
+<A ID="pgfId-1032986"></A>
+http://www.zvon.org/xxl/css1Reference/Output/index.html</Link-URL>
+<Link-Title>
+<A ID="pgfId-1032981"></A>
+Zvon: CSS2 Tutorial for XML</Link-Title>
+<Link-URL>
+<A ID="pgfId-1032995"></A>
+http://zvon.org/xxl/CSS2Tutorial/General/htmlIntro.html</Link-URL>
+<Link-Title>
+<A ID="pgfId-1032994"></A>
+XML.com: Cross-Browser XML [Simon St.Laurent, Nov. 2000]</Link-Title>
+<Link-URL>
+<A ID="pgfId-1033167"></A>
+http://www.simonstl.com/articles/xbrowse/index.html</Link-URL>
+<Link-Title>
+<A ID="pgfId-1033162"></A>
+XML.com: Browser XML Display Support Chart [with links to NS 6, IE 5 and Opera 4 articles]</Link-Title>
+<Link-URL>
+<A ID="pgfId-1033209"></A>
+http://www.xml.com/pub/a/2000/05/03/browserchart/index.html</Link-URL>
+<Link-Title>
+<A ID="pgfId-1033210"></A>
+XML.com: On Display: XML Web Pages with Mozilla [Simon St.Laurent, Mar. 2000]</Link-Title>
+<Link-URL>
+<A ID="pgfId-1033234"></A>
+http://www.xml.com/pub/a/2000/03/29/tutorial/index.html</Link-URL>
+<Link-Title>
+<A ID="pgfId-1033223"></A>
+Netscape 6 Release</Link-Title>
+<Link-URL>
+<A ID="pgfId-1033215"></A>
+http://home.netscape.com/browsers/6/index.html</Link-URL>
+<Link-Title>
+<A ID="pgfId-1033298"></A>
+WebReview: Style Sheet Reference Guide [Eric Myer]</Link-Title>
+<Link-URL>
+<A ID="pgfId-1033346"></A>
+http://www.webreview.com/style/index.shtml</Link-URL>
+<Link-Title>
+<A ID="pgfId-1033347"></A>
+WebReview: Browser Compatibility Charts [Eric Myer]</Link-Title>
+<Link-URL>
+<A ID="pgfId-1035863"></A>
+http://www.webreview.com/browsers/index.shtml</Link-URL>
+<Link-Title>
+<A ID="pgfId-1035862"></A>
+WebReview: CSS2 Selectors Support Chart [Eric Myer]</Link-Title>
+<Link-URL>
+<A ID="pgfId-1033386"></A>
+http://www.webreview.com/style/css2/charts/selectors.shtml</Link-URL>
+<Link-Title>
+<A ID="pgfId-1033375"></A>
+WDVL: Cascading Style Sheets [tutorials, resources and articles]</Link-Title>
+<Link-URL>
+<A ID="pgfId-1033352"></A>
+http://wdvl.Internet.com/Authoring/Style/Sheets/</Link-URL>
+<Link-Title>
+<A ID="pgfId-1033351"></A>
+WDVL: Introduction to Style Sheets [tutorial by Alan Richmond]</Link-Title>
+<Link-URL>
+<A ID="pgfId-1033366"></A>
+http://wdvl.Internet.com/Authoring/Style/Sheets/Tutorial.html</Link-URL>
+<Link-Title>
+<A ID="pgfId-1033361"></A>
+IBM: Improve your XSLT coding five ways [Tip #1 concerns CSS]</Link-Title>
+<Link-URL>
+<A ID="pgfId-1033348"></A>
+http://www-106.ibm.com/developerworks/library/x-xslt5.html</Link-URL>
+</HC> <!-- moved -->
+<FOOTNOTES>
+<FOOTNOTE>
+<FTN>
+<A ID="pgfId-1035783"></A>
+<C1>
+http://www.w3.org/TR/REC-CSS2/</C1>
+</FTN>
+</FOOTNOTE>
+<FOOTNOTE>
+<FTN>
+<A ID="pgfId-1036384"></A>
+The differences between CSS1 and CSS2 are described in Appendix B of the CSS@ spec; see <C1>
+http://www.w3.org/TR/REC-CSS2/changes.html</C1>
+.</FTN>
+</FOOTNOTE>
+<FOOTNOTE>
+<FTN>
+<A ID="pgfId-1035903"></A>
+<C1>
+http://www.webreview.com/style/index.shtml</C1>
+ and <C1>
+http://zvon.org/xxl/CSS2Reference/Output/index.htm</C1>
+l</FTN>
+</FOOTNOTE>
+<FOOTNOTE>
+<FTN>
+<A ID="pgfId-1036232"></A>
+<C1>
+http://www.w3.org/TR/REC-CSS2/cascade.html</C1>
+</FTN>
+</FOOTNOTE>
+<FOOTNOTE>
+<FTN>
+<A ID="pgfId-1036903"></A>
+<C1>
+http://www.w3.org/TR/REC-CSS2/box.html</C1>
+</FTN>
+</FOOTNOTE>
+<FOOTNOTE>
+<FTN>
+<A ID="pgfId-1036993"></A>
+<C1>
+http://www.w3.org/TR/REC-CSS2/intro.html#q1</C1>
+</FTN>
+</FOOTNOTE>
+<FOOTNOTE>
+<FTN>
+<A ID="pgfId-1035234"></A>
+http://www.w3.org/TR/REC-CSS2/selector.html. See also http://www.webreview.com/style/css2/charts/selectors.shtml.</FTN>
+</FOOTNOTE>
+<FOOTNOTE>
+<FTN>
+<A ID="pgfId-1036436"></A>
+<C1>
+http://home.netscape.com/browsers/6/index.html</C1>
+</FTN>
+</FOOTNOTE>
+<FOOTNOTE>
+<FTN>
+<A ID="pgfId-1037489"></A>
+<C1>
+http://home.netscape.com/browsers/6/datasheet/index.html</C1>
+</FTN>
+</FOOTNOTE>
+<FOOTNOTE>
+<FTN>
+<A ID="pgfId-1037505"></A>
+<C1>
+http://www.w3.org/Style/CSS/</C1>
+</FTN>
+</FOOTNOTE>
+<FOOTNOTE>
+<FTN>
+<A ID="pgfId-1037067"></A>
+<C1>
+http://www.w3.org/TR/xml-stylesheet/</C1>
+</FTN>
+</FOOTNOTE>
+<FOOTNOTE>
+<FTN>
+<A ID="pgfId-1037792"></A>
+<C1>
+http://www.w3.org/Style/styling-XML</C1>
+</FTN>
+</FOOTNOTE>
+<FOOTNOTE>
+<FTN>
+<A ID="pgfId-1037808"></A>
+<C1>
+http://www.w3.org/TR/CSS2/intro.html#q2</C1>
+</FTN>
+</FOOTNOTE>
+<FOOTNOTE>
+<FTN>
+<A ID="pgfId-1038133"></A>
+<C1>
+http://www.w3.org/TR/CSS2/generate.html</C1>
+</FTN>
+</FOOTNOTE>
+<FOOTNOTE>
+<FTN>
+<A ID="pgfId-1037621"></A>
+<C1>
+http://www.w3.org/Style/CSS-vs-XSL</C1>
+</FTN>
+<FTN>
+<A ID="pgfId-1037618"></A>
+</FTN>
+</FOOTNOTE>
+<FOOTNOTE>
+<FTN>
+<A ID="pgfId-1037638"></A>
+See the Browser Compatibility Charts at <C1>
+http://www.webreview.com/browsers/index.shtml.</C1>
+</FTN>
+</FOOTNOTE>
+</FOOTNOTES>
+</XML>

@@ -1,0 +1,42 @@
+
+<project name="grepdir" default="run" basedir=".">
+   <target name="init">
+	   <echo message="init"/>
+      <property name="java.dir" value="java"/>
+      <property name="build.dir" value="build"/>
+	  <property name="cpath" value="${build.dir}"/>
+   </target>
+
+   <target name="clean" depends="init">
+	   <echo message="clean"/>
+	   <delete>
+		   <fileset dir="${build.dir}" includes="**/*.class"/>
+	   </delete>
+   </target>
+
+   <target name="compile" depends="clean">
+	   <echo message="compile"/>
+     <javac destdir="${build.dir}" classpath="{cpath}">
+		<src path="${java.dir}"/>
+	</javac>
+   </target>
+
+   <target name="run" depends="init">
+	   <echo message="run app"/>
+	   <java classname="App" fork="yes">
+			<classpath>
+				<pathelement location="${cpath}"/>
+			</classpath>
+		</java>
+   </target>
+   <target name="fcd" depends="init">
+	   <echo message="run FileChooserDemo"/>
+	   <java classname="FileChooserDemo" fork="yes">
+			<classpath>
+				<pathelement location="${cpath}"/>
+			</classpath>
+		</java>
+   </target>
+</project>
+
+

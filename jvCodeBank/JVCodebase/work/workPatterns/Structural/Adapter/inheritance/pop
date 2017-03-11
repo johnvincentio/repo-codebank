@@ -1,0 +1,2 @@
+java -cp . structural.adapter.inheritance.ConnectorAdapter
+# java ConnectorAdapter

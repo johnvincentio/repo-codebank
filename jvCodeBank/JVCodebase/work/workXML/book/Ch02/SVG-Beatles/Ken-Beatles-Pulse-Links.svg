@@ -1,0 +1,237 @@
+<?xml version="1.0" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 20000303 Stylable//EN"   
+"http://www.w3.org/TR/2000/03/WD-SVG-20000303/DTD/svg-20000303-stylable.dtd">
+
+<!--
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 20001102//EN"
+
+"http://www.w3.org/TR/2000/CR-SVG-20001102/DTD/svg-20001102.dtd">
+-->
+
+<svg width="350" height="400">
+
+  <script><![CDATA[
+    var op = 1.0;
+    function changeDiamond(evt) {
+      var doc=getSVGDoc(evt.getTarget());
+      var eDiamond=doc.getElementById("diamond");
+      var dStyle = eDiamond.getAttribute("style");
+      // var op = dStyle.getAttribute("fill-opacity");
+      if ( op <= 0.0 ) op = 1.0;
+      op -= 0.25;
+      alert ("style = " + dStyle + "\n" + "next opacity = " + op);
+      eDiamond.setAttribute("style", "fill-opacity:" + op);
+      }
+    function getSVGDoc(node) { 
+      if(node.getNodeType()==9)
+        return node;
+      else
+        return node.getOwnerDocument();
+      }
+    ]]></script>
+  
+
+  <script type="text/javascript"> <![CDATA[
+    function circle_click(evt) {
+      var evt = 21; // this.event;
+      var circle = evt.target;
+      var currentRadius = circle.getAttribute("rx");
+alert(currentRadius);
+      if (currentRadius == 100)
+        circle.setAttribute("r", currentRadius*2);
+      else
+        circle.setAttribute("r", currentRadius*0.5);
+    }
+  ]]> </script>
+
+<a xlink:href="http://gernhardt.com/beatles/index.html" target="BeatlesWin">
+ <g id="BeatlesGraphic">
+  <image xlink:href="Beatles3-100.jpg" 
+       x="20" y="20" width="252" height="257"  
+       style="opacity:0.75"  id="beatles" />
+  <animate attributeType="CSS" attributeName="opacity" 
+       from="1.0" to="0.1" dur="12.5s" repeatCount="indefinite" />
+  </g>
+</a>
+
+<!--
+<image xlink:href="pastel.jpg" x="0" y="0" width="446" height="447"  
+ id="restorePix" style="opacity:0.75" />
+-->
+
+<pattern id="Nested-squares" x="0" y="0" width="48" height="48"
+
+	patternUnits="userSpaceOnUse" patternContentUnits="userSpaceOnUse">
+
+	<g>
+
+		<rect width="48" height="48" style="fill:rgb(0,0,0);stroke:none">
+		</rect>
+
+		<g style="fill:none;stroke:rgb(0,255,255);stroke-width:1">
+
+			<path
+
+				d="M16 0 L16 16 L8 16 M3 16 L0 16 M31 0 L31 3 M31 8 L31 16 L47 16 M47 31 L44 31 M39 31 L31 31 L31 47 M0 31 L16 31 L16 39 M16 44 L16 47"/>
+
+			<path
+
+				d="M19 0 L19 19 L8 19 M3 19 L0 19 M28 0 L28 3 M28 8 L28 19 L47 19 M47 28 L44 28 M39 28 L28 28 L28 47 M0 28 L19 28 L19 39 M19 44 L19 47"/>
+
+		</g>
+
+		<g style="fill:none;stroke:rgb(255,255,0);stroke-width:1">
+
+			<path
+
+				d="M4 27 L4 4 L15 4 M20 4 L43 4 L43 15 M43 20 L43 43 L32 43 M27 43 L4 43 L4 32"/>
+
+			<path
+
+				d="M7 27 L7 7 L15 7 M20 7 L40 7 L40 15 M40 20 L40 40 L32 40 M27 40 L7 40 L7 32"/>
+
+		</g>
+
+	</g>
+
+</pattern>
+
+<linearGradient id="fading-spectrum" x1="0%" y1="0%" x2="100%" y2="0%"
+
+	spreadMethod="pad" gradientUnits="userSpaceOnUse">
+
+	<stop offset="12%" style="stop-color:rgb(255,0,0);stop-opacity:1"/>
+
+	<stop offset="28%" style="stop-color:rgb(255,251,0);stop-opacity:1"/>
+
+	<stop offset="45%" style="stop-color:rgb(1,180,57);stop-opacity:1"/>
+
+	<stop offset="60%" style="stop-color:rgb(0,234,255);stop-opacity:1"/>
+
+	<stop offset="75%" style="stop-color:rgb(0,2,144);stop-opacity:1"/>
+
+	<stop offset="88%" style="stop-color:rgb(255,0,200);stop-opacity:1"/>
+
+</linearGradient>
+
+<text id="BigB1" x="133" y="389"
+
+	transform="matrix(2.28891 0 0 3.30911 -314.632 -901.246)" style="
+
+	font-family:Gill Sans Ultra Bold;font-size:150;stroke-width:2;stroke-opacity:1;fill-opacity:0.75;
+
+	fill:url(#fading-spectrum);opacity:0.45;visibility:inherit">B</text>
+
+<filter id="Bevel" filterUnits="objectBoundingBox" x="-10%" y="-10%"
+
+	width="150%" height="150%">
+
+	<feGaussianBlur in="SourceAlpha" stdDeviation="3" result="blur"/>
+
+	<feSpecularLighting in="blur" surfaceScale="5" specularConstant="0.5"
+
+		specularExponent="10" result="specOut" style="
+
+		lighting-color:rgb(255,255,255)">
+
+		<fePointLight x="-5000" y="-10000" z="20000"/>
+
+	</feSpecularLighting>
+
+	<feComposite in="specOut" in2="SourceAlpha" operator="in" result="specOut2"/>
+
+	<feComposite in="SourceGraphic" in2="specOut2" operator="arithmetic" k1="0"
+
+		k2="1" k3="1" k4="0" result="litPaint"/>
+
+</filter>
+
+<linearGradient id="black-white" x1="0%" y1="0%" x2="100%" y2="0%"
+
+	spreadMethod="pad" gradientUnits="objectBoundingBox">
+
+	<stop offset="0%" style="stop-color:rgb(0,0,0);stop-opacity:1"/>
+
+	<stop offset="100%" style="stop-color:rgb(255,255,255);stop-opacity:1"/>
+
+</linearGradient>
+
+<polygon id="arrow1" points="156.375,28 265,85 155,142 188,85" style="stroke-miterlimit:4;stroke-linejoin:miter;stroke-width:10;stroke-opacity:0.6;stroke:rgb(0,0,0);
+
+	fill-opacity:0.75;fill:url(#black-white);opacity:0.51;visibility:inherit"/>
+
+<path id="line1" d="M28.5 283 L253.5 190" style="stroke-miterlimit:4;stroke-linejoin:miter;stroke-linecap:round;stroke-width:5;stroke-opacity:1;
+
+	stroke:rgb(65,233,152);fill-opacity:1;fill:rgb(0,0,0);opacity:1"/>
+
+<path id="triangle1" d="M98 209 L135 270 L61 270 z" style="filter:url(#Bevel);stroke-miterlimit:4;stroke-linejoin:miter;stroke-width:1;stroke-opacity:1;
+
+	stroke:rgb(0,0,0);fill-opacity:1;fill:rgb(51,133,233);opacity:1"
+onmousemove="changeDiamond(evt)" 
+/>
+
+<a xlink:href="javascript:changeDiamond(evt)" > <!-- does not work: evt undefined -->
+  <path id="diamond"
+
+onmousemove="changeDiamond(evt)"
+	d="M61.0323 349.328 L99.1543 317.968 L121.088 317.968 L155.032 351.248 L121.088 381.968 L99.1543 381.968 z" style="
+
+	stroke-miterlimit:4;stroke-linejoin:miter;stroke-width:1;stroke-opacity:1;stroke:rgb(0,0,0);
+
+	fill-opacity:1;fill:url(#Nested-squares);opacity:1"/>
+</a>
+
+<polygon id="arrow2"
+
+	points="132.468,27.8917 21.9199,81.0661 129.864,141.87 98.873,83.7533" style="
+
+	stroke-miterlimit:4;stroke-linejoin:miter;stroke-width:10;stroke-opacity:0.6;stroke:rgb(0,0,0);
+
+	fill-opacity:0.75;fill:url(#black-white);opacity:0.51;visibility:inherit"/>
+
+<rect x="207" y="192" width="44" height="37" rx="0" ry="0" style="stroke-miterlimit:4;stroke-linejoin:miter;stroke-width:3;stroke-opacity:1;stroke:rgb(0,0,0);
+
+	fill-opacity:1;fill:rgb(223,17,17);opacity:1" >
+	<animate attributeType="CSS" attributeName="opacity" 
+              from="1" to="0.2" dur="5s" repeatCount="indefinite" />
+</rect>
+<!--
+    <a xlink:href="javascript:alert('hi')"  onmouseover="javascript:alert('Click Me!')">
+    <a xlink:href="circle_click(evt);">
+    <a xlink:href="#fadePix">
+-->
+
+
+    <a xlink:href="javascript:circle_click(evt);"  >
+     <ellipse id="circle1" cx="97.5" cy="179" rx="52" ry="52" 
+        style="stroke-width:1;stroke-opacity:1;stroke:rgb(0,0,0);fill-opacity:1;fill:rgb(255,192,192);
+	opacity:0.66" />
+    </a>
+
+<a xlink:href="http://www.w3.org/Graphics/SVG/" style="cursor: crosshair" >
+    <text id="rocks" x="66" y="189" 
+        style="cursor:crosshair; font-family:Broadway;font-size:32;stroke-width:2;stroke-opacity:1;stroke:rgb(255,255,255);
+
+	fill-opacity:1;fill:rgb(0,0,0);opacity:1">SVG Rocks!</text> 
+</a>
+
+<path id="petals" 
+
+	d="M215.506 266 C239.594 266.031 212.413 302.014 218.283 303.949 C224.154 305.884 228.568 262.289 247 276.51 C265.431 290.731 219.384 302.276 222.524 307.218 C225.664 312.161 259.607 281.367 263.757 303.124 C267.906 324.881 224.54 306.585 223.481 312.222 C222.422 317.859 270.011 314.275 257.937 333.388 C245.864 352.5 225.469 312.925 220.706 316.619 C215.943 320.313 254.91 345.616 232.263 353.141 C209.616 360.666 221.736 318.329 215.498 318.351 C209.26 318.374 221.372 360.724 198.748 353.141 C176.124 345.557 215.088 320.269 210.294 316.609 C205.499 312.95 185.089 352.531 173.074 333.388 C161.06 314.244 208.636 317.837 207.528 312.207 C206.421 306.578 163.039 324.87 167.255 303.124 C171.471 281.378 205.398 312.171 208.496 307.206 C211.593 302.241 165.538 290.684 184.012 276.51 C202.486 262.337 206.889 305.922 212.743 303.944 C218.597 301.966 191.418 265.969 215.506 266 z" style="
+
+	stroke-miterlimit:4;stroke-linejoin:miter;stroke-width:2;stroke-opacity:1;stroke:rgb(138,238,238);
+
+	fill-opacity:0.71;fill:rgb(64,255,64);opacity:1; cursor: crosshair"/>
+
+
+<a xlink:href="http://gernhardt.com/beatles/index.html" >
+  <image xlink:href="Beatles-title-sm.gif" 
+       x="120" y="350" width="222" height="48"  
+       style="opacity:0.50"  id="beatlesTitle" />
+</a>
+
+
+</svg>
+
+
+<!-- Originally Generated by Jasc WebDraw PR4(tm) on 03/31/01 01:42:35 -->

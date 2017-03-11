@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<modulemap:EARProjectMap xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:application="application.xmi" xmlns:modulemap="modulemap.xmi" xmi:id="EARProjectMap_1122174101707">
+  <mappings xmi:id="ModuleMapping_1122174101707" projectName="HadrianEJB">
+    <module xmi:type="application:EjbModule" href="META-INF/application.xml#EjbModule_1122174101708"/>
+  </mappings>
+  <mappings xmi:id="ModuleMapping_1122174336547" projectName="HadrianWAR">
+    <module xmi:type="application:WebModule" href="META-INF/application.xml#WebModule_1122174336547"/>
+  </mappings>
+  <utilityJARMappings xmi:id="UtilityJARMapping_1122174102642" projectName="HadrianEJBClient" uri="HadrianEJBClient.jar"/>
+  <utilityJARMappings xmi:id="UtilityJARMapping_1125252033146" projectName="Common1" uri="Common1.jar"/>
+  <utilityJARMappings xmi:id="UtilityJARMapping_1125252033147" projectName="Common2" uri="Common2.jar"/>
+  <utilityJARMappings xmi:id="UtilityJARMapping_1125252033151" projectName="Common3" uri="Common3.jar"/>
+  <utilityJARMappings xmi:id="UtilityJARMapping_1125252033152" projectName="Common4" uri="Common4.jar"/>
+  <utilityJARMappings xmi:id="UtilityJARMapping_1125252033153" projectName="Common5" uri="Common5.jar"/>
+</modulemap:EARProjectMap>

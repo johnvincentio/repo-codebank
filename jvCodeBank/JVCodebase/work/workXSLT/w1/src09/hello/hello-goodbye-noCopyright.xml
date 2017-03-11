@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<hello-goodbye>
+  <hi>Hello</hi>
+  <bye>Goodbye</bye>
+  <hi>Hello, Hello</hi>
+  <hi>Hi</hi>
+  <bye>Say Goodbye</bye>
+  <bye>Bye</bye>
+</hello-goodbye>

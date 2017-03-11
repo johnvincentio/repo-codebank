@@ -1,0 +1,125 @@
+
+<project name="toolbox" default="jar" basedir=".">
+
+	<target name="init">
+		<echo message="init"/>
+		<property name="java.dir" value="java"/>
+		<property name="build.dir" value="build"/>
+		<property name="jar.name" value="toolbox"/>
+		<property name="javadocs.dir" value="${basedir}/docs/api"/>
+		<path id="javac.classpath">
+			<pathelement location="/opt/log4j/dist/lib/log4j-1.2.9.jar"/>
+			<pathelement location="${build.dir}/classes"/>
+		</path>
+		<path id="java.classpath">
+			<pathelement location="${build.dir}/${jar.name}.jar"/>
+			<pathelement location="/opt/log4j/dist/lib/log4j-1.2.9.jar"/>
+		</path>
+	</target>
+
+    <target name="javadocs_clean" depends="init">
+        <echo message="Cleaning Javadocs...."/>
+        <delete includeEmptyDirs="true" quiet="true">
+            <fileset dir="${javadocs.dir}"/>
+        </delete>
+    </target>
+    <target name="javadocs" depends="javadocs_clean">
+        <echo message="Generating API Javadocs...."/>
+        <path id="javadocs.classpath">
+            <path refid="javac.classpath"/>
+        </path>
+        <mkdir dir="${javadocs.dir}"/>
+        <javadoc
+            packagenames="*"
+            destdir="${javadocs.dir}"
+            verbose="false"
+            author="false" version="true" use="true"
+            windowtitle="${app.name} API Documentation"
+            doctitle="${app.name} Documentation"
+            bottom="Copyright. All Rights Reserved.">
+            <sourcepath>
+                <pathelement path="java"/>
+            </sourcepath>
+            <classpath>
+                <path refid="javadocs.classpath"/>
+            </classpath>
+        </javadoc>
+    </target>
+
+	<target name="build">
+		<echo message="build"/>
+		<property file="./build.properties"/>
+		<propertyfile file="./build.properties">
+			<entry key="build.number" type="int" operation="+" 
+					value="1" pattern="00"/>
+		</propertyfile>
+	</target>
+
+	<target name="clean" depends="init">
+		<echo message="clean"/>
+		<delete>
+			<fileset dir="${build.dir}/classes" includes="**/*.class"/>
+			<fileset dir="${build.dir}" includes="**/*.jar"/>
+		</delete>
+	</target>
+
+	<target name="compile" depends="build, clean">
+		<echo message="Compiling java..."/>
+		<javac srcdir="${java.dir}" 
+				destdir="${build.dir}/classes">
+			<include name="**/*.java" />
+			<classpath refid="javac.classpath"/>
+		</javac>
+	</target>
+
+	<target name="jar" depends="compile">
+		<jar jarfile="${build.dir}/${jar.name}.jar" compress="true">
+			<fileset dir="${build.dir}/classes" includes="**/*.class"/>
+		</jar>
+	</target>
+
+	<target name="Diff" depends="init">
+		<echo message="run diff"/>
+		<java classname="com/idc/diff/file/App" fork="yes">
+			<arg line="work/Node99.java"/>
+			<arg line="work/Node01.java"/>
+			<classpath refid="java.classpath"/>
+		</java>
+	</target>
+
+	<target name="Cmdargs" depends="init">
+		<echo message="run cmdargs test"/>
+		<java classname="com/idc/file/cmdargs/Main" fork="yes">
+			<arg line="-b some_arg"/>
+			<classpath refid="java.classpath"/>
+		</java>
+	</target>
+
+	<target name="Grepgui" depends="init">
+		<echo message="run Grepgui test"/>
+		<java classname="com/idc/grepgui/GrepdirGui" fork="yes">
+			<classpath refid="java.classpath"/>
+		</java>
+	</target>
+
+	<target name="FilesSince" depends="init">
+		<echo message="run FilesSince"/>
+		<java classname="com/idc/files/FilesSince" fork="yes">
+			<arg line="24/04/2005"/>
+			<classpath refid="java.classpath"/>
+		</java>
+	</target>
+
+</project>
+
+<!--
+	<target name="DiffAll" depends="init">
+		<echo message="run app"/>
+		<copy file="log4j.properties" todir="${build.dir}"/>
+		<java classname="com/idc/diff/all/DiffAll" fork="yes">
+			<arg line="/tmp/test/base/filecompare"/>
+			<classpath refid="javac.classpath"/>
+		</java>
+	</target>
+
+-->

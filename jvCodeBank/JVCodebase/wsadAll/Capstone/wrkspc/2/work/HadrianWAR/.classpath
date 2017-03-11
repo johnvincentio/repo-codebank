@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="JavaSource"/>
+	<classpathentry exported="true" kind="src" path="/HadrianEJB"/>
+	<classpathentry exported="true" kind="src" path="/HadrianEJBClient"/>
+	<classpathentry exported="true" kind="src" path="/Common3"/>
+	<classpathentry exported="true" kind="src" path="/Common5"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/WebSphere v6 JRE"/>
+	<classpathentry kind="con" path="com.ibm.wtp.server.java.core.container/com.ibm.ws.ast.st.runtime.core.runtimeTarget.v60/was.base.v6"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/commons-beanutils.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/commons-collections.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/commons-digester.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/commons-fileupload.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/commons-lang.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/commons-logging.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/commons-validator.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/jakarta-oro.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/struts.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/taglibs-mailer.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/utility.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/taglibs-string.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/taglibs-datetime.jar"/>
+	<classpathentry kind="lib" path="/opt/jwsdp-1.5/jstl/lib/jstl.jar"/>
+	<classpathentry kind="lib" path="/opt/jwsdp-1.5/jstl/lib/standard.jar"/>
+	<classpathentry kind="output" path="WebContent/WEB-INF/classes"/>
+</classpath>

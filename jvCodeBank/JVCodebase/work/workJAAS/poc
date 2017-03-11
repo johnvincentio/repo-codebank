@@ -1,0 +1,11 @@
+set -x
+javac SampleAction.java JaasAzn.java
+jar -cvf JaasAzn.jar JaasAzn.class
+jar -cvf SampleAction.jar SampleAction.class
+java -classpath JaasAzn.jar:SampleAction.jar \
+ -Djava.security.manager \
+ -Djava.security.krb5.realm=ALPHA \
+ -Djava.security.krb5.kdc=192.168.9.1:88 \
+ -Djava.security.policy=jaasazn.policy \
+ -Djava.security.auth.login.config=jaas.conf \
+ -Dsun.security.krb5.debug=true JaasAzn

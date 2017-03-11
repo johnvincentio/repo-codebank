@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE web-diagram PUBLIC "-//IBM//DTD Web Diagram 1.1//EN" "http://www.ibm.com/dtd/web-diagram_1_1.dtd">
+<web-diagram>
+    <properties>
+        <property name="Module Name" value="&lt;default module&gt;"/>
+    </properties>
+    <nodes>
+        <node id="n0" type="com.ibm.etools.model2.web.providers.model.WebPageProvider">
+            <properties>
+                <property name="Web Page Path" value="/login.jsp"/>
+                <property name="hidden" value="false"/>
+            </properties>
+            <location x="366" y="329"/>
+        </node>
+        <node id="n1" type="com.ibm.etools.struts.graphical.providers.model.ActionMappingProvider">
+            <properties>
+                <property name="Action Mapping Name" value="/Logon"/>
+                <property name="hidden" value="false"/>
+            </properties>
+            <location x="570" y="332"/>
+        </node>
+        <node id="n2" type="com.ibm.etools.struts.graphical.providers.model.FormBeanProvider">
+            <properties>
+                <property name="Form Bean Name" value="LogonForm"/>
+                <property name="Form Bean Scope" value="request"/>
+                <property name="hidden" value="false"/>
+            </properties>
+            <location x="546" y="508"/>
+        </node>
+        <node id="n3" type="com.ibm.etools.model2.web.providers.model.WebPageProvider">
+            <properties>
+                <property name="Web Page Path" value="/main.jsp"/>
+                <property name="hidden" value="false"/>
+            </properties>
+            <location x="825" y="338"/>
+        </node>
+    </nodes>
+    <edges>
+        <edge source="n1" target="n0" type="com.ibm.etools.struts.graphical.providers.edge.ActionMappingLocalForwardEdgeProvider">
+            <properties>
+                <property name="Forward Name" value="failure"/>
+            </properties>
+            <bendpoints>
+                <bendpoint weight="0.5">
+                    <dimensions>
+                        <dimension height="53" width="-107"/>
+                        <dimension height="56" width="93"/>
+                    </dimensions>
+                </bendpoint>
+            </bendpoints>
+        </edge>
+        <edge source="n1" target="n0" type="com.ibm.etools.struts.graphical.providers.edge.ActionMappingInputEdgeProvider">
+            <properties/>
+            <bendpoints>
+                <bendpoint weight="0.5">
+                    <dimensions>
+                        <dimension height="-43" width="-72"/>
+                        <dimension height="-40" width="128"/>
+                    </dimensions>
+                </bendpoint>
+                <bendpoint weight="0.5">
+                    <dimensions>
+                        <dimension height="-50" width="-111"/>
+                        <dimension height="-47" width="89"/>
+                    </dimensions>
+                </bendpoint>
+                <bendpoint weight="0.5">
+                    <dimensions>
+                        <dimension height="-32" width="-137"/>
+                        <dimension height="-29" width="63"/>
+                    </dimensions>
+                </bendpoint>
+            </bendpoints>
+        </edge>
+        <edge source="n1" target="n3" type="com.ibm.etools.struts.graphical.providers.edge.ActionMappingLocalForwardEdgeProvider">
+            <properties>
+                <property name="Forward Name" value="success"/>
+            </properties>
+        </edge>
+        <edge source="n0" target="n1" type="com.ibm.etools.model2.web.providers.edge.WebPageLinkEdgeProvider">
+            <properties/>
+        </edge>
+        <edge source="n1" target="n2" type="com.ibm.etools.struts.graphical.providers.edge.FormBeanEdgeProvider">
+            <properties/>
+        </edge>
+    </edges>
+</web-diagram>

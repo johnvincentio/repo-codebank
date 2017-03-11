@@ -1,0 +1,57 @@
+<HTML>
+<HEAD>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1252">
+<META NAME="Generator" CONTENT="Microsoft Word 97">
+<TITLE>Object-Oriented Concepts</TITLE>
+<LINK REL="stylesheet" HREF="activetree.css" TYPE="text/css"></HEAD>
+<BODY TEXT="#0000ff" LINK="#0000ff" VLINK="#800080" BGCOLOR="#ffffff">
+
+<P><A NAME="_Ref18395856">&nbsp;</A></P>
+<B><FONT FACE="Tahoma" SIZE=5><P><A NAME="_Toc46387926">Chapter-2: Object-Oriented Programming Concepts</A></P>
+</B></FONT><FONT SIZE=4><P>You must have heard that some <I>languages are procedural</I>. Procedural programming because they consists of global variables and functions. Language such as COBOL (Common Business Oriented Language) is fully a procedural language. Everything in COBOL is broken down into number of functions spread across different files. The same is true for the comparably younger procedural language C. On the other hand, language such as Java is known as <I>Object-Oriented language</I>. Everything around us falls to a category, i.e. a type. All we see around us are objects of those types. Objects consist of number of data elements and the operations defined on those data members. Both data and its operations for objects in an Object-Oriented programming stay together as a capsule.</P>
+<P>The success of the OO programming is entirely depends upon how good the designer and programmer in OO concepts. I would attempt to teach you the fundamentals of Object-Oriented programming such as <I>Class</I>, <I>Object</I>, <I>Message</I>, <I>Inheritance</I>, <I>Polymorphism</I>, and <I>Overriding</I> briefly. It is very important to learn the OO concepts clearly. Organizations rapidly need to adopt business changes into its software products in order to keep competitive advantage. Only an OO language such as Java can support an organization towards achieving that goal and only by proper implementation of OO concepts.</P>
+<P>&nbsp;</P>
+</FONT><P><IMG SRC="Image290.gif" WIDTH=29 HEIGHT=24><FONT SIZE=4>&nbsp;"<B><I>Object-Oriented Concepts</B></I>" lets you know the fundamentals of the Object-Oriented concepts such as Class, Object, Message, and Encapsulation.</P>
+</FONT><P><IMG SRC="Image290.gif" WIDTH=29 HEIGHT=24><FONT SIZE=4>&nbsp;"<B><I>Inheritance</B></I>" section teaches you the concept of inheritance as an important feature of the Object-Oriented programming. </P>
+</FONT><P><IMG SRC="Image290.gif" WIDTH=29 HEIGHT=24><FONT SIZE=4>&nbsp;"<B><I>Polymorphism</B></I>" section discusses abstraction and providing a change mechanism using the abstraction along with overriding. </P>
+</FONT><P><IMG SRC="Image290.gif" WIDTH=29 HEIGHT=24><FONT SIZE=4>&nbsp;"<B><I>Overloading</B></I>" talks about writing multiple functions with the same name but with different arguments.</P>
+<P>&nbsp;</P>
+</FONT><B><FONT FACE="Tahoma" SIZE=4><P><A NAME="_Toc46387927">Object-Oriented Concepts</A></P>
+</B></FONT><FONT SIZE=4><P>In this section, you are going to get a brief but clear idea about why one should consider Object-Oriented programming as an edge over procedural programming. Most of you might have worked in Object-Oriented programming such as C++. Those already know the OO concepts might skip this chapter. However, for others who are new to this concept or not very much familiar, might find it helpful.</P>
+<P>You might have often heard about <I>Pure Object-Oriented</I> programming language. Important questions therefore, what is a "<I>Pure Object-Oriented</I>" language and what is not pure? You often heard C++ is a hybrid language and it is not a "<I>Pure Object-Oriented</I>" language. Is that true about <I>Java</I>? To tell you, Java is a pure Object-Oriented language and differs in some of the concepts with C++. Therefore, the goal in this chapter is to discuss the OO concepts in the context of a "pure OO language" – Java. In our discussion, you will find everything in Java is an object. Occasionally, I took the opportunity to discuss some major difference between C++ and Java, because most of the readers perhaps having some C++ background. </P>
+<P>&nbsp;</P>
+</FONT><B><FONT FACE="Tahoma" SIZE=4><P><A NAME="_Toc46387928">What is a Class?</A></P>
+</B></FONT><FONT SIZE=4><P>To understand the analogy of a class, we are going to consider a better example - "cars". It is a physical entity or type. For example, all four-wheel vehicles fitted with an Engine belong to a particular category called "<I>Car</I>". All two-wheel vehicles fitted with an engine are usually called "<I>Motor Cycles</I>". One can easily understand, at least one thing is common to them - they all belong to a particular category or <I>type - "car" or "motor cycle"</I>. However, <I>type</I> like "car" or "motor cycle" does not describe your particular car or motor cycle. We might also say that the "BMW" is a special type of car. You perhaps own a "<I>BMW</I>" car and that is gray color, year-2003 model, four doors, etc. Someone may have owned a "<I>BMW</I>" car with silver color, year-2002 model, and two doors. You perhaps got some idea about what do I mean by "BMW" and "your particular gray, 2003, 4-door BMW car". What we are saying here is that the "BMW" is a <I>type</I> of "car". In software world, a type is known as a <I>class</I>. Therefore, "BMW" can be considered as a <I>class</I> of "car". </P>
+<P>Similarly, we often say, "penguins is a type of bird". When "bird" is the general type, penguins is the special type of bird. Knowingly or unknowingly, we somehow have the knowledge of a type. </P>
+<I><P>Figure – 2.1: A class is a type, similar to a factory capable of producing new.</P>
+</I></FONT><P><IMG SRC="Image292.gif" WIDTH=478 HEIGHT=152></P>
+<FONT SIZE=4><P>A class is like a factory that is capable of producing instances. Attributes value of each of such instances varies. For example, a <I>car</I> factory produces new cars. More specifically, a BMW factory can produce new BMW cars of different colors and models.</P>
+<P>Let us take one more example. Similar to the "car" class, "</FONT><FONT FACE="Courier New" SIZE=4>BankAccount</FONT><FONT SIZE=4>" is again considered as a class. A "</FONT><FONT FACE="Courier New" SIZE=4>BankAccount</FONT><FONT SIZE=4>" factory can produce new bank account identified by an <I>account number</I>, <I>name</I>, <I>address,</I> and more attributes.</P>
+<P>&nbsp;</P>
+</FONT><B><FONT FACE="Tahoma" SIZE=4><P><A NAME="_Toc46387929">What is an Object?</A></P>
+</B></FONT><FONT SIZE=4><P>In order to understand about objects let us look at the illustration next. It explains that the factory at the middle is the "Car" class from where all the new BMWs are produced. </P>
+<I><P>Figure – 2.2: A "BMW" class is a factory produces new BMWs.</P>
+</I></FONT><P><IMG SRC="Image293.gif" WIDTH=478 HEIGHT=259></P>
+<FONT SIZE=4><P>The little squares inside the object spaces are indicative of different values of the attributes for the variety model of BMW car created by the factory. Examples of such attributes are the <I>color of the car</I>, <I>number of doors</I>, <I>engine capacity</I>, and so on. </P>
+<P>Following is the general syntax for creating <I>objects</I> ("your individual car") from the "Car" factory, i.e. <I>class</I>.</P>
+</FONT><FONT FACE="Courier New" SIZE=2><P>Car myCar = new Car();</P>
+</FONT><FONT SIZE=4><P>In Java, a class name starts with a capital letter. However, there is no bar in naming the <I>class</I> with all small letters. In diagram shows six different cars are created from the BMW car factory.</P>
+<P>Value of a particular attribute of "your particular car" instance might change, if you repaint it with a different color. Therefore, the class that created it must have methods so that the color once changed can be changed in the system too. Usually, there is always a <I>setter</I> and <I>getter</I> method for each particular <I>attribute of the object</I>. For example, to change the color information of the car in the system the Car class might have </FONT><FONT FACE="Courier New" SIZE=4>getColor</FONT><FONT SIZE=4> and </FONT><FONT FACE="Courier New" SIZE=4>setColor</FONT><FONT SIZE=4> methods. Therefore, </FONT><FONT FACE="Courier New" SIZE=4>myCar</FONT><FONT SIZE=4> needs to be initialized with appropriate attribute values shown next.</P>
+<I><P>Listing – 2.1: Object creation syntax</P>
+</I></FONT><PRE>Car myCar = new car();
+myCar.setMake("BMW");
+myCar.setModel("M3");
+myCar.setColor("Gray");</PRE>
+<FONT SIZE=4><P>&nbsp;</P>
+<P>Similarly, a </FONT><FONT FACE="Courier New" SIZE=4>BankAccount</FONT><FONT SIZE=4> class is a representative of your bank account in a bank. Following is perhaps the simplest definition of it.</P>
+<I><P>Listing – 2.2: Simplest definition of a bank account class.</P>
+</I></FONT><PRE>class BankAccount {
+  int ac_no;
+  int balance;
+  int getBalance() { return balance;}
+  void setBalance(int amout) { balance = amount;}
+  int getAccountNumber() {return ac_no;}
+  void setAccountNumber(int accountNo) { ac_no = accountNo;}
+}</PRE>
+<FONT SIZE=4><P>&nbsp;</P></FONT></BODY>
+</HTML>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--xtools2_universal_type_manager-->
+<notation:Diagram xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:notation="http://www.ibm.com/xtools/1.5.0/Notation" xmlns:uml="http://www.eclipse.org/uml2/1.0.0/UML" xmlns:umlnotation="http://www.ibm.com/xtools/1.5.0/Umlnotation" xmi:id="_ff3FYCJCEdqYRv3J6-ce1g" type="Class" name="default.dnx">
+  <children xmi:id="_gsPY8CJCEdqYRv3J6-ce1g">
+    <children xmi:id="_gsWtsCJCEdqYRv3J6-ce1g" type="ImageCompartment">
+      <element xmi:type="uml:Component" href="vizref:///#sessionBean^vcore.target=uml2.Component^URI=platform%3a%2fresource%2fRetailerEJB%2fejbModule%2fMETA-INF%2fejb-jar.xml%23Abcd[project^vcore.target=uml2.Model^id=RetailerEJB]"/>
+      <layoutConstraint xmi:type="notation:Size" xmi:id="_gsWtsSJCEdqYRv3J6-ce1g" width="1320" height="1320"/>
+    </children>
+    <children xmi:id="_gsXUwCJCEdqYRv3J6-ce1g" type="Stereotype">
+      <element xmi:type="uml:Component" href="vizref:///#sessionBean^vcore.target=uml2.Component^URI=platform%3a%2fresource%2fRetailerEJB%2fejbModule%2fMETA-INF%2fejb-jar.xml%23Abcd[project^vcore.target=uml2.Model^id=RetailerEJB]"/>
+    </children>
+    <children xmi:id="_gsX70CJCEdqYRv3J6-ce1g" type="Kind">
+      <element xmi:type="uml:Component" href="vizref:///#sessionBean^vcore.target=uml2.Component^URI=platform%3a%2fresource%2fRetailerEJB%2fejbModule%2fMETA-INF%2fejb-jar.xml%23Abcd[project^vcore.target=uml2.Model^id=RetailerEJB]"/>
+    </children>
+    <children xmi:id="_gsYi4CJCEdqYRv3J6-ce1g" type="Name">
+      <element xmi:type="uml:Component" href="vizref:///#sessionBean^vcore.target=uml2.Component^URI=platform%3a%2fresource%2fRetailerEJB%2fejbModule%2fMETA-INF%2fejb-jar.xml%23Abcd[project^vcore.target=uml2.Model^id=RetailerEJB]"/>
+    </children>
+    <children xmi:id="_gsZJ8CJCEdqYRv3J6-ce1g" type="AttributeCompartment">
+      <styles xmi:type="umlnotation:UMLListCompartmentStyle" xmi:id="_gsZJ8SJCEdqYRv3J6-ce1g"/>
+      <element xmi:type="uml:Component" href="vizref:///#sessionBean^vcore.target=uml2.Component^URI=platform%3a%2fresource%2fRetailerEJB%2fejbModule%2fMETA-INF%2fejb-jar.xml%23Abcd[project^vcore.target=uml2.Model^id=RetailerEJB]"/>
+    </children>
+    <children xmi:id="_gsZxACJCEdqYRv3J6-ce1g" visible="false" type="OperationCompartment">
+      <styles xmi:type="umlnotation:UMLListCompartmentStyle" xmi:id="_gsZxASJCEdqYRv3J6-ce1g"/>
+      <element xmi:type="uml:Component" href="vizref:///#sessionBean^vcore.target=uml2.Component^URI=platform%3a%2fresource%2fRetailerEJB%2fejbModule%2fMETA-INF%2fejb-jar.xml%23Abcd[project^vcore.target=uml2.Model^id=RetailerEJB]"/>
+    </children>
+    <children xmi:id="_gsZxAiJCEdqYRv3J6-ce1g" visible="false" type="RealizationListCompartment">
+      <styles xmi:type="umlnotation:UMLListCompartmentStyle" xmi:id="_gsZxAyJCEdqYRv3J6-ce1g"/>
+      <element xmi:type="uml:Component" href="vizref:///#sessionBean^vcore.target=uml2.Component^URI=platform%3a%2fresource%2fRetailerEJB%2fejbModule%2fMETA-INF%2fejb-jar.xml%23Abcd[project^vcore.target=uml2.Model^id=RetailerEJB]"/>
+    </children>
+    <children xmi:id="_gsaYECJCEdqYRv3J6-ce1g" visible="false" type="RequiredInterfaceListCompartment">
+      <styles xmi:type="umlnotation:UMLListCompartmentStyle" xmi:id="_gsaYESJCEdqYRv3J6-ce1g" filtering="Automatic" filteringKeys="Other interface"/>
+      <element xmi:type="uml:Component" href="vizref:///#sessionBean^vcore.target=uml2.Component^URI=platform%3a%2fresource%2fRetailerEJB%2fejbModule%2fMETA-INF%2fejb-jar.xml%23Abcd[project^vcore.target=uml2.Model^id=RetailerEJB]"/>
+    </children>
+    <children xmi:id="_gsaYEiJCEdqYRv3J6-ce1g" type="ProvidedInterfaceListCompartment">
+      <styles xmi:type="umlnotation:UMLListCompartmentStyle" xmi:id="_gsaYEyJCEdqYRv3J6-ce1g" filtering="Automatic" filteringKeys="Other interface"/>
+      <element xmi:type="uml:Component" href="vizref:///#sessionBean^vcore.target=uml2.Component^URI=platform%3a%2fresource%2fRetailerEJB%2fejbModule%2fMETA-INF%2fejb-jar.xml%23Abcd[project^vcore.target=uml2.Model^id=RetailerEJB]"/>
+    </children>
+    <children xmi:id="_gssE4CJCEdqYRv3J6-ce1g" visible="false" type="StructureCompartment">
+      <styles xmi:type="umlnotation:UMLShapeCompartmentStyle" xmi:id="_gssr8CJCEdqYRv3J6-ce1g"/>
+      <element xmi:type="uml:Component" href="vizref:///#sessionBean^vcore.target=uml2.Component^URI=platform%3a%2fresource%2fRetailerEJB%2fejbModule%2fMETA-INF%2fejb-jar.xml%23Abcd[project^vcore.target=uml2.Model^id=RetailerEJB]"/>
+    </children>
+    <styles xmi:type="umlnotation:UMLComponentStyle" xmi:id="_gsPY8SJCEdqYRv3J6-ce1g" fontName="Sans" showStereotype="Label"/>
+    <element xmi:type="uml:Component" href="vizref:///#sessionBean^vcore.target=uml2.Component^URI=platform%3a%2fresource%2fRetailerEJB%2fejbModule%2fMETA-INF%2fejb-jar.xml%23Abcd[project^vcore.target=uml2.Model^id=RetailerEJB]"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_gsPY8iJCEdqYRv3J6-ce1g" x="13213" y="9133"/>
+  </children>
+  <styles xmi:type="umlnotation:UMLDiagramStyle" xmi:id="_ff3FYSJCEdqYRv3J6-ce1g"/>
+</notation:Diagram>

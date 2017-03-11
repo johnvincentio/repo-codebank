@@ -1,0 +1,106 @@
+<?xml version="1.0"?>
+
+<project name="EJB Xbean" default="ejb-jar" basedir=".">
+
+   <!-- Init -->
+   <target name="init">
+
+      <property name="lib.dir" value="lib" />
+      <property name="xdoclet.jar.path" value="/apps/java/xdoclet/lib/xdoclet.jar" />
+      <property name="log4j.jar.path" value="/apps/java/lib/log4j.jar" />
+      <property name="ant.jar.path" value="/apps/java/lib/ant.jar" />
+
+      <property name="src.dir" value="src" />
+      <property name="generated.src.dir" value="gen-src" />
+
+      <property name="java.dir" value="." />
+      <property name="generated.java.dir" value="${generated.src.dir}/java" />
+
+      <property name="config.dir" value="config" />
+      <property name="build.dir" value="build" />
+      <property name="dist.dir" value="dist" />
+
+      <property name="build.compiler" value="modern" />
+      <property name="name" value="receiver-xbean" />
+
+   </target>
+
+
+   <!-- Prepare -->
+   <target name="prepare" depends="init">
+
+      <mkdir dir="${build.dir}" />
+
+      <mkdir dir="${build.dir}/ejb" />
+      <mkdir dir="${build.dir}/ejb/META-INF" />
+
+      <mkdir dir="${build.dir}/j2ee" />
+      <mkdir dir="${dist.dir}" />
+
+      <mkdir dir="${generated.src.dir}" />
+      <mkdir dir="${generated.java.dir}" />
+
+   </target>
+
+   <!-- Run EJBDoclet -->
+   <target name="ejbdoclet" depends="prepare">
+
+      <taskdef name="ejbdoclet"
+               classname="xdoclet.ejb.EjbDocletTask" classpath="${java.class.path};${xdoclet.jar.path};${log4j.jar.path};${ant.jar.path}"
+      />
+
+      <ejbdoclet
+         sourcepath="${java.dir}"
+         destdir="${generated.java.dir}"
+         excludedtags="@version,@author"
+         ejbspec="2.0">
+
+         <fileset dir="${java.dir}">
+            <include name="**/ReceiverBean.java" />
+         </fileset>
+
+         <remoteinterface/>
+         <homeinterface/>
+         <deploymentdescriptor destdir="${build.dir}/ejb/META-INF"/>
+
+         <jboss version="2.4" xmlencoding="UTF-8" destdir="${build.dir}/ejb/META-INF"/>
+         <weblogic xmlencoding="UTF-8" destdir="${build.dir}/ejb/META-INF" validatexml="true"/>
+         <webSphere destdir="${build.dir}/ejb/META-INF" />
+         <orion destdir="${build.dir}/ejb/META-INF" />
+
+      </ejbdoclet>
+
+   </target>
+
+
+   <!-- Compile -->
+   <target name="compile" depends="ejbdoclet">
+
+      <!-- Compile EJBs -->
+      <javac srcdir="${java.dir};${generated.java.dir}"
+             destdir="${build.dir}/ejb"
+             includes="examples/*.java">
+      </javac>
+
+   </target>
+
+
+   <!-- Create EJB-JAR file -->
+   <target name="ejb-jar" depends="compile">
+
+      <jar jarfile="${build.dir}/j2ee/${name}-ejb.jar" basedir="${build.dir}/ejb" />
+
+   </target>
+
+
+   <!-- Clean everything -->
+   <target name="clean" depends="init">
+
+      <delete dir="${build.dir}" />
+      <delete dir="${dist.dir}" />
+      <delete dir="${generated.src.dir}" />
+
+   </target>
+
+
+</project>

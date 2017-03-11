@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<!DOCTYPE hello-goodbye [
+	<!ELEMENT hello-goodbye ((bye?, hi?)*)>
+	<!ELEMENT hi (#PCDATA)>
+	<!ELEMENT bye (#PCDATA)>
+]>
+<?xml-stylesheet type="text/xsl" 
+                 href="hello-goodbye.xsl"?>
+<hello-goodbye>
+	<bye>You say Goodbye</bye>
+	<hi>and I say Hello</hi>
+	<hi>Hello, Hello</hi>
+	<bye>I don't know why you say Goodbye</bye>
+	<hi>I say Hello</hi>
+</hello-goodbye>

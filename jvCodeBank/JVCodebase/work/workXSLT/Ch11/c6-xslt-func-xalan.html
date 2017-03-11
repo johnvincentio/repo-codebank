@@ -1,0 +1,42 @@
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>XSLT: XSLT Functions and Key</title>
+</head>
+<body>
+<h2>XSLT: XSLT Functions and Key</h2>
+<h3>function-available: Xalan</h3>xsl:function-available('element-available') = true<br>xalan:difference = true<br>xalan:foobar = false<br>saxon:difference = false<br>saxon:forAll = false<br>
+<h3>element-available: Xalan</h3>xsl:text = true<br>xsl:foobar = false<br>xsl:message = true<br>xalan:difference = false<br>xalan:foobar = false<br>saxon:preview = false<br>saxon:script = false<h3>system-property</h3>xsl:version = 1<br>xsl:vendor = Apache Software Foundation<br>xsl:vendor-url = http://xml.apache.org/xalan<h3>document</h3>document('collection7.xml')/Collection/CD[1]/Title = <i>Double Fantasy</i>
+<br>$doc/Collection/Book[1]/Title = <i>Beatles: After The Break-Up, The</i>
+<br>document('collection7.xml')/Collection/CD[2] = <br>
+<h3>format-number</h3>ListPrice of <i>Double Fantasy</i> is $17.97<br>ListPrice of <i>Beatles: After The Break-Up, The</i> is $34.95<br>Combined price using format-number(sum($doc//ListPrice), '$#.00') = $52.92<h3>key</h3>Found key('PriceKey', '24.95') with Title = <i>Complete Beatles Chronicle, The</i>
+<br>Found key('TitleKey', 'Venus and Mars') with ListPrice = $16.97<br>Found key('AuthorKey', 'McCartney') with Title = <i>Many Years From Now</i>
+<br>Found key('AuthorKey', 'McCartney') with Title = <i>Beatles Anthology, The</i>
+<br>
+<h3>generate-id</h3>
+<b>pass 1: Book and CD Nodes</b>
+<br>
+<i>Complete Beatles Chronicle, The</i>, id = N7<br>
+<i>Band on the Run</i>, id = N29<br>
+<i>Venus and Mars</i>, id = N57<br>
+<i>Many Years From Now</i>, id = N83<br>
+<i>Beatles Anthology, The</i>, id = NA7<br>
+<i>Beatles 1</i>, id = NED<br>
+<b>pass 2: Title Nodes</b>
+<br>
+<i>Complete Beatles Chronicle, The</i>, id = N9<br>
+<i>Band on the Run</i>, id = N2B<br>
+<i>Venus and Mars</i>, id = N59<br>
+<i>Many Years From Now</i>, id = N85<br>
+<i>Beatles Anthology, The</i>, id = NA9<br>
+<i>Beatles 1</i>, id = NEF<br>
+<b>pass 3: Revisit Book and CD Nodes</b>
+<br>
+<i>Complete Beatles Chronicle, The</i>, id = N7<br>
+<i>Band on the Run</i>, id = N29<br>
+<i>Venus and Mars</i>, id = N57<br>
+<i>Many Years From Now</i>, id = N83<br>
+<i>Beatles Anthology, The</i>, id = NA7<br>
+<i>Beatles 1</i>, id = NED<br>
+</body>
+</html>

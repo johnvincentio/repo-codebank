@@ -1,0 +1,41 @@
+<!-- Comment -->
+
+<project name="wordgame" default="run" basedir=".">
+   <target name="init">
+	   <echo message="init"/>
+      <property name="appDir" value="app"/>
+      <property name="deployDir" value="deploy"/>
+	  <property name="cpath" value="${deployDir}"/>
+   </target>
+
+   <target name="clean" depends="init">
+	   <echo message="clean"/>
+	   <delete>
+		   <fileset dir="${deployDir}" includes="**/*.class"/>
+	   </delete>
+   </target>
+
+   <target name="compile" depends="clean">
+	   <echo message="compile"/>
+     <javac destdir="${deployDir}" classpath="{cpath}">
+		<src path="${appDir}"/>
+	</javac>
+   </target>
+
+   <target name="run" depends="init">
+	   <echo message="run app"/>
+	   <java classname="App" fork="yes">
+			<classpath>
+				<pathelement location="${cpath}"/>
+			</classpath>
+		</java>
+   </target>
+
+	<target name="dist" depends="compile">
+		<echo message="Creating JAR file...."/>
+		<jar destfile="wordgame.jar" basedir="${build.dir}"/>
+	</target>
+
+</project>
+
+

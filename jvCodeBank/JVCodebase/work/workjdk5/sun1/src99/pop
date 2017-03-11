@@ -1,0 +1,11 @@
+#
+#java -cp . VarGreeter
+#java -cp . VarGreeter2 fred bill paul
+#java -cp . VarGreeter3 fred bill paul
+#java -cp . VarGreeter4 fred bill paul
+#java -cp . VarGreeter41
+#java -cp . PreVarGridLayout
+#java -cp . VarGridLayout
+#java -cp . Dispenser4
+#java -cp . New abc 231 ythr 000 ---
+java -cp . New21 frd 45346546 d34fd 45---

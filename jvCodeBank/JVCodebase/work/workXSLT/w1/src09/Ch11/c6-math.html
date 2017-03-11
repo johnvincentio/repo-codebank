@@ -1,0 +1,18 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   
+      <title>XSLT: Math Functions; Boolean and Relational Operators</title>
+   </head>
+   <body>
+      <h2>XSLT: Math Functions; Boolean and Relational Operators</h2>
+      <h2 align="center">CD Prices</h2><br>CD 1.)  $16.97 - <i>Band on the Run</i> --- floor: 16, ceiling: 17, round: 17  --- Price is between $16 and $18. <br>CD 2.)  $16.97 - <i>Venus and Mars</i> --- floor: 16, ceiling: 17, round: 17  --- Price is between $16 and $18. <br>CD 3.)  $18.97 - <i>Beatles 1</i> --- floor: 18, ceiling: 19, round: 19<br>$52.91 - Total for all 3 CDs<br>Average price: $17.64
+      <h2 align="center">Book Prices</h2><br>Book 1.)  $24.95 - <i>Complete Beatles Chronicle, The</i> --- floor: 24, ceiling: 25, round: 25<br>Book 2.)  $27.50 - <i>Many Years From Now</i> --- floor: 27, ceiling: 28, round: 28  --- Price is between $25 and $50 (inclusive). <br>Book 3.)  $60.00 - <i>Beatles Anthology, The</i> --- floor: 60, ceiling: 60, round: 60<br>$112.45 - Total for all 3 Books<br>Average price: $37.48
+      <p>Grand Total: $165.36 should equal $165.36<br> Unformatted: 165.35999999999999
+      </p>
+      <h3>Miscellaneous Boolean and Number Tests</h3><br>boolean(*), boolean(0), boolean(-3), boolean (1.25): <b>true</b>, 
+      	   <b>false</b>, 
+      	   <b>true</b>, 
+      	   <b>true</b><br>not(name(//CD) = name(//Book)): <b>true</b><br>number('Beatles'): NaN
+   </body>
+</html>

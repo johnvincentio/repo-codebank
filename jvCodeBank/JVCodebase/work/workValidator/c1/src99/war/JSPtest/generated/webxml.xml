@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<!DOCTYPE web-app
+    PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+    "http://java.sun.com/dtd/web-app_2_3.dtd">
+<!--
+Automatically created by Tomcat JspC.
+-->
+<web-app>
+
+
+    <servlet>
+        <servlet-name>org.apache.jsp.registration_jsp</servlet-name>
+        <servlet-class>org.apache.jsp.registration_jsp</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>org.apache.jsp.multiRegistration2_jsp</servlet-name>
+        <servlet-class>org.apache.jsp.multiRegistration2_jsp</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>org.apache.jsp.index_jsp</servlet-name>
+        <servlet-class>org.apache.jsp.index_jsp</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>org.apache.jsp.type_jsp</servlet-name>
+        <servlet-class>org.apache.jsp.type_jsp</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>org.apache.jsp.multiRegistration1_jsp</servlet-name>
+        <servlet-class>org.apache.jsp.multiRegistration1_jsp</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>org.apache.jsp.jsRegistration_jsp</servlet-name>
+        <servlet-class>org.apache.jsp.jsRegistration_jsp</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>org.apache.jsp.jsType_jsp</servlet-name>
+        <servlet-class>org.apache.jsp.jsType_jsp</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>org.apache.jsp.registration_jsp</servlet-name>
+        <url-pattern>/registration.jsp</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>org.apache.jsp.multiRegistration2_jsp</servlet-name>
+        <url-pattern>/multiRegistration2.jsp</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>org.apache.jsp.index_jsp</servlet-name>
+        <url-pattern>/index.jsp</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>org.apache.jsp.type_jsp</servlet-name>
+        <url-pattern>/type.jsp</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>org.apache.jsp.multiRegistration1_jsp</servlet-name>
+        <url-pattern>/multiRegistration1.jsp</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>org.apache.jsp.jsRegistration_jsp</servlet-name>
+        <url-pattern>/jsRegistration.jsp</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>org.apache.jsp.jsType_jsp</servlet-name>
+        <url-pattern>/jsType.jsp</url-pattern>
+    </servlet-mapping>
+
+</web-app>
+

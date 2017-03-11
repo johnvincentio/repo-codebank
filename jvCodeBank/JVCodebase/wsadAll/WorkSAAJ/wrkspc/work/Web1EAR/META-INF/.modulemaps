@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<modulemap:EARProjectMap xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:application="application.xmi" xmlns:modulemap="modulemap.xmi" xmi:id="EARProjectMap_1140484528995">
+  <mappings xmi:id="ModuleMapping_1140484528995" projectName="Web1">
+    <module xmi:type="application:WebModule" href="META-INF/application.xml#WebModule_1140484528995"/>
+  </mappings>
+</modulemap:EARProjectMap>

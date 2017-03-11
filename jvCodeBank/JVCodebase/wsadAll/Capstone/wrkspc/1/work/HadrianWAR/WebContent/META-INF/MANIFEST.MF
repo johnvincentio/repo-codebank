@@ -1,0 +1,7 @@
+Manifest-Version: 1.0
+Class-Path: HadrianEJB.jar 
+ HadrianEJBClient.jar 
+ Common3.jar 
+ Common5.jar 
+ Common4.jar
+

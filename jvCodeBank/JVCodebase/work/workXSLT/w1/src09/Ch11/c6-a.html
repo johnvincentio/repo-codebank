@@ -1,0 +1,91 @@
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>XSLT: XPath Axes</title>
+</head>
+<body>
+<h1>XSLT: XPath Axes</h1>
+<p></p>
+<i>Venus and Mars</i><i> = CD[2] </i>
+<p></p>
+<b>ancestor: </b>
+<br>1.) Collection<p></p>
+<b>ancestor-or-self: </b>
+<br>1.) Collection<br>2.) CD<p></p>
+<b>attribute: </b>
+<br>1.) Element: Peak has attribute: weeks --- 1<br>1.) Element: Peak has attribute: country --- UK<br>1.) Element: Label has attribute: country --- UK<br>1.) Element: Remastered has attribute: format --- gold CD with 3 bonus tracks<p></p>
+<b>child: </b>
+<br>1.) Title --- Venus and Mars<br>2.) Artist --- McCartney, Paul and Wings<br>3.) Chart --- 
+      1
+      2
+      
+    <br>4.) Type --- Rock<br>5.) Label --- Capitol<br>6.) Label --- EMI<br>7.) AlbumReleased --- 1975<br>8.) Remastered --- 1994<br>9.) ListPrice --- 16.97<p></p>
+<b>descendant: </b>
+<br>1.) Title --- Venus and Mars<br>2.) Artist --- McCartney, Paul and Wings<br>3.) Chart --- 
+      1
+      2
+      
+    <br>1.) Peak --- 1<br>2.) Peak --- 2<br>4.) Type --- Rock<br>5.) Label --- Capitol<br>6.) Label --- EMI<br>7.) AlbumReleased --- 1975<br>8.) Remastered --- 1994<br>9.) ListPrice --- 16.97<p></p>
+<b>descendant-or-self: </b>
+<br>3.) CD<br>1.) Title --- Venus and Mars<br>2.) Artist --- McCartney, Paul and Wings<br>3.) Chart --- 
+      1
+      2
+      
+    <br>1.) Peak --- 1<br>2.) Peak --- 2<br>4.) Type --- Rock<br>5.) Label --- Capitol<br>6.) Label --- EMI<br>7.) AlbumReleased --- 1975<br>8.) Remastered --- 1994<br>9.) ListPrice --- 16.97<p></p>
+<b>following: </b>
+<br>1.) bogus-pi --- attr1="foo" attr2="foobar" <br>1.4.) Book<br>1.4.1.) Title --- Many Years From Now<br>1.4.2.) Author<br>1.4.2.1.) Name --- 
+        Paul
+        McCartney
+      <br>1.4.2.1.1.) First --- Paul<br>1.4.2.1.2.) Last --- McCartney<br>1.4.3.) Type --- Autobiographical<br>1.4.4.) Published --- 1997<br>1.4.5.) Rating --- 4 stars<br>1.4.6.) Notes --- 654 pages; Reprint edition (October 1998)<br>1.4.7.) ListPrice --- 27.50<br>1.5.) Book<br>1.5.1.) Title --- Beatles Anthology, The<br>1.5.2.) Author<br>1.5.2.1.) Name --- 
+        Paul
+        McCartney
+      <br>1.5.2.1.1.) First --- Paul<br>1.5.2.1.2.) Last --- McCartney<br>1.5.3.) Author<br>1.5.3.1.) Name --- 
+        George
+        Harrison
+      <br>1.5.3.1.1.) First --- George<br>1.5.3.1.2.) Last --- Harrison<br>1.5.4.) Author --- 
+      
+        Ringo
+        Starr
+      
+    <br>1.5.4.1.) Name --- 
+        Ringo
+        Starr
+      <br>1.5.4.1.1.) First --- Ringo<br>1.5.4.1.2.) Last --- Starr<br>1.5.5.) Author --- 
+      
+        John
+        Lennon
+      
+    <br>1.5.5.1.) Name --- 
+        John
+        Lennon
+      <br>1.5.5.1.1.) First --- John<br>1.5.5.1.2.) Last --- Lennon<br>1.5.6.) Type --- Autobiographical<br>1.5.7.) Published --- 2000<br>1.5.8.) Rating --- 5 stars<br>1.5.9.) Notes<br>1.5.10.) ListPrice --- 60.00<br>1.6.) CD<br>1.6.1.) Title --- Beatles 1<br>1.6.2.) Artist --- Beatles<br>1.6.3.) Chart --- 
+      1
+    <br>1.6.3.1.) Peak --- 1<br>1.6.4.) Type --- Rock<br>1.6.5.) Label --- Capitol<br>1.6.6.) AlbumReleased --- November 14, 2000<br>1.6.7.) ListPrice --- 18.97<br>1.7.) Owner<br>1.7.1.) Name --- 
+      Ken
+      Sall
+    <br>1.7.1.1.) First --- Ken<br>1.7.1.2.) Last --- Sall<br>1.7.2.) Address<br>1.7.2.1.) Street --- 123 Milky Way Dr.<br>1.7.2.2.) City --- Columbia<br>1.7.2.3.) State --- MD<br>1.7.2.4.) Zip --- 20794<p></p>
+<b>following-sibling: </b>
+<br>1.) bogus-pi --- attr1="foo" attr2="foobar" <br>4.) Book<br>5.) Book<br>6.) CD<br>7.) Owner<p></p>
+<b>namespace(/Collection): </b>
+<br>1.) xhtml --- http://www.w3.org/1999/xhtml<br>1.) html --- http://www.w3.org/TR/REC-html40<p></p>
+<b>parent: </b>
+<br>1.) Collection<p></p>
+<b>preceding: </b>
+<br>1.) Book<br>1.) Title --- Complete Beatles Chronicle, The<br>2.) Author --- 
+      
+        Mark
+        Lewisohn
+      
+    <br>1.) Name --- 
+        Mark
+        Lewisohn
+      <br>1.) First --- Mark<br>2.) Last --- Lewisohn<br>3.) Type --- Chronology<br>4.) Published --- 1992<br>5.) Rating --- 5 stars<br>6.) Notes<br>7.) ListPrice --- 24.95<br>2.) CD<br>1.) Title --- Band on the Run<br>2.) Artist --- McCartney, Paul and Wings<br>3.) Chart --- 
+      1
+      1
+      
+    <br>1.) Peak --- 1<br>2.) Peak --- 1<br>4.) Type --- Rock<br>5.) Label --- Capitol<br>6.) Label --- EMI<br>7.) AlbumReleased --- 1973<br>8.) Remastered --- 1993<br>9.) Remastered --- 1999<br>10.) ListPrice --- 16.97<p></p>
+<b>preceding-sibling: </b>
+<br>1.) Book<br>2.) CD<p></p>
+<b>self: </b>
+<br>3.) CD</body>
+</html>

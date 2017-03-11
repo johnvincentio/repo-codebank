@@ -1,0 +1,123 @@
+<!-- Comment -->
+
+<project name="w2" default="compile" basedir=".">
+   <target name="init">
+	   <echo message="init"/>
+      <property name="appDir" value="app"/>
+      <property name="deployDir" value="deploy"/>
+	  <property name="cpath" value="${deployDir}"/>
+   </target>
+
+   <target name="clean" depends="init">
+	   <echo message="clean"/>
+	   <delete>
+		   <fileset dir="${deployDir}" includes="**/*.class"/>
+	   </delete>
+   </target>
+
+   <target name="compile" depends="clean">
+	   <echo message="compile"/>
+     <javac destdir="${deployDir}" classpath="{cpath}">
+		<src path="${appDir}"/>
+	</javac>
+   </target>
+
+   <target name="App01" depends="init">
+	   <echo message="run app01"/>
+	   <java classname="TransformationApp01" fork="yes">
+			<arg line="xml/slideSample01.xml"/>
+			<classpath>
+				<pathelement location="${cpath}"/>
+			</classpath>
+		</java>
+   </target>
+   <target name="App02" depends="init">
+	   <echo message="run app02"/>
+	   <java classname="TransformationApp02" fork="yes">
+			<arg line="xml/slideSample01.xml"/>
+			<classpath>
+				<pathelement location="${cpath}"/>
+			</classpath>
+		</java>
+   </target>
+   <target name="App03" depends="init">
+	   <echo message="run app03"/>
+	   <java classname="TransformationApp03" fork="yes">
+			<arg line="xml/slideSample01.xml"/>
+			<classpath>
+				<pathelement location="${cpath}"/>
+			</classpath>
+		</java>
+   </target>
+   <target name="Add01" depends="init">
+	   <echo message="run Add01"/>
+	   <java classname="AddressBookReader01" fork="yes">
+			<arg line="xml/PersonalAddressBook.ldif"/>
+			<classpath>
+				<pathelement location="${cpath}"/>
+			</classpath>
+		</java>
+   </target>
+   <target name="App04" depends="init">
+	   <echo message="run App04"/>
+	   <java classname="TransformationApp04" fork="yes">
+			<arg line="xml/PersonalAddressBook.ldif"/>
+			<classpath>
+				<pathelement location="${cpath}"/>
+			</classpath>
+		</java>
+   </target>
+   <target name="Style01" depends="init">
+	   <echo message="run Style01"/>
+	   <java classname="Stylizer" fork="yes">
+			<arg line="xml/article1a.xsl"/>
+			<arg line="xml/article1.xml"/>
+			<classpath>
+				<pathelement location="${cpath}"/>
+			</classpath>
+		</java>
+   </target>
+   <target name="Style02" depends="init">
+	   <echo message="run Style02"/>
+	   <java classname="Stylizer" fork="yes">
+			<arg line="xml/article1b.xsl"/>
+			<arg line="xml/article1.xml"/>
+			<classpath>
+				<pathelement location="${cpath}"/>
+			</classpath>
+		</java>
+   </target>
+   <target name="Style03" depends="init">
+	   <echo message="run Style03"/>
+	   <java classname="Stylizer" fork="yes">
+			<arg line="xml/article1c.xsl"/>
+			<arg line="xml/article1.xml"/>
+			<classpath>
+				<pathelement location="${cpath}"/>
+			</classpath>
+		</java>
+   </target>
+   <target name="Style04" depends="init">
+	   <echo message="run Style04"/>
+	   <java classname="Stylizer" fork="yes">
+			<arg line="xml/article2.xsl"/>
+			<arg line="xml/article2.xml"/>
+			<classpath>
+				<pathelement location="${cpath}"/>
+			</classpath>
+		</java>
+   </target>
+   <target name="Chain01" depends="init">
+	   <echo message="run Chain01"/>
+	   <java classname="FilterChain" fork="yes">
+			<arg line="xml/docbookToArticle.xsl"/>
+			<arg line="xml/article1c.xsl"/>
+			<arg line="xml/small-docbook-article.xml"/>
+			<classpath>
+				<pathelement location="${cpath}"/>
+			</classpath>
+		</java>
+   </target>
+
+</project>
+

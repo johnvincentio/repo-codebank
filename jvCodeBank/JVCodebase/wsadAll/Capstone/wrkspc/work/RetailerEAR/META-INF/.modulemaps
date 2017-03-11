@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<modulemap:EARProjectMap xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:application="application.xmi" xmlns:modulemap="modulemap.xmi" xmi:id="EARProjectMap_1126387566911">
+  <mappings xmi:id="ModuleMapping_1126387643234" projectName="RetailerEJB">
+    <module xmi:type="application:EjbModule" href="META-INF/application.xml#EjbModule_1126387643234"/>
+  </mappings>
+  <mappings xmi:id="ModuleMapping_1126387834261" projectName="RetailerWEB">
+    <module xmi:type="application:WebModule" href="META-INF/application.xml#WebModule_1126387834261"/>
+  </mappings>
+  <utilityJARMappings xmi:id="UtilityJARMapping_1126387566911" projectName="Common1" uri="Common1.jar"/>
+  <utilityJARMappings xmi:id="UtilityJARMapping_1126387566912" projectName="Common2" uri="Common2.jar"/>
+  <utilityJARMappings xmi:id="UtilityJARMapping_1126387566913" projectName="Common3" uri="Common3.jar"/>
+  <utilityJARMappings xmi:id="UtilityJARMapping_1126387566914" projectName="Common4" uri="Common4.jar"/>
+  <utilityJARMappings xmi:id="UtilityJARMapping_1126387566915" projectName="Common5" uri="Common5.jar"/>
+  <utilityJARMappings xmi:id="UtilityJARMapping_1126387643546" projectName="RetailerEJBClient" uri="RetailerEJBClient.jar"/>
+</modulemap:EARProjectMap>

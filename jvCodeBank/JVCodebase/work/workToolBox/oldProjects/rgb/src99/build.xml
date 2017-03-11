@@ -1,0 +1,38 @@
+
+<project name="rgb" default="compile" basedir=".">
+
+	<target name="init">
+		<echo message="init"/>
+		<property name="appDir" value="java"/>
+		<property name="deployDir" value="build"/>
+		<path id="cpath">
+			<pathelement location="/opt/log4j/dist/lib/log4j-1.2.9.jar"/>
+			<pathelement location="${deployDir}"/>
+		</path>
+	</target>
+
+	<target name="clean" depends="init">
+		<echo message="clean"/>
+		<delete>
+			<fileset dir="${deployDir}" includes="**/*.class"/>
+		</delete>
+	</target>
+
+	<target name="compile" depends="clean">
+		<echo message="compile"/>
+		<javac destdir="${deployDir}">
+			<classpath refid="cpath"/>
+			<compilerarg line="-deprecation"/>
+			<src path="${appDir}"/>
+		</javac>
+	</target>
+
+	<target name="run" depends="init">
+		<echo message="run app"/>
+		<copy file="log4j.properties" todir="${deployDir}"/>
+		<java classname="App" fork="yes">
+			<classpath refid="cpath"/>
+		</java>
+	</target>
+</project>
+

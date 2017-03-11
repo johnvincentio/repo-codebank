@@ -1,0 +1,15 @@
+
+JAVA_HOME=/opt/jdk1.5.0_02
+ANT_HOME=/opt/apache-ant-1.6.2
+J2EE_HOME=/opt/SUNWappserver
+export JAVA_HOME
+export ANT_HOME
+export J2EE_HOME
+
+PATH=$JAVA_HOME/bin:$J2EE_HOME/bin:$ANT_HOME/bin:$HOME/dbin:/usr/local/bin
+PATH=$PATH:/bin:/usr/bin:/usr/bin/X11:/usr/X11R6/bin
+export PATH
+
+CLASSPATH=.:$J2EE_HOME/lib/j2ee.jar
+export CLASSPATH
+

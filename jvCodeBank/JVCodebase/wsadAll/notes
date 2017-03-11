@@ -1,0 +1,230 @@
+start RAD
+no server
+
+new, server,
+localhost
+WebSphere v6.0 Server
+Next>
+
+CapstoneSrv01
+bootstrap, soap connector
+
+use soap
+
+Server Name: server1
+BASE
+
+Detect
+
+Next>
+
+Do not add projects to the server
+
+Starts the server
+
+Start a browser
+Check the port used for WCAdminHost (9063)
+
+http://localhost:9063/ibm/console/
+
+Resources, JDBC Providers
+
+Server
+New
+
+Database Type: Oracle
+takes ages....
+
+Oracle JDBC Driver
+Connection pool data source
+
+Next>
+
+Apply
+
+Data Sources
+
+New
+
+Name: Nero Pool
+JNDI name: jdbc/NeroResource
+Oracle 10g
+Url=jdbc:oracle:thin:@alpha:1521:orcl
+
+Apply
+
+Data sources, Nero Pool
+Related Items: J2EE Connector Architecture Authentication data entries
+
+New
+Alias: OracleNero
+User Id: JVNERO
+Password: capstone
+
+OK
+
+Select Nero Pool
+Component-managed authentication alias: alphaNode05/OracleNero
+
+OK
+
+Save
+Test Connection
+Failed, /ojdbc14.jar not found
+
+Environment, WebSphere Variables
+Name: ORACLE_JDBC_DRIVER_PATH
+Value: /usr/local/bin/Oracle/jdbc
+Ok
+
+Save
+
+Test Connection
+
+
+
+
+
+Add an Alias (JAAS)
+When you add or edit a Data Source, J2C is an option on the right.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+JMS
+
+Service Integration
+Buses
+
+took ages
+
+New
+InterbankingBus
+untick secure
+
+save
+save to master
+
+select the bus member
+
+Additional Properties
+Bus Members
+Add
+
+Server
+Default is alphaNode07:server1 {node:server}
+accept the default
+
+Next
+Finish
+Save
+save to master
+
+select the bus member
+
+Additonal Properties
+Destinations
+
+New
+
+Queue
+Next
+
+interbankingQueue
+Next
+
+Bus member (alphaNode07:server1)
+Next
+
+Finish
+
+save
+save to master
+
+logout
+restart server
+
+Service integration
+Buses
+
+click interbanking
+
+Bus Members
+Click the bus member
+
+Status should have a green arrow.
+
+
+
+JMS Connection Factory
+Resources
+JMS Providers
+Default Messaging
+
+JMS Queue connection factory
+
+New
+
+Name: interbankingCF
+JNDI: jms/interbankingCF
+Bus Name: InterbankingBus
+
+OK
+save
+save to master
+
+DefaultMessaageing provider
+JMS Queue
+
+New
+
+Name: InterbankingQueue
+JNDI: jms/interbankingQueue
+Bus Name: InterbankingBus
+Queue Name: InterbankingQueue
+
+OK
+save
+save to master
+
+Default messaging provider
+JMS Activation Specification
+
+New
+
+name: interbankingAS
+JNDI: jms/interbankingAS
+Queue
+Destination JNDI: jms/interbankingQueue
+Bus Name: InterbankingBus
+
+OK
+save
+save to master
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

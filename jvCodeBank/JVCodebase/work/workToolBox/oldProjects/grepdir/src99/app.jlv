@@ -1,0 +1,6 @@
+env,CLASSPATH,deploy
+oldrun,c:\j2sdk1.4.1_02\bin\java.exe -cp deploy App
+oldrun,java -cp deploy App
+oldrun,javaw -cp deploy App
+oldrun,java App
+run,javaw App

@@ -1,0 +1,75 @@
+<?xml version='1.0' standalone='no'?>
+<!DOCTYPE Employees SYSTEM "employee.dtd" >
+<Employees>
+  <Employee sex="male">
+    <Name>
+      <First>Ken</First>
+      <Last>Sall</Last>
+    </Name>
+    <Title>Sr. Software Engineer<Title>
+    <Projects>
+      <Project>Writing book</Project>
+      <Project>developing XML training course</Project>
+      <Project>SmallProject</Project>
+    </Projects>
+    <Email>Ken.Sall@home.com</Email>
+    <PhoneNumbers>
+      <Home>555-abc-1234</Home>
+      <Office>555-xyz-1234</Office>
+      <Cell>n/a</Cell>
+    </PhoneNumbers>
+    <Address>
+      <Street>123 Milky Way</Street>
+      <City>Columbia</City>
+      <State>MD</State>
+      <Zip>20777</Zip>
+    </Address>
+  </Employee>
+  <Employee sex="female">
+    <Name>
+      <First>Betty Jo</First>
+      <Last>Bialowsky</Last>
+      <!-- aka: Melanie Haber, Audrey Farber, Susan Underhill, Nancy -->
+    </Name>
+    <Title>Project Leader</Title>
+    <Projects>
+      <Project>MegaProject</Project>
+      <Project>SmallProject</Project>
+      <Project>others</Project>
+    </Projects>
+    <Email>BettyJo.Bialowsky@home.com</Email>
+    <PhoneNumbers>
+      <Home>555-abc-1235</Home>
+      <Office>555-xyz-4321</Office>
+      <Cell>555-pqr-1267</Cell>
+    </PhoneNumbers>
+    <Address>
+      <Street>321 Carmel Court</Street>
+      <City>Columbia</City>
+      <State>MD</State>
+      <Zip>20777</Zip>
+    </Address>
+  </Employee>
+  <Employee sex="male">
+    <Name>
+      <First>Nick</First>
+      <Last>Danger</Last>
+    </Name>
+    <Title>Technical Lead</Title>
+    <Projects>
+      <Project>ThirdEye Project</Project>
+    </Projects>
+    <Email>Nick.Danger@home.com</Email>
+    <PhoneNumbers>
+      <Home>555-abc-1236</Home>
+      <Office>555-xyz-2222</Office>
+      <Cell>555-pqr-1268</Cell>
+    </PhoneNumbers>
+    <Address>
+      <Street>456 Pickup Sticks Lane</Street>
+      <City>Columbia</City>
+      <State>MD</State>
+      <Zip>20777</Zip>
+    </Address>
+  </Employee>
+</Employees>

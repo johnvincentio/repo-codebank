@@ -1,0 +1,162 @@
+<!-- Comment -->
+
+<project name="w1" default="run" basedir=".">
+   <target name="init">
+	   <echo message="init"/>
+      <property name="appDir" value="app"/>
+      <property name="deployDir" value="deploy"/>
+	  <property name="cpath" value="${deployDir}"/>
+   </target>
+
+   <target name="clean" depends="init">
+	   <echo message="clean"/>
+	   <delete>
+		   <fileset dir="${deployDir}" includes="**/*.class"/>
+	   </delete>
+   </target>
+
+   <target name="compile" depends="clean">
+	   <echo message="compile"/>
+     <javac destdir="${deployDir}" classpath="{cpath}">
+		<src path="${appDir}"/>
+	</javac>
+   </target>
+
+   <target name="echo1" depends="init">
+	   <echo message="run echo1"/>
+	   <java classname="Echo01" fork="yes">
+			<arg line="xml/slideSample01.xml"/>
+			<classpath>
+				<pathelement location="${cpath}"/>
+			</classpath>
+		</java>
+   </target>
+   <target name="echo2" depends="init">
+	   <echo message="run echo2"/>
+	   <java classname="Echo02" fork="yes">
+			<arg line="xml/slideSample01.xml"/>
+			<classpath>
+				<pathelement location="${cpath}"/>
+			</classpath>
+		</java>
+   </target>
+   <target name="echo3" depends="init">
+	   <echo message="run echo3"/>
+	   <java classname="Echo03" fork="yes">
+			<arg line="xml/slideSample01.xml"/>
+			<classpath>
+				<pathelement location="${cpath}"/>
+			</classpath>
+		</java>
+   </target>
+   <target name="echo4" depends="init">
+	   <echo message="run echo4"/>
+	   <java classname="Echo04" fork="yes">
+			<arg line="xml/slideSample01.xml"/>
+			<classpath>
+				<pathelement location="${cpath}"/>
+			</classpath>
+		</java>
+   </target>
+   <target name="echo5" depends="init">
+	   <echo message="run echo5"/>
+	   <java classname="Echo05" fork="yes">
+			<arg line="xml/slideSample01.xml"/>
+			<classpath>
+				<pathelement location="${cpath}"/>
+			</classpath>
+		</java>
+   </target>
+   <target name="echo6" depends="init">
+	   <echo message="run echo6"/>
+	   <java classname="Echo06" fork="yes">
+			<arg line="xml/slideSampleBad1.xml"/>
+			<classpath>
+				<pathelement location="${cpath}"/>
+			</classpath>
+		</java>
+   </target>
+   <target name="echo7" depends="init">
+	   <echo message="run echo7"/>
+	   <java classname="Echo07" fork="yes">
+			<arg line="xml/slideSampleBad1.xml"/>
+			<classpath>
+				<pathelement location="${cpath}"/>
+			</classpath>
+		</java>
+   </target>
+   <target name="echo7a" depends="init">
+	   <echo message="run echo7"/>
+	   <java classname="Echo07" fork="yes">
+			<arg line="xml/slideSample03.xml"/>
+			<classpath>
+				<pathelement location="${cpath}"/>
+			</classpath>
+		</java>
+   </target>
+   <target name="echo7-05" depends="init">
+	   <echo message="run echo07-05"/>
+	   <java classname="Echo07" fork="yes">
+			<arg line="xml/slideSample05.xml"/>
+			<classpath>
+				<pathelement location="${cpath}"/>
+			</classpath>
+		</java>
+   </target>
+   <target name="echo08-05" depends="init">
+	   <echo message="run echo08-05"/>
+	   <java classname="Echo08" fork="yes">
+			<arg line="xml/slideSample05.xml"/>
+			<classpath>
+				<pathelement location="${cpath}"/>
+			</classpath>
+		</java>
+   </target>
+   <target name="echo09-05" depends="init">
+	   <echo message="run echo09-05"/>
+	   <java classname="Echo09" fork="yes">
+			<arg line="xml/slideSample05.xml"/>
+			<classpath>
+				<pathelement location="${cpath}"/>
+			</classpath>
+		</java>
+   </target>
+   <target name="echo09-06" depends="init">
+	   <echo message="run echo09-06"/>
+	   <java classname="Echo09" fork="yes">
+			<arg line="xml/slideSample06.xml"/>
+			<classpath>
+				<pathelement location="${cpath}"/>
+			</classpath>
+		</java>
+   </target>
+   <target name="echo09-07" depends="init">
+	   <echo message="run echo09-07"/>
+	   <java classname="Echo09" fork="yes">
+			<arg line="xml/slideSample07.xml"/>
+			<classpath>
+				<pathelement location="${cpath}"/>
+			</classpath>
+		</java>
+   </target>
+   <target name="echo11-09" depends="init">
+	   <echo message="run echo11-09"/>
+	   <java classname="Echo11" fork="yes">
+			<arg line="xml/slideSample09.xml"/>
+			<classpath>
+				<pathelement location="${cpath}"/>
+			</classpath>
+		</java>
+   </target>
+   <target name="echo12-09" depends="init">
+	   <echo message="run echo12-09"/>
+	   <java classname="Echo12" fork="yes">
+			<arg line="xml/slideSample09.xml"/>
+			<classpath>
+				<pathelement location="${cpath}"/>
+			</classpath>
+		</java>
+   </target>
+
+</project>
+

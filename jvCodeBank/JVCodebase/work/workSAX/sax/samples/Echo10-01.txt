@@ -1,0 +1,20 @@
+Echo10 ../../../xml/samples/slideSample01.xml
+LOCATOR
+ SYS ID: file:/java/pubs/dev/tutorial/examples/jaxp/sax/work/../../../xml/samples/slideSample01.xml
+
+START DOCUMENT
+<?xml version='1.0' encoding='UTF-8'?>** Warning, line 5, uri file:/java/pubs/dev/tutorial/examples/jaxp/sax/work/../../../xml/samples/slideSample01.xml
+   Valid documents must have a <!DOCTYPE declaration.
+
+** Parsing error, line 5, uri file:/java/pubs/dev/tutorial/examples/jaxp/sax/work/../../../xml/samples/slideSample01.xml
+   Element type "slideshow" is not declared.
+org.xml.sax.SAXParseException: Element type "slideshow" is not declared.
+	at org.apache.crimson.parser.Parser2.error(Parser2.java:3317)
+	at org.apache.crimson.parser.Parser2.maybeElement(Parser2.java:1469)
+	at org.apache.crimson.parser.Parser2.parseInternal(Parser2.java:634)
+	at org.apache.crimson.parser.Parser2.parse(Parser2.java:333)
+	at org.apache.crimson.parser.XMLReaderImpl.parse(XMLReaderImpl.java:448)
+	at javax.xml.parsers.SAXParser.parse(SAXParser.java:345)
+	at javax.xml.parsers.SAXParser.parse(SAXParser.java:281)
+	at Echo10.main(Echo10.java:64)
+

@@ -1,0 +1,35 @@
+
+<project name="zip" default="run" basedir=".">
+   <target name="init">
+	   <echo message="init"/>
+      <property name="java.dir" value="java"/>
+      <property name="build.dir" value="build"/>
+	  <property name="cpath" value="${build.dir}"/>
+   </target>
+
+   <target name="clean" depends="init">
+	   <echo message="clean"/>
+	   <delete>
+		   <fileset dir="${build.dir}" includes="**/*.class"/>
+	   </delete>
+   </target>
+
+   <target name="compile" depends="clean">
+	   <echo message="compile"/>
+     <javac destdir="${build.dir}" classpath="{cpath}">
+		<src path="${java.dir}"/>
+	</javac>
+   </target>
+
+   <target name="run" depends="init">
+	   <echo message="run app"/>
+	   <java classname="Zip" fork="yes">
+			<arg line="keep/FileExplorer.zip"/>
+			<classpath>
+				<pathelement location="${cpath}"/>
+			</classpath>
+		</java>
+   </target>
+</project>
+
+

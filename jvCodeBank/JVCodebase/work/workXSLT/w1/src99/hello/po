@@ -1,0 +1,3 @@
+xalan-it hello.xml hello.xsl jv.html
+xalan-it hello.xml hello-alt.xsl jv2.html
+xalan-it hello.xml hello-italics.xsl jv3.html

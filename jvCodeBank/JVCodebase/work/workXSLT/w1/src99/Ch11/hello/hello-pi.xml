@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<!-- Can optionally reference stylesheet explicitly, 
+     as below. However, command line overrides 
+     processing instruction XSL association.
+-->
+<?xml-stylesheet type="text/xsl" 
+                 href="hello-italics.xsl"?>
+<hi>Hello, XSLT!</hi>

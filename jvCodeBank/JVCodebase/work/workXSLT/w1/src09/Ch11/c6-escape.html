@@ -1,0 +1,32 @@
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>XSLT: Disable Output Escaping</title>
+</head>
+<body>
+<h1>XSLT: Disable Output Escaping</h1>
+<h3>View HTML Source for Differences</h3>
+<p>Book title: <i>Beatles Anthology, The</i>
+<br>  
+   default:  &nbsp; &nbsp; &nbsp; &nbsp;
+   Copyright &copy;2000<br>  
+   disable=no:&nbsp;
+   Copyright &copy;2000<br>  
+   disable=yes: 
+   Copyright ©2000</p>
+
+   Copyright as hex (xA9): &copy; and as decimal (169): &copy;<br> 
+   disable=no (numeric):
+    &alpha; &beta; &gamma; &copy; &circ;<br> 
+   disable=yes (numeric): 
+    α β γ © ˆ<br>
+   disable=no (internally defined symbols):
+    &alpha; &beta; &gamma; &copy; &circ;<br> 
+   disable=yes (internally defined symbols): 
+    α β γ © ˆ<br>
+   disable=no:
+   3 nbsp:[&nbsp;&nbsp;&nbsp;] &lt; &gt; &amp; " '<br> 
+   disable=yes: 
+   3 nbsp:[   ] < > & " '<br>
+</body>
+</html>

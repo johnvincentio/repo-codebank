@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CD xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:html="http://www.w3.org/TR/REC-html40">
+    <Title>Band on the Run</Title>
+    <Artist>McCartney, Paul and Wings</Artist>
+    <Chart>
+      <Peak weeks="4">1</Peak>
+      <Peak country="UK">1</Peak>
+      <!-- guess -->
+    </Chart>
+    <Type>Rock</Type>
+    <Label>Capitol</Label>
+    <Label country="UK">EMI</Label>
+    <AlbumReleased>1973</AlbumReleased>
+    <Remastered format="gold CD">1993</Remastered>
+    <Remastered format="2 disc box set with booklet">1999</Remastered>
+    <ListPrice>16.97</ListPrice>
+  </CD><Book xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:html="http://www.w3.org/TR/REC-html40">
+    <Title>Beatles Anthology, The</Title>
+    <Author>
+      <Name>
+        <First>Paul</First>
+        <Last>McCartney</Last>
+      </Name>
+    </Author>
+    <Author>
+      <Name>
+        <First>George</First>
+        <Last>Harrison</Last>
+      </Name>
+    </Author>
+    <Author>
+      <Name>
+        <First>Ringo</First>
+        <Last>Starr</Last>
+      </Name>
+    </Author>
+    <Author>
+      <Name>
+        <First>John</First>
+        <Last>Lennon</Last>
+      </Name>
+    </Author>
+    <Type>Autobiographical</Type>
+    <Published publisher="Chronicle Books">2000</Published>
+    <Rating>5 stars</Rating>
+    <Notes>368 pages of the Beatles in their own words and pictures! 
+    A must-have for true Beatles fans.</Notes>
+    <ListPrice>60.00</ListPrice>
+  </Book><CD xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:html="http://www.w3.org/TR/REC-html40">November 14, 2000</CD>

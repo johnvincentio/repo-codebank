@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!DOCTYPE project [
+  <!ENTITY jvXDocletCommands SYSTEM     "/opt/jvconfig/workbuild/jvXDoclet.xml">
+]>
+
+<project name="xdoclet" default="all" basedir=".">
+
+	&jvXDocletCommands;
+
+	<property name="generate.java.file" value="QueueBean.java"/>
+	<target name="all" depends="xdoclet-slsb"/>
+<!--
+	<property name="generate.java.file" value="AdviceBean.java"/>
+	<target name="all" depends="xdoclet-slsb"/>
+-->
+</project>
+

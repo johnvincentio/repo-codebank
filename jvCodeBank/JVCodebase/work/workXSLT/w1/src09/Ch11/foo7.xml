@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?><Collection version="2">
+  <CD>
+    <Title>Double Fantasy</Title>
+    <Artist>Lennon, John and Ono, Yoko</Artist>
+    <Chart>
+      <Peak weeks="8">1</Peak>
+      <Peak country="UK">1</Peak>
+    </Chart>
+    <Type>Rock</Type>
+    <Label>Capitol</Label>
+    <Label country="UK">EMI</Label>
+    <AlbumReleased>1980</AlbumReleased>
+    <Remastered format="3 bonus tracks and photos">October 10, 2000</Remastered>
+    <Notes>Released 2 days before Lennon was murdered. 
+1981 Grammy for Album of the Year.</Notes>
+    <ListPrice>17.97</ListPrice>
+  </CD>
+  <Book>
+    <Title>Beatles: After The Break-Up, The</Title>
+    <Author>
+      <Name>
+        <First>Keith</First>
+        <Last>Badman</Last>
+      </Name>
+    </Author>
+    <Type>Chronology</Type>
+    <Published publisher="Omnibus Press">1999</Published>
+    <Notes>631 pp. Covers the years 1970 through 1999 and a brief mention 
+of 2000. Day-by-day diary format. Extensive coverage of Lennon's murder on
+December 8, 1980.
+    </Notes>
+    <ListPrice>34.95</ListPrice>
+  </Book>
+  <Owner>
+    <Name sex="male">
+      <First>Ken</First>
+      <Last>Sall</Last>
+    </Name>
+    <Address>
+      <Street>123 Milky Way Dr.</Street>
+      <City>Columbia</City>
+      <State>MD</State>
+      <Zip>20794</Zip>
+    </Address>
+  </Owner>
+</Collection>

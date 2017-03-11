@@ -1,0 +1,46 @@
+
+<project name="project" default="run" basedir=".">
+	<target name="init">
+		<echo message="init"/>
+		<property name="java.dir" value="java"/>
+		<property name="java2.dir"
+			value="../../filecompare/src99/java"/>
+		<property name="build.dir" value="build"/>
+		<path id="javac.classpath">
+			<pathelement location="/opt/log4j/dist/lib/log4j-1.2.9.jar"/>
+			<pathelement path="${build.dir}"/>
+		</path>
+	</target>
+
+	<target name="clean" depends="init">
+		<echo message="clean"/>
+		<delete>
+			<fileset dir="${build.dir}" includes="**/*.class"/>
+		</delete>
+	</target>
+
+	<target name="compile" depends="clean">
+		<echo message="Compiling java..."/>
+		<javac srcdir="${java2.dir}" 
+				destdir="${build.dir}">
+			<include name="**/*.java" />
+			<classpath refid="javac.classpath"/>
+		</javac>
+		<javac srcdir="${java.dir}" 
+				destdir="${build.dir}">
+			<include name="**/*.java" />
+			<classpath refid="javac.classpath"/>
+		</javac>
+	</target>
+
+	<target name="run" depends="init">
+		<echo message="run app"/>
+		<copy file="/opt/jvconfig/workbuild/2/log4j/log4j.properties"
+				todir="${build.dir}"/>
+		<java classname="com/idc/diffall/DiffAll" fork="yes">
+			<arg line="/tmp/test/base/filecompare"/>
+			<classpath refid="javac.classpath"/>
+		</java>
+	</target>
+</project>
+

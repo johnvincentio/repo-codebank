@@ -1,0 +1,65 @@
+<html>
+<body><pre>
+Echo05 ../../../xml/samples/slideSampleBad1.xml
+LOCATOR
+ SYS ID: file:/java/pubs/dev/tutorial/examples/jaxp/sax/work/../../../xml/samples/slideSampleBad1.xml
+
+START DOCUMENT
+&lt;?xml version='1.0' encoding='UTF-8'?>
+    ELEMENT: &lt;slideshow
+       ATTR: title	"Sample Slide Show"
+       ATTR: date	"Date of publication"
+       ATTR: author	"Yours Truly"
+    >
+    CHARS:   
+        ELEMENT: &lt;slide
+           ATTR: type	"all"
+        >
+        CHARS:   
+            ELEMENT: &lt;title>
+            CHARS:   Wake up to WonderWidgets!
+            END_ELM: &lt;/title>
+        CHARS:   
+        END_ELM: &lt;/slide>
+    CHARS:   
+        ELEMENT: &lt;slide
+           ATTR: type	"all"
+        >
+        CHARS:   
+            ELEMENT: &lt;title>
+            CHARS:   Overview
+            END_ELM: &lt;/title>
+        CHARS:   
+            ELEMENT: &lt;item>
+            CHARS:   Why 
+                ELEMENT: &lt;em>
+                CHARS:   WonderWidgets
+                END_ELM: &lt;/em>
+            CHARS:    are great
+            END_ELM: &lt;/item>
+        CHARS:   
+            ELEMENT: &lt;item>
+            CHARS:   
+                ELEMENT: &lt;item>
+                CHARS:   Who 
+                    ELEMENT: &lt;em>
+                    CHARS:   buys
+                    END_ELM: &lt;/em>
+                CHARS:    WonderWidgets
+                END_ELM: &lt;/item>org.xml.sax.SAXParseException: Expected "&lt;/item>" to terminate element starting on line 20.
+	at org.apache.crimson.parser.Parser2.fatal(Parser2.java:3339)
+	at org.apache.crimson.parser.Parser2.fatal(Parser2.java:3333)
+	at org.apache.crimson.parser.Parser2.maybeElement(Parser2.java:1660)
+	at org.apache.crimson.parser.Parser2.content(Parser2.java:1926)
+	at org.apache.crimson.parser.Parser2.maybeElement(Parser2.java:1654)
+	at org.apache.crimson.parser.Parser2.content(Parser2.java:1926)
+	at org.apache.crimson.parser.Parser2.maybeElement(Parser2.java:1654)
+	at org.apache.crimson.parser.Parser2.parseInternal(Parser2.java:634)
+	at org.apache.crimson.parser.Parser2.parse(Parser2.java:333)
+	at org.apache.crimson.parser.XMLReaderImpl.parse(XMLReaderImpl.java:448)
+	at javax.xml.parsers.SAXParser.parse(SAXParser.java:345)
+	at javax.xml.parsers.SAXParser.parse(SAXParser.java:281)
+	at Echo05.main(Echo05.java:62)
+
+</pre></body>
+</html>

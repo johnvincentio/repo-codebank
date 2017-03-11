@@ -1,0 +1,4 @@
+set -x
+JVSERVER=/opt/SUNWappserver/domains/domain1/docroot/jv1
+cp wordgame.jar $JVSERVER
+cp wordgame.jnlp $JVSERVER

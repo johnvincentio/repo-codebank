@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--xtools2_universal_type_manager-->
+<notation:Diagram xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:notation="http://www.ibm.com/xtools/1.5.0/Notation" xmlns:uml="http://www.eclipse.org/uml2/1.0.0/UML" xmlns:umlnotation="http://www.ibm.com/xtools/1.5.0/Umlnotation" xmi:id="_9y4psCluEdqG5_TooNStQw" type="Class" name="default.dnx">
+  <children xmi:id="_-0Y-cCl4EdqG5_TooNStQw">
+    <children xmi:id="_-0jWgCl4EdqG5_TooNStQw" type="ImageCompartment">
+      <element xmi:type="uml:Component" href="vizref:///#messageDrivenBean^vcore.target=uml2.Component^URI=platform%3a%2fresource%2fSupplierEJB%2fejbModule%2fMETA-INF%2fejb-jar.xml%23SimpleMessage[project^vcore.target=uml2.Model^id=SupplierEJB]"/>
+      <layoutConstraint xmi:type="notation:Size" xmi:id="_-0jWgSl4EdqG5_TooNStQw" width="1320" height="1320"/>
+    </children>
+    <children xmi:id="_-0jWgil4EdqG5_TooNStQw" type="Stereotype">
+      <element xmi:type="uml:Component" href="vizref:///#messageDrivenBean^vcore.target=uml2.Component^URI=platform%3a%2fresource%2fSupplierEJB%2fejbModule%2fMETA-INF%2fejb-jar.xml%23SimpleMessage[project^vcore.target=uml2.Model^id=SupplierEJB]"/>
+    </children>
+    <children xmi:id="_-0j9kCl4EdqG5_TooNStQw" type="Kind">
+      <element xmi:type="uml:Component" href="vizref:///#messageDrivenBean^vcore.target=uml2.Component^URI=platform%3a%2fresource%2fSupplierEJB%2fejbModule%2fMETA-INF%2fejb-jar.xml%23SimpleMessage[project^vcore.target=uml2.Model^id=SupplierEJB]"/>
+    </children>
+    <children xmi:id="_-0j9kSl4EdqG5_TooNStQw" type="Name">
+      <element xmi:type="uml:Component" href="vizref:///#messageDrivenBean^vcore.target=uml2.Component^URI=platform%3a%2fresource%2fSupplierEJB%2fejbModule%2fMETA-INF%2fejb-jar.xml%23SimpleMessage[project^vcore.target=uml2.Model^id=SupplierEJB]"/>
+    </children>
+    <children xmi:id="_-0j9kil4EdqG5_TooNStQw" type="AttributeCompartment">
+      <styles xmi:type="umlnotation:UMLListCompartmentStyle" xmi:id="_-0j9kyl4EdqG5_TooNStQw"/>
+      <element xmi:type="uml:Component" href="vizref:///#messageDrivenBean^vcore.target=uml2.Component^URI=platform%3a%2fresource%2fSupplierEJB%2fejbModule%2fMETA-INF%2fejb-jar.xml%23SimpleMessage[project^vcore.target=uml2.Model^id=SupplierEJB]"/>
+    </children>
+    <children xmi:id="_-0kkoCl4EdqG5_TooNStQw" visible="false" type="OperationCompartment">
+      <styles xmi:type="umlnotation:UMLListCompartmentStyle" xmi:id="_-0kkoSl4EdqG5_TooNStQw"/>
+      <element xmi:type="uml:Component" href="vizref:///#messageDrivenBean^vcore.target=uml2.Component^URI=platform%3a%2fresource%2fSupplierEJB%2fejbModule%2fMETA-INF%2fejb-jar.xml%23SimpleMessage[project^vcore.target=uml2.Model^id=SupplierEJB]"/>
+    </children>
+    <children xmi:id="_-0kkoil4EdqG5_TooNStQw" visible="false" type="RealizationListCompartment">
+      <styles xmi:type="umlnotation:UMLListCompartmentStyle" xmi:id="_-0kkoyl4EdqG5_TooNStQw"/>
+      <element xmi:type="uml:Component" href="vizref:///#messageDrivenBean^vcore.target=uml2.Component^URI=platform%3a%2fresource%2fSupplierEJB%2fejbModule%2fMETA-INF%2fejb-jar.xml%23SimpleMessage[project^vcore.target=uml2.Model^id=SupplierEJB]"/>
+    </children>
+    <children xmi:id="_-0lLsCl4EdqG5_TooNStQw" visible="false" type="RequiredInterfaceListCompartment">
+      <styles xmi:type="umlnotation:UMLListCompartmentStyle" xmi:id="_-0lLsSl4EdqG5_TooNStQw" filtering="Automatic" filteringKeys="Other interface"/>
+      <element xmi:type="uml:Component" href="vizref:///#messageDrivenBean^vcore.target=uml2.Component^URI=platform%3a%2fresource%2fSupplierEJB%2fejbModule%2fMETA-INF%2fejb-jar.xml%23SimpleMessage[project^vcore.target=uml2.Model^id=SupplierEJB]"/>
+    </children>
+    <children xmi:id="_-0lLsil4EdqG5_TooNStQw" type="ProvidedInterfaceListCompartment">
+      <styles xmi:type="umlnotation:UMLListCompartmentStyle" xmi:id="_-0lLsyl4EdqG5_TooNStQw" filtering="Automatic" filteringKeys="Other interface"/>
+      <element xmi:type="uml:Component" href="vizref:///#messageDrivenBean^vcore.target=uml2.Component^URI=platform%3a%2fresource%2fSupplierEJB%2fejbModule%2fMETA-INF%2fejb-jar.xml%23SimpleMessage[project^vcore.target=uml2.Model^id=SupplierEJB]"/>
+    </children>
+    <children xmi:id="_-1FiACl4EdqG5_TooNStQw" visible="false" type="StructureCompartment">
+      <styles xmi:type="umlnotation:UMLShapeCompartmentStyle" xmi:id="_-1FiASl4EdqG5_TooNStQw"/>
+      <element xmi:type="uml:Component" href="vizref:///#messageDrivenBean^vcore.target=uml2.Component^URI=platform%3a%2fresource%2fSupplierEJB%2fejbModule%2fMETA-INF%2fejb-jar.xml%23SimpleMessage[project^vcore.target=uml2.Model^id=SupplierEJB]"/>
+    </children>
+    <styles xmi:type="umlnotation:UMLComponentStyle" xmi:id="_-0ZlgCl4EdqG5_TooNStQw" fontName="Sans" showStereotype="Label"/>
+    <element xmi:type="uml:Component" href="vizref:///#messageDrivenBean^vcore.target=uml2.Component^URI=platform%3a%2fresource%2fSupplierEJB%2fejbModule%2fMETA-INF%2fejb-jar.xml%23SimpleMessage[project^vcore.target=uml2.Model^id=SupplierEJB]"/>
+    <layoutConstraint xmi:type="notation:Bounds" xmi:id="_-0ZlgSl4EdqG5_TooNStQw" x="15807" y="9930"/>
+  </children>
+  <styles xmi:type="umlnotation:UMLDiagramStyle" xmi:id="_9y4psSluEdqG5_TooNStQw"/>
+</notation:Diagram>

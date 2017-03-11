@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Data>
+	<Title>Logon</Title>
+
+	<Header>Header</Header>
+
+	<Message>
+		<Header>Message_Header</Header>
+		<Text>Message_Text</Text>
+	</Message>
+</Data>

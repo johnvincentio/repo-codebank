@@ -1,0 +1,292 @@
+// Decompiled by Jad v1.5.8e. Copyright 2001 Pavel Kouznetsov.
+// Jad home page: http://www.geocities.com/kpdus/jad.html
+// Decompiler options: packimports(3) 
+
+import java.awt.BorderLayout;
+import java.awt.Container;
+import java.awt.event.*;
+import javax.swing.*;
+
+public class App extends JFrame
+    implements ActionListener
+{
+    private class WordFieldHandler
+        implements ActionListener
+    {
+
+        public void actionPerformed(ActionEvent actionevent)
+        {
+            Debug.println("command: " + actionevent.getActionCommand());
+            Debug.println("event type: " + actionevent.getID());
+            Debug.println("paramString: " + actionevent.paramString());
+            int i = actionevent.getModifiers();
+            Debug.println("Modifiers:");
+            Debug.println("\tALT : " + checkMod(i, 8));
+            Debug.println("\tCTRL : " + checkMod(i, 2));
+            Debug.println("\tMETA : " + checkMod(i, 4));
+            Debug.println("\tSHIFT : " + checkMod(i, 1));
+            Object obj = actionevent.getSource();
+            Debug.println("object :" + obj.getClass().getName());
+            if(obj instanceof JTextField)
+                Debug.println("type JTextField");
+        }
+
+        private boolean checkMod(int i, int j)
+        {
+            return (i & j) == j;
+        }
+
+        private WordFieldHandler()
+        {
+        }
+    }
+
+
+    public App(String s)
+    {
+        super(s);
+        m_bAppOver = false;
+        Debug.setFile("CONSOLE", false);
+        Debug.println("App()");
+        m_dict = new Dictionary(this);
+        m_appThread = new AppThread(this, m_dict);
+        m_appThread.start();
+        setContentPane(makeGameContentPane());
+        addWindowListener(new WindowAdapter() {
+
+            public void windowClosing(WindowEvent windowevent)
+            {
+                doStopClient();
+            }
+
+        });
+        if(!m_dict.setupDictionary())
+        {
+            JOptionPane.showMessageDialog(this, "No dictionary", "Word Search", 0);
+            doStopClient();
+        }
+        setStatusMessage("Enter your Word and press Search");
+        setSize(500, 900);
+        pack();
+        setVisible(true);
+    }
+
+    public AppThread getAppThread()
+    {
+        return m_appThread;
+    }
+
+    public boolean isAppOver()
+    {
+        return m_bAppOver;
+    }
+
+    public void addWord(String s)
+    {
+        setMessagesArea(s);
+    }
+
+    public static void main(String args[])
+    {
+        App app = new App("Word Game");
+    }
+
+    private void doStopClient()
+    {
+        m_bAppOver = true;
+        m_appThread.setStop();
+        try
+        {
+            for(; m_appThread.isAlive(); Debug.println("sleeping"))
+            {
+                Debug.println("thread is alive");
+                Thread.sleep(10L);
+            }
+
+            Debug.println("thread is not alive");
+        }
+        catch(InterruptedException interruptedexception)
+        {
+            Debug.println("no sleep");
+        }
+        Debug.println("exiting app...");
+        System.exit(0);
+    }
+
+    private Container makeGameContentPane()
+    {
+        JPanel jpanel = new JPanel();
+        jpanel.setLayout(new BorderLayout());
+        JPanel jpanel1 = new JPanel();
+        JLabel jlabel = new JLabel("Your Word");
+        m_nameField = new JTextField(20);
+        m_nameField.addActionListener(this);
+        m_btnApp = new JButton("Search");
+        m_btnApp.addActionListener(this);
+        jpanel1.add(jlabel);
+        jpanel1.add(m_nameField);
+        jpanel1.add(m_btnApp);
+        JPanel jpanel2 = new JPanel();
+        m_messagesArea = new JTextArea(20, 35);
+        m_messagesArea.setEditable(false);
+        jpanel2.add(new JScrollPane(m_messagesArea));
+        JPanel jpanel3 = new JPanel();
+        m_txtStatus = new JLabel();
+        jpanel3.add(m_txtStatus);
+        m_progress = new JProgressBar();
+        jpanel3.add(m_progress);
+        jpanel.add(jpanel1, "North");
+        jpanel.add(jpanel2, "Center");
+        jpanel.add(jpanel3, "South");
+        return jpanel;
+    }
+
+    public void setButtonText(boolean flag)
+    {
+        final String msg;
+        if(flag)
+            msg = "Search";
+        else
+            msg = "Stop";
+        SwingUtilities.invokeLater(new Runnable() {
+
+            public void run()
+            {
+                m_btnApp.setText(msg);
+            }
+
+        });
+    }
+
+    private void setMessagesArea(final String msg)
+    {
+        SwingUtilities.invokeLater(new Runnable() {
+
+            public void run()
+            {
+                m_messagesArea.append(msg);
+                m_messagesArea.append("\n");
+                m_messagesArea.setCaretPosition(m_messagesArea.getText().length());
+            }
+
+        });
+    }
+
+    public void setStatusMessage(final String msg)
+    {
+        SwingUtilities.invokeLater(new Runnable() {
+
+            public void run()
+            {
+                m_txtStatus.setText(msg);
+                validate();
+            }
+
+        });
+    }
+
+    public void initProgressBar(final int iMin, final int iMax)
+    {
+        SwingUtilities.invokeLater(new Runnable() {
+
+            public void run()
+            {
+                m_progress.setMinimum(iMin);
+                m_progress.setMaximum(iMax);
+                m_progress.setValue(iMin);
+                m_progress.setStringPainted(true);
+                m_progress.setIndeterminate(false);
+            }
+
+        });
+    }
+
+    public void setProgressBar(final int value)
+    {
+        SwingUtilities.invokeLater(new Runnable() {
+
+            public void run()
+            {
+                m_progress.setValue(value);
+            }
+
+        });
+    }
+
+    private void setNameField(final String msg)
+    {
+        SwingUtilities.invokeLater(new Runnable() {
+
+            public void run()
+            {
+                m_nameField.setText(msg);
+                validate();
+            }
+
+        });
+    }
+
+    private void searchSelected()
+    {
+        StringBuffer stringbuffer = new StringBuffer(m_nameField.getText());
+        StringBuffer stringbuffer1 = new StringBuffer();
+        for(int i = 0; i < stringbuffer.length(); i++)
+            if(stringbuffer.charAt(i) != ' ')
+                stringbuffer1.append(stringbuffer.charAt(i));
+
+        String s = stringbuffer1.toString().toLowerCase();
+        setNameField(s);
+        if(stringbuffer1.length() < 1)
+        {
+            setStatusMessage("Enter your Word and press Search");
+            setProgressBar(0);
+        } else
+        {
+            m_appThread.setStart(s);
+            setButtonText(false);
+        }
+    }
+
+    public void actionPerformed(ActionEvent actionevent)
+    {
+        Object obj = actionevent.getSource();
+        if(obj instanceof JTextField)
+            searchSelected();
+        else
+        if(obj instanceof JButton)
+        {
+            JButton jbutton = (JButton)actionevent.getSource();
+            String s = jbutton.getText();
+            if(s.equals("Search"))
+                searchSelected();
+            else
+            if(s.equals("Stop"))
+            {
+                m_appThread.setStop();
+                setButtonText(true);
+            }
+        }
+    }
+
+    public void setSize(int i, int j)
+    {
+        super.setSize(i, j);
+        validate();
+        repaint();
+    }
+
+    private JTextArea m_messagesArea;
+    private JTextField m_nameField;
+    private JButton m_btnApp;
+    private JLabel m_txtStatus;
+    private JProgressBar m_progress;
+    private AppThread m_appThread;
+    private Dictionary m_dict;
+    private boolean m_bAppOver;
+
+
+
+
+
+
+}

@@ -1,0 +1,34 @@
+
+<project name="app" default="run" basedir=".">
+   <target name="init">
+	   <echo message="init"/>
+      <property name="java.dir" value="java"/>
+      <property name="build.dir" value="build"/>
+	  <property name="java.classpath" value="${build.dir}"/>
+   </target>
+
+   <target name="clean" depends="init">
+	   <echo message="clean"/>
+	   <delete>
+		   <fileset dir="${build.dir}" includes="**/*.class"/>
+	   </delete>
+   </target>
+
+   <target name="compile" depends="clean">
+	   <echo message="compile"/>
+     <javac destdir="${build.dir}" classpath="{java.classpath}">
+		<src path="${java.dir}"/>
+	</javac>
+   </target>
+
+   <target name="run" depends="init">
+	   <echo message="run app"/>
+	   <java classname="com.idc.files.FilesSince" fork="yes">
+			<arg line="24/04/2005"/>
+			<classpath>
+				<pathelement location="${java.classpath}"/>
+			</classpath>
+		</java>
+   </target>
+</project>
+

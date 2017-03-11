@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projectDescription>
+	<name>NeroEAR</name>
+	<comment></comment>
+	<projects>
+		<project>Common1</project>
+		<project>Common5</project>
+		<project>NeroWAR</project>
+		<project>Common4</project>
+		<project>NeroEJBClient</project>
+		<project>Common3</project>
+		<project>NeroEJB</project>
+		<project>Common2</project>
+	</projects>
+	<buildSpec>
+		<buildCommand>
+			<name>com.ibm.etools.validation.validationbuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+		<buildCommand>
+			<name>com.ibm.sse.model.structuredbuilder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+	</buildSpec>
+	<natures>
+		<nature>com.ibm.wtp.j2ee.EARNature</nature>
+	</natures>
+</projectDescription>

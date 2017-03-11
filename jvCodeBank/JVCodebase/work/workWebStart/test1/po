@@ -1,0 +1,3 @@
+javac JNLPTest.java
+jar -cf JNLPTest.jar JNLPTest.class
+
