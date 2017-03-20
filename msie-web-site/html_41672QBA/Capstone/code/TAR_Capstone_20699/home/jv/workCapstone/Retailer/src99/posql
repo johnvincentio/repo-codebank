@@ -1,3 +1,0 @@
-ant addAllData > y.y 2>&1
-gvim y.y
-

@@ -1,3 +1,0 @@
-ant waronly > x.x 2>&1
-gvim x.x
-

@@ -1,3 +1,0 @@
-ant all > x.x 2>&1
-gvim x.x
-

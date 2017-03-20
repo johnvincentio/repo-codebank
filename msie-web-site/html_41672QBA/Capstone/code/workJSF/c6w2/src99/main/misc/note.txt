@@ -1,1 +1,0 @@
-used Oracle user jvtest2/jvtest2

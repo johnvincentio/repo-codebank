@@ -1,4 +1,0 @@
-set -x
-CMPFILE=$1
-BASEFILE=/home/jv/workCapstone/Supplier/src99/mdb1/$CMPFILE
-diff $CMPFILE $BASEFILE
