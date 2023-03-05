@@ -1,0 +1,55 @@
+package io.johnvincent.gomoku.library.rates;
+
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+
+@JsonPropertyOrder({ "key", "before", "actual", "after" })
+public class ActualRatesItem extends FlagsItem {
+	
+	private String key;
+	private int before;
+	private int actual;
+	private int after;
+
+//	public ActualRatesItem (String key, int before, int actual, int after, int rate, 
+//	PlayerFlagsItem currentPlayerFlagsItem, PlayerFlagsItem otherPlayerFlagsItem) {
+//super(key, rate, currentPlayerFlagsItem, otherPlayerFlagsItem);
+//
+//assert before >= 0;
+//assert actual >= 0;
+//assert after >= 0;
+//
+//this.key = key;
+//this.before = before;
+//this.actual = actual;
+//this.after = after;
+//}
+	
+	public ActualRatesItem (String key, int before, int actual, int after, int rate, 
+			PlayerFlagsItem currentPlayerFlagsItem, PlayerFlagsItem otherPlayerFlagsItem) {
+		super(key, rate, currentPlayerFlagsItem, otherPlayerFlagsItem);
+		
+		assert before >= 0;
+		assert actual >= 0;
+		assert after >= 0;
+
+		this.key = key;
+		this.before = before;
+		this.actual = actual;
+		this.after = after;
+	}
+
+//	public ActualRatesItem (String key, int before, int actual, int after, int rate) {
+//		this(key, before, actual, after, rate, RateHelper.NONE, RateHelper.NONE, RateHelper.NONE, true);
+//	}
+	
+	// PlayerFlagsItem currentPlayerFlagsItem, PlayerFlagsItem otherPlayerFlagsItem
+	
+	public String getKey() {return key;}
+	public int getBefore() {return before;}
+	public int getActual() {return actual;}
+	public int getAfter() {return after;}
+	
+	public String toString() {
+		return "("+getKey()+","+getBefore()+","+getActual()+","+getAfter()+","+super.toString();
+	}
+}

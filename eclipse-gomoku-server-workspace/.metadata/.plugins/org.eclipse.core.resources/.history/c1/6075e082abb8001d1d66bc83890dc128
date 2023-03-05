@@ -1,0 +1,344 @@
+package io.johnvincent.gomoku.library.junit.lethalForcing;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
+import org.junit.Test;
+
+import io.johnvincent.gomoku.library.counter.CounterActual;
+import io.johnvincent.gomoku.library.counter.CounterGroups;
+import io.johnvincent.gomoku.library.counter.CounterHelper;
+import io.johnvincent.gomoku.library.counter.CounterPatternsItem;
+import io.johnvincent.gomoku.library.counter.CounterInfo;
+import io.johnvincent.gomoku.library.game.Board;
+import io.johnvincent.gomoku.library.game.Moves;
+import io.johnvincent.gomoku.library.junit.utils.Inner;
+//import io.johnvincent.gomoku.library.output.Output;
+//import io.johnvincent.gomoku.library.output.OutputTTY;
+import io.johnvincent.gomoku.library.players.Players;
+import io.johnvincent.gomoku.library.rates.ActualRatesItem;
+import io.johnvincent.gomoku.library.rates.RateHelper;
+import io.johnvincent.gomoku.library.rates.SummaryRatesItem;
+import io.johnvincent.gomoku.library.scoring.SquareForcingScoresItem;
+import io.johnvincent.gomoku.library.scoring.SquareForcingScoresList;
+import io.johnvincent.gomoku.library.scoring.SquareLethalScoresItem;
+import io.johnvincent.gomoku.library.scoring.SquareLethalScoresList;
+
+public class LethalForcing0Test extends Inner {
+
+	private CounterInfo m_counterInfo;
+
+	private void initializeData(int playerA, int playerB) {
+		m_players = new Players();
+		m_board = new Board(m_players, 15, 15);
+		m_moves = new Moves (m_players, m_board);
+
+		m_board.setPlayer(playerA, 3, 5);
+		m_board.setPlayer(playerA, 3, 6);
+		m_board.setPlayer(playerA, 3, 7);
+		m_board.setPlayer(playerA, 3, 9);
+		
+		
+		m_board.setPlayer(playerB, 3, 2);
+		m_board.setPlayer(playerB, 3, 13);
+		
+		m_counterInfo = CounterHelper.calculateAllCounters(m_board, m_moves);
+	}
+
+	private void runTest1(int player) {
+//		Output output = new OutputTTY();
+//		m_board.showBoard(false, "LethalForcing0Test::test1", output);
+		
+		CounterPatternsItem counterPatternsItem = m_counterInfo.getCounterPatternsItem(player, 3, 8, 1);
+		assertNotNull(counterPatternsItem);
+		assertNotNull(counterPatternsItem.getLine());
+		
+//		System.out.println("counterPatternsItem "+counterPatternsItem.toString());
+
+		/*
+		 * Check CounterActual and ActualRatesItem
+		 */
+		CounterActual counterActual = counterPatternsItem.getCounterActual();
+		assertNotNull(counterActual);
+		
+		assertEquals(counterActual.getActual(), 5);
+		assertEquals(counterActual.getBeforeActual(), 2);
+		assertEquals(counterActual.getAfterActual(), 3);
+		assertEquals(counterActual.getScore(), RateHelper.getActualRate(0, 5, 0));
+		
+		ActualRatesItem actualRatesItem = counterActual.getActualRatesItem();
+		assertNotNull(actualRatesItem);
+		
+		assertEquals(actualRatesItem.getCurrentPlayer().getForcingMove(), -1);
+		assertEquals(actualRatesItem.getCurrentPlayer().getLethal(), 1);
+
+		/*
+		 * Check SummaryRatesItem on Players.PLAYER1(3,8)
+		 */
+		SummaryRatesItem summaryRatesItem = m_counterInfo.getSummaryRatesItem(player, 3, 8);
+		assertNotNull(summaryRatesItem);
+		
+//		System.out.println("summaryRatesItem "+summaryRatesItem.toString());
+		assertEquals(summaryRatesItem.isLethal(), true);
+		assertEquals(summaryRatesItem.isForcingMove(), false);
+		assertEquals(summaryRatesItem.getLethal1(), 1);
+		assertEquals(summaryRatesItem.getLethal2(), 0);
+		assertEquals(summaryRatesItem.getLethal3(), 0);
+	}
+	
+	@Test
+	public void test1() {
+		initializeData(Players.PLAYER1, Players.PLAYER2);
+		runTest1(Players.PLAYER1);
+		
+		initializeData(Players.PLAYER2, Players.PLAYER1);
+		runTest1(Players.PLAYER2);
+	}
+
+	private void runTest2(int player) {
+//		Output output = new OutputTTY();
+//		m_board.showBoard(false, "Lethal0Test::test2", output);
+		
+		CounterPatternsItem counterPatternsItem = m_counterInfo.getCounterPatternsItem(player, 3, 4, 1);
+		assertNotNull(counterPatternsItem);
+		assertNotNull(counterPatternsItem.getLine());
+		
+//		System.out.println("counterPatternsItem "+counterPatternsItem.toString());
+
+		CounterActual counterActual = counterPatternsItem.getCounterActual();
+		assertNotNull(counterActual);
+		
+		assertEquals(counterActual.getActual(), 4);
+		assertEquals(counterActual.getBeforeActual(), 1);
+		assertEquals(counterActual.getAfterActual(), 4);
+		assertEquals(counterActual.getScore(), RateHelper.getActualRate(1, 4, 4));
+		
+		ActualRatesItem actualRatesItem = counterActual.getActualRatesItem();
+		assertNotNull(actualRatesItem);
+		
+//		System.out.println("actualRatesItem "+actualRatesItem);
+		
+		assertEquals(actualRatesItem.getCurrentPlayer().getForcingMove(), -1);
+		assertEquals(actualRatesItem.getCurrentPlayer().getLethal(), 2);
+
+		SummaryRatesItem summaryRatesItem = m_counterInfo.getSummaryRatesItem(player, 3, 4);
+		assertNotNull(summaryRatesItem);
+		
+//		System.out.println("summaryRatesItem "+summaryRatesItem.toString());
+		assertEquals(summaryRatesItem.isLethal(), true);
+		assertEquals(summaryRatesItem.isForcingMove(), true);
+		assertEquals(summaryRatesItem.getLethal1(), 0);
+		assertEquals(summaryRatesItem.getLethal2(), 1);
+		assertEquals(summaryRatesItem.getLethal3(), 0);
+		
+		assertEquals(summaryRatesItem.getForcingMove1(), 1);
+		assertEquals(summaryRatesItem.getForcingMove2(), 0);
+		
+		assertEquals(summaryRatesItem.getPossibleWin2(), 1);
+		assertEquals(summaryRatesItem.getPossibleWin3(), 0);
+	}
+	
+	@Test
+	public void test2() {
+		initializeData(Players.PLAYER1, Players.PLAYER2);
+		runTest2(Players.PLAYER1);
+		
+		initializeData(Players.PLAYER2, Players.PLAYER1);
+		runTest2(Players.PLAYER2);
+	}
+
+	private void runTest3(int player) {
+//		Output output = new OutputTTY();
+//		m_board.showBoard(false, "Lethal0Test::test1", output);
+		
+		CounterPatternsItem counterPatternsItem = m_counterInfo.getCounterPatternsItem(player, 3, 3, 1);
+		assertNotNull(counterPatternsItem);
+		assertNotNull(counterPatternsItem.getLine());
+		
+//		System.out.println("counterPatternsItem "+counterPatternsItem.toString());
+
+		CounterGroups counterGroups = counterPatternsItem.getCounterGroups();
+		assertNotNull(counterGroups);
+
+		SummaryRatesItem summaryRatesItem = counterGroups.getGroupsSummaryRatesItem();
+		assertNotNull(summaryRatesItem);
+		
+//		System.out.println("summaryRatesItem "+summaryRatesItem.toString());
+
+		assertEquals(summaryRatesItem.isLethal(), false);
+		assertEquals(summaryRatesItem.isForcingMove(), true);
+		assertEquals(summaryRatesItem.getForcingMove1() , 1);
+		assertEquals(summaryRatesItem.getForcingMove2() , 0);
+
+		summaryRatesItem = m_counterInfo.getSummaryRatesItem(player, 3, 3);
+		assertNotNull(summaryRatesItem);
+		
+//		System.out.println("summaryRatesItem "+summaryRatesItem.toString());
+		assertEquals(summaryRatesItem.isLethal(), false);
+		assertEquals(summaryRatesItem.isForcingMove(), true);
+		assertEquals(summaryRatesItem.getForcingMove1() , 1);
+		assertEquals(summaryRatesItem.getForcingMove2() , 0);
+	}
+	
+	@Test
+	public void test3() {
+		initializeData(Players.PLAYER1, Players.PLAYER2);
+		runTest3(Players.PLAYER1);
+		
+		initializeData(Players.PLAYER2, Players.PLAYER1);
+		runTest3(Players.PLAYER2);
+	}
+
+	private void runTest4(int player) {
+		SquareLethalScoresList lethalMovesList = m_counterInfo.getScoringLists(player).getSquareLethalScoresList();
+		assertNotNull(lethalMovesList);
+		assertEquals(lethalMovesList.getSize(), 2);
+//		System.out.println("lethalMovesList "+lethalMovesList.toString());
+
+		SquareLethalScoresItem squareLethalScoresItem = lethalMovesList.getItem(0);		// check first move
+		assertNotNull(squareLethalScoresItem);
+//		System.out.println("squareLethalScoresItem "+squareLethalScoresItem.toString());
+
+		assertEquals(squareLethalScoresItem.getPlayer(), player);
+		assertEquals(squareLethalScoresItem.getRow(), 3);
+		assertEquals(squareLethalScoresItem.getColumn(), 8);
+		
+		SummaryRatesItem item1 = squareLethalScoresItem.getSummaryRatesItem();
+		assertNotNull(item1);
+		
+		assertEquals(item1.isUseful(), true);
+		assertEquals(item1.isLethal(), true);
+		assertEquals(item1.isForcingMove(), false);
+		
+		assertEquals(item1.getLethal1(), 1);
+		assertEquals(item1.getLethal2(), 0);
+		assertEquals(item1.getLethal3(), 0);
+		
+		squareLethalScoresItem = lethalMovesList.getItem(1);			// check second move
+		assertNotNull(squareLethalScoresItem);
+//		System.out.println("squareLethalScoresItem "+squareLethalScoresItem.toString());
+
+		assertEquals(squareLethalScoresItem.getPlayer(), player);
+		assertEquals(squareLethalScoresItem.getRow(), 3);
+		assertEquals(squareLethalScoresItem.getColumn(), 4);
+		
+		item1 = squareLethalScoresItem.getSummaryRatesItem();
+//		System.out.println("summaryRatesItem "+item1.toString());
+		assertNotNull(item1);
+		
+		assertEquals(item1.isUseful(), true);
+		assertEquals(item1.isLethal(), true);
+		assertEquals(item1.isForcingMove(), true);
+		
+		assertEquals(item1.getLethal1(), 0);
+		assertEquals(item1.getLethal2(), 1);
+		assertEquals(item1.getLethal3(), 0);
+		
+		assertEquals(item1.getForcingMove1(), 1);
+		assertEquals(item1.getForcingMove2(), 0);
+		
+		assertEquals(item1.getPossibleWin2(), 1);
+		assertEquals(item1.getPossibleWin3(), 0);
+	}
+	
+	/*
+	 * Check Lethal Moves List on Players.PLAYER1
+	 */
+	@Test
+	public void test4() {
+		initializeData(Players.PLAYER1, Players.PLAYER2);
+		runTest4(Players.PLAYER1);
+		
+		initializeData(Players.PLAYER2, Players.PLAYER1);
+		runTest4(Players.PLAYER2);
+	}
+
+	private void runTest5(int player) {
+		
+		SummaryRatesItem item1;
+		SquareForcingScoresItem squareForcingScoresItem;
+		
+		SquareForcingScoresList forcingMovesList = m_counterInfo.getScoringLists(player).getSquareForcingScoresList();
+		assertNotNull(forcingMovesList);
+		assertEquals(forcingMovesList.getSize(), 3);
+//		System.out.println("forcingMovesList "+forcingMovesList.toString());
+
+		squareForcingScoresItem = forcingMovesList.getItem(0);		// check first move
+		assertNotNull(squareForcingScoresItem);
+//		System.out.println("squareForcingScoresItem "+squareForcingScoresItem.toString());
+		
+		assertEquals(squareForcingScoresItem.getPlayer(), player);
+		assertEquals(squareForcingScoresItem.getRow(), 3);
+		assertEquals(squareForcingScoresItem.getColumn(), 4);
+		
+		item1 = squareForcingScoresItem.getSummaryRatesItem();
+//		System.out.println("summaryRatesItem "+item1.toString());
+		assertNotNull(item1);
+		
+		assertEquals(item1.isUseful(), true);
+		assertEquals(item1.isLethal(), true);
+		assertEquals(item1.isForcingMove(), true);
+		
+		assertEquals(item1.getForcingMove1() , 1);
+		assertEquals(item1.getForcingMove2() , 0);
+		
+		assertEquals(item1.getPossibleWin2(), 1);
+		assertEquals(item1.getPossibleWin3(), 0);
+		
+		squareForcingScoresItem = forcingMovesList.getItem(1);		// check next move
+		assertNotNull(squareForcingScoresItem);
+//		System.out.println("squareForcingScoresItem "+squareForcingScoresItem.toString());
+		
+		assertEquals(squareForcingScoresItem.getPlayer(), player);
+		assertEquals(squareForcingScoresItem.getRow(), 3);
+		assertEquals(squareForcingScoresItem.getColumn(), 10);
+		
+		item1 = squareForcingScoresItem.getSummaryRatesItem();
+//		System.out.println("summaryRatesItem "+item1.toString());
+		assertNotNull(item1);
+		
+		assertEquals(item1.isUseful(), true);
+		assertEquals(item1.isLethal(), false);
+		assertEquals(item1.isForcingMove(), true);
+		
+		assertEquals(item1.getForcingMove1() , 1);
+		assertEquals(item1.getForcingMove2() , 0);
+		
+		assertEquals(item1.getPossibleWin2(), 1);
+		assertEquals(item1.getPossibleWin3(), 0);
+		
+		squareForcingScoresItem = forcingMovesList.getItem(2);		// check last move
+		assertNotNull(squareForcingScoresItem);
+//		System.out.println("squareForcingScoresItem "+squareForcingScoresItem.toString());
+		
+		assertEquals(squareForcingScoresItem.getPlayer(), player);
+		assertEquals(squareForcingScoresItem.getRow(), 3);
+		assertEquals(squareForcingScoresItem.getColumn(), 3);
+		
+		item1 = squareForcingScoresItem.getSummaryRatesItem();
+//		System.out.println("summaryRatesItem "+item1.toString());
+		assertNotNull(item1);
+		
+		assertEquals(item1.isUseful(), true);
+		assertEquals(item1.isLethal(), false);
+		assertEquals(item1.isForcingMove(), true);
+		
+		assertEquals(item1.getForcingMove1() , 1);
+		assertEquals(item1.getForcingMove2() , 0);
+		
+		assertEquals(item1.getPossibleWin2(), 1);
+		assertEquals(item1.getPossibleWin3(), 0);
+	}
+	
+	/*
+	 * Check Forcing Moves List on Players.PLAYER1
+	 */
+	@Test
+	public void test5() {
+		initializeData(Players.PLAYER1, Players.PLAYER2);
+		runTest5(Players.PLAYER1);
+		
+		initializeData(Players.PLAYER2, Players.PLAYER1);
+		runTest5(Players.PLAYER2);
+	}
+}

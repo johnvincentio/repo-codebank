@@ -1,0 +1,169 @@
+package io.johnvincent.gomoku.library.bestmove;
+
+import io.johnvincent.gomoku.library.counter.CounterInfo;
+import io.johnvincent.gomoku.library.game.Board;
+import io.johnvincent.gomoku.library.game.Coordinate;
+import io.johnvincent.gomoku.library.players.Players;
+
+public class BestMoveHelper {
+
+	private static Coordinate calculateMoveForEmptyBoard(final Board board) {
+		if (board.isBoardEmpty()) {
+			return new Coordinate(board.getRows() / 2, board.getColumns() / 2);
+		}
+		return null;
+	}
+
+	public static BestMoveItem calculateHighestRatedMove(final CounterInfo counterInfo, final Board board, final int currentPlayer) {
+		assert Players.isValidPlayer(currentPlayer);
+		
+		Coordinate coordEmptyBoard = calculateMoveForEmptyBoard(board);
+		if (coordEmptyBoard != null) {				// 1
+			return new BestMoveItem(1000, "Empty Board", coordEmptyBoard, currentPlayer);
+		}
+
+		int otherPlayer = Players.whoIsOtherPlayer(currentPlayer);
+
+//		ScoringListsItem currentPlayerScoringLists = counterInfo.getScoringLists(currentPlayer);
+//		ScoringListsItem otherPlayerScoringLists = counterInfo.getScoringLists(otherPlayer);
+//		currentPlayerScoringLists.show("currentPlayer ScoringListsItem");
+//		otherPlayerScoringLists.show("otherPlayer ScoringListsItem");
+		
+		BestMoveOptions currentPlayerOptions = counterInfo.getBestMoveOptions(currentPlayer);
+		BestMoveOptions otherPlayerOptions = counterInfo.getBestMoveOptions(otherPlayer);
+
+//		currentPlayerOptions.show("currentPlayer BestMoveOptions");
+//		otherPlayerOptions.show("otherPlayer BestMoveOptions");
+		
+		Coordinate coord = currentPlayerOptions.getLethal1();
+		if (coord != null) {						// 2
+			return new BestMoveItem(2000, "Current Player has a Lethal1", coord, currentPlayer);
+		}
+
+		coord = otherPlayerOptions.getLethal1();
+		if (coord != null) {						// 3
+			return new BestMoveItem(3000, "Current Player blocks Other Player's Lethal1", coord, currentPlayer);
+		}
+		
+		coord = currentPlayerOptions.getLethal2();
+		if (coord != null) {						// 4
+			return new BestMoveItem(4000, "Current Player has a Lethal2", coord, currentPlayer);
+		}
+		
+		coord = otherPlayerOptions.getLethal2();
+		if (coord != null) {						// 5
+			Coordinate coord1 = currentPlayerOptions.getPossibleWin2();
+			if (coord1 != null) {						// 5.1
+				return new BestMoveItem(5100, "Current Player has a PossibleWin2, overriding Other Player's Lethal2", coord1, currentPlayer);
+			}
+			return new BestMoveItem(5200, "Current Player blocks Other Player's Lethal2", coord, currentPlayer);		// 5.2
+		}	
+		
+		coord = otherPlayerOptions.getLethal3();	
+		if (coord != null) {						// 6
+			Coordinate coord1 = currentPlayerOptions.getPossibleWin2();
+			if (coord1 != null) {						// 6.1
+				return new BestMoveItem(6100, "Current Player has a PossibleWin2, overriding Other Player's Lethal3", coord1, currentPlayer);
+			}
+
+			coord1 = currentPlayerOptions.getLethal3();
+			if (coord1 != null) {						// 6.2
+				return new BestMoveItem(6200, "Current Player has a Lethal3, overriding Other Player's Lethal3", coord1, currentPlayer);
+			}
+			
+			coord1 = currentPlayerOptions.getPossibleWin3();
+			if (coord1 != null) {						// 6.3
+				return new BestMoveItem(6300, "Current Player has a PossibleWin3, overriding Other Player's Lethal3", coord1, currentPlayer);
+			}
+			
+			coord1 = currentPlayerOptions.getForcingMove();
+			if (coord1 != null) {						// 6.4
+				return new BestMoveItem(6400, "Current Player has a ForcingMove, overriding Other Player's Lethal3", coord1, currentPlayer);
+			}
+			
+			coord1 = currentPlayerOptions.getBuildingMove();
+			if (coord1 != null) {						// 6.5
+				return new BestMoveItem(6500, "Current Player has a BuildingMove, overriding Other Player's Lethal3", coord1, currentPlayer);
+			}
+
+			// 6.6
+			return new BestMoveItem(6600, "Current Player plays Other Player's Lethal3, blocking Other Player's Lethal3", coord, currentPlayer);
+		}
+		
+		coord = otherPlayerOptions.getPossibleWin2();
+		if (coord != null) {						// 7
+			Coordinate coord1 = currentPlayerOptions.getPossibleWin2();
+			if (coord1 != null) {						// 7.1
+				return new BestMoveItem(7100, "Current Player has a PossibleWin2, overriding Other Player's PossibleWin2", coord1, currentPlayer);
+			}
+			
+			coord = currentPlayerOptions.getLethal3();
+			if (coord != null) {						// 7.2
+				return new BestMoveItem(7200, "Current Player has a Lethal3, overriding Other Player's PossibleWin2", coord, currentPlayer);
+			}
+
+			// 7.3
+			return new BestMoveItem(7300, "Current Player plays Other Player's PossibleWin2, blocking Other Player's PossibleWin2", coord, currentPlayer);
+		}	
+
+		coord = currentPlayerOptions.getLethal3();
+		if (coord != null) {						// 8
+			return new BestMoveItem(8000, "Current Player has a Lethal3", coord, currentPlayer);
+		}
+
+		coord = currentPlayerOptions.getPossibleWin2();
+		if (coord != null) {						// 9
+			return new BestMoveItem(9000, "Current Player has a PossibleWin2", coord, currentPlayer);
+		}
+		
+		coord = otherPlayerOptions.getPossibleWin3();	
+		if (coord != null) {						// 10
+			Coordinate coord1 = currentPlayerOptions.getPossibleWin3();
+			if (coord1 != null) {						// 10.1
+				return new BestMoveItem(10100, "Current Player has a PossibleWin3, overriding Other Player's PossibleWin3", coord1, currentPlayer);
+			}
+
+			coord1 = currentPlayerOptions.getForcingMove();
+			if (coord1 != null) {						// 10.2
+				return new BestMoveItem(10200, "Current Player has a ForcingMove, overriding Other Player's PossibleWin3", coord1, currentPlayer);
+			}
+			
+			coord1 = currentPlayerOptions.getBuildingMove();
+			if (coord1 != null) {						// 10.3
+				return new BestMoveItem(6300, "Current Player has a BuildingMove, overriding Other Player's PossibleWin3", coord1, currentPlayer);
+			}
+			
+			// 10.4
+			return new BestMoveItem(10400, "Current Player plays Other Player's PossibleWin3, blocking Other Player's PossibleWin3", coord, currentPlayer);
+		}	
+		
+		coord = currentPlayerOptions.getPossibleWin3();
+		if (coord != null) {						// 11
+			return new BestMoveItem(9000, "Current Player has a PossibleWin3", coord, currentPlayer);
+		}		
+		
+		coord = otherPlayerOptions.getForcingMove();
+		if (coord != null) {						// 12
+			Coordinate coord1 = currentPlayerOptions.getForcingMove();
+			if (coord1 != null) {						// 12.1
+				return new BestMoveItem(12100, "Current Player has a ForcingMove, overriding Other Player's ForcingMove", coord1, currentPlayer);
+			}
+			// 												12.2
+			return new BestMoveItem(12200, "Current Player plays Other Player's ForcingMove, blocking Other Player's ForcingMove", coord, currentPlayer);
+		}	
+
+		coord = currentPlayerOptions.getForcingMove();
+		if (coord != null) {						// 13
+			return new BestMoveItem(13000, "Current Player has a ForcingMove", coord, currentPlayer);
+		}	
+		
+		coord = currentPlayerOptions.getBuildingMove();
+		if (coord != null) {						// 14
+			return new BestMoveItem(14000, "Current Player has a BuildingMove", coord, currentPlayer);
+		}		
+
+		coord = otherPlayerOptions.getBuildingMove();
+
+		return new BestMoveItem(15000, "Current Player plays Other Player's BuildingMove", coord, currentPlayer);
+	}
+}	

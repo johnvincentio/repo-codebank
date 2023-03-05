@@ -1,0 +1,125 @@
+package io.johnvincent.gomoku.library.counter;
+
+import java.util.Iterator;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+
+import io.johnvincent.gomoku.library.specialcases.FindGroup;
+import io.johnvincent.gomoku.library.specialcases.FindGroupList;
+import io.johnvincent.gomoku.library.winner.WinnerList;
+
+@JsonPropertyOrder({ "player", "row", "column", "pattern", "useful", "line", "actual", "groups", "winnerList" })
+@JsonIgnoreProperties(value = { "counterActual", "counterGroups" })
+
+public class CounterPatternsItem {
+	
+	private int player;
+	private int row;
+	private int column;
+	private int pattern;
+	
+	private int[] line;
+	
+	@JsonProperty("actuals")
+	private CounterActual m_counterActual;
+	
+	@JsonProperty("groups")
+	private CounterGroups m_counterGroups = null;
+	
+	@JsonProperty("winnerList")
+	private WinnerList m_winnerList = null;
+	
+	public CounterPatternsItem (int player, int row, int column, int pattern, int[] line, int[] actuals) {
+		this.player = player;
+		this.row = row;
+		this.column = column;
+		this.pattern = pattern;
+		
+		this.line = line;
+		
+		this.m_counterActual = new CounterActual(actuals);
+	}
+	
+	public void setCounterGroups(final CounterGroups counterGroups) {
+		if (counterGroups != null) this.m_counterGroups = counterGroups;
+	}
+	
+	public int getPlayer() {return player;}
+	public int getRow() {return row;}
+	public int getColumn() {return column;}
+	public int getPattern() {return pattern;}
+	
+	public int[] getLine() {return line;}
+	
+	public CounterActual JVgetCounterActual() { return m_counterActual;}
+	public CounterGroups getCounterGroups() { return m_counterGroups;}
+
+	public int getGroupCounts() {
+		if (m_counterGroups == null) return 0;
+		return m_counterGroups.getSize();
+	}
+	
+	public boolean isGroupExist(final String key) {
+		assert key != null;
+		
+		if (m_counterGroups == null) return false;
+		return m_counterGroups.isExist(key);
+	}
+	
+	public boolean isUseful() {
+		return m_counterActual.getActual() > 1 || getGroupCounts() > 0;
+	}
+
+	public int getGroupCount(final String key) {
+		assert key != null;
+		
+		if (m_counterGroups == null) return 0;
+		return m_counterGroups.getCount(key);
+	}
+
+	public int getPatternScore() {
+		int groupsScore = 0;
+		if (m_counterGroups != null) {
+			groupsScore = m_counterGroups.getGroupsScore();
+		}
+		return m_counterActual.getScore() + groupsScore;
+	}
+
+	public int getGroupCount(final FindGroupList listGroup) {
+		int total = 0;
+		for (Iterator<FindGroup> iter = listGroup.getItems(); iter.hasNext(); ) {
+			total += getGroupCount(iter.next());
+		}
+		return total;
+	}
+
+	private int getGroupCount(final FindGroup findGroup) {
+		return getGroupCount(findGroup.getName());
+	}
+
+	public WinnerList getWinnerList() {return m_winnerList;}
+	public void setWinnerList(final WinnerList winnerList) {
+		if (winnerList != null) this.m_winnerList = winnerList;
+	}
+
+	public String getStringLine() {
+		boolean first = true;
+		StringBuffer buf = new StringBuffer();
+		buf.append("[");
+		for (int elem : getLine()) {
+			if (! first) buf.append(",");
+			buf.append(elem);
+			first = false;
+		}
+		buf.append("]");
+		return buf.toString();
+	}
+	
+	public String toString() {
+		String strGroups = (m_counterGroups == null ? "" : ","+m_counterGroups.toString());
+		return "("+getPlayer()+","+getRow()+","+getColumn()+","+getPattern()+","+
+				getStringLine()+","+m_counterActual.toString()+strGroups+")";
+	}
+}

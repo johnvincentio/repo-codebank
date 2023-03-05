@@ -1,0 +1,366 @@
+package io.johnvincent.gomoku.library.scoring;
+
+import java.util.Iterator;
+
+import io.johnvincent.gomoku.library.game.Board;
+import io.johnvincent.gomoku.library.game.Coordinate;
+import io.johnvincent.gomoku.library.output.Output;
+//import io.johnvincent.gomoku.library.output.OutputTTY;
+import io.johnvincent.gomoku.library.players.Players;
+import io.johnvincent.gomoku.library.scoring.counting.Counting;
+import io.johnvincent.gomoku.library.scoring.counting.CountsInfo;
+import io.johnvincent.gomoku.library.scoring.counting.CountsItemInfo;
+import io.johnvincent.gomoku.library.scoring.pattern.PatternUtils;
+import io.johnvincent.gomoku.library.utils.Utilities;
+
+/*
+Class Scoring exists only to calculate the best possible next move.
+
+To do this, it calculates and keeps:
+ 	* Scores m_scores
+This object is delivered as Json via the microservice.
+
+
+ */
+public class Scoring {
+
+	private Players m_players;
+	private Board m_board;
+	private Counting m_counting;
+	private Scores m_scores;
+	private int m_currentPlayer;
+
+	public Scoring (Counting counting, Players players, Board board, final int currentPlayer) {
+		m_counting = counting;
+		m_players = players;
+		m_board = board;
+		m_currentPlayer = currentPlayer;
+		m_scores = calculateScores();
+	}
+
+/*
+Scores scores = new Scores (m_board);
+for each row
+	for each col
+		for each player
+			compute possible score.
+			add to scores.
+		endfor
+	endfor
+endfor
+return scores;
+*/
+	private Scores calculateScores() {
+		Scores scores = new Scores (m_board);
+		for (int row = 0; row < m_board.getRows(); row++) {
+			for (int col = 0; col < m_board.getColumns(); col++) {
+				if (m_board.isNotEmpty (row, col)) continue;
+				for (int player = Players.PLAYER1; player <= Players.PLAYER2; player++) {
+					int computeScore = computePossibleScore (m_currentPlayer, player, row, col);
+					scores.incrementCount (player, row, col, computeScore);
+				}
+			}
+		}
+		return scores;
+	}
+
+/*
+Have now calculated m_scores and can now determine the best possible move.
+
+int highest = 0, row_select = 0, col_select = 0;
+for each row
+	for each col
+		scoreme = score if am current player.
+		scoreOther = score if am not current player.
+		if scoreMe > score to win, 
+			this is the winning move, play it.
+		endif
+		int choose = scoreOther + scoreMe;
+		if (choose > highest)
+			this is now the current best move
+		endif
+	endfor
+endfor
+return Coordinate of best move.
+ */
+	public Coordinate getHighestPossibleScoringMove() {
+//		System.out.println(">>> Scoring::getHighestPossibleScoringMove; currentPlayer "+currentPlayer);
+		assert Players.isValidPlayer(m_currentPlayer);
+
+		if (m_board.isBoardEmpty()) {
+			return new Coordinate (m_board.getRows() / 2, m_board.getColumns() / 2);
+		}
+
+		int highest = 0, row_select = 0, col_select = 0;
+		for (int row = 0; row < m_board.getRows(); row++) {
+			for (int col = 0; col < m_board.getColumns(); col++) {
+				int scoreMe = m_scores.getScore (m_currentPlayer, row, col);
+				int scoreOther = m_scores.getScore (Players.whoIsOtherPlayer (m_currentPlayer), row, col);
+//				System.out.println(" currentPlayer "+currentPlayer+" row "+row+" col "+col+
+//						" scoreME "+scoreMe+" scoreOther "+scoreOther+" scoreTotal "+(scoreOther + scoreMe)+" highest "+highest);
+				if (scoreMe >= getScoreWin()) return new Coordinate (row, col);		// I win
+//				int choose = scoreOther > scoreMe ? scoreOther : scoreMe;
+				int choose = scoreOther + scoreMe;
+				if (choose > highest) {
+					highest = choose;
+					row_select = row;
+					col_select = col;
+				}
+			}
+		}
+//		System.out.println("<<< Scoring::getHighestPossibleScoringMove; currentPlayer "+currentPlayer);
+		return new Coordinate (row_select, col_select);
+	}
+
+	private CountsInfo getCountsInfo (int player, int row, int col, int actual) {
+		assert Players.isValidPlayer(player);
+		assert m_board.isValidRow(row);
+		assert m_board.isValidColumn(col);
+		assert actual >= 0;
+		CountsInfo countsInfo = new CountsInfo();
+		for (int pattern = 0; pattern < PatternUtils.getNumberOfVictoryPatterns(); pattern++) {
+			CountsItemInfo countsItemInfo = m_counting.getCounts (player, row, col, pattern);
+			if (countsItemInfo == null) continue;
+			if (countsItemInfo.getActual() == actual) countsInfo.add(countsItemInfo);
+		}
+		return countsInfo;
+	}
+	
+	private int computePossibleScore (final int currentPlayer, final int player, final int row, final int col) {
+//		System.out.println(">>> Scoring::computePossibleScore; player "+player+"("+row+","+col+")");
+		int total = 0;
+//		boolean bDebug = false;
+//		if (row == 0 && col == 0) bDebug = true;
+//		if (row == 4 && col == 0) bDebug = true;
+//		if (row == 0 && col == 4) bDebug = true;
+//		if (row == 4 && col == 3) bDebug = true;
+		boolean bCurrentPlayer = (player == currentPlayer);
+		for (int actual = 0; actual <= m_board.getMaxSize(); actual++) {
+			CountsInfo countsInfo = getCountsInfo (player, row, col, actual);
+			int how_many = countsInfo.getSize();
+			if (how_many < 1) continue;
+//			if (how_many > 0) {
+//				System.out.println("player "+player+"("+row+","+col+") actual "+actual+" how_many "+how_many+" countsInfo "+countsInfo);
+//			}
+			Iterator<CountsItemInfo> iter = countsInfo.getItems();
+			while (iter.hasNext()) {
+				CountsItemInfo item = iter.next();
+				int subTotal = computePossibleScoreInner (bCurrentPlayer, item, how_many);
+				total += subTotal;
+//				System.out.println("CountsItemInfo "+item+" subTotal "+subTotal+" total "+total);
+			}
+		}
+//		System.out.println("<<< Scoring::computePossibleScore; total "+total);
+		return total;
+	}
+
+	private int getScoringFactor() {
+		return (m_board.getRows() - 4) + (m_board.getColumns() - 4);
+	}
+	private int getScoreWin() {
+		return 100000 * getScoringFactor();
+	}
+
+	private int computePossibleScoreInner (final boolean bCurrentPlayer, final CountsItemInfo countsItemInfo, final int how_many) {
+
+		final int SCORE_WIN_CURRENT = getScoreWin();
+		final int SCORE_FOUR_CURRENT = 10000 * getScoringFactor();
+		final int SCORE_THREE_CURRENT = 1000 * getScoringFactor();
+		final int SCORE_TWO_CURRENT = 100 * getScoringFactor();
+
+		final int SCORE_FOUR_CURRENT_BOUNDED = 1000 * getScoringFactor();
+		final int SCORE_THREE_CURRENT_BOUNDED = 75 * getScoringFactor();
+		final int SCORE_TWO_CURRENT_BOUNDED = 50 * getScoringFactor();
+
+		final int SCORE_WIN_OTHER = 75000 * getScoringFactor();
+		final int SCORE_FOUR_OTHER = 7500 * getScoringFactor();
+		final int SCORE_THREE_OTHER = 125 * getScoringFactor();
+		final int SCORE_TWO_OTHER = 75 * getScoringFactor();
+
+		final int SCORE_FOUR_OTHER_BOUNDED = 750 * getScoringFactor();
+		final int SCORE_THREE_OTHER_BOUNDED = 50 * getScoringFactor();
+		final int SCORE_TWO_OTHER_BOUNDED = 25 * getScoringFactor();
+
+		int scoring_multiplier = 1;
+		/*
+		switch (how_many) {
+		case 4:
+			scoring_multiplier = 10;
+			break;
+		case 3:
+			scoring_multiplier = 8;
+			break;
+		case 2:
+			scoring_multiplier = 3;
+			break;
+		case 1:
+		default:
+			break;
+		}
+		*/
+
+		int total = 0;
+		int possible = countsItemInfo.getPossible();
+		if (possible >= 5) {
+			int actual = countsItemInfo.getActual();
+			if (bCurrentPlayer) {
+				switch (actual) {
+				case 4:
+					if (countsItemInfo.isBounded())
+						total += SCORE_FOUR_CURRENT_BOUNDED;
+					else
+						total += SCORE_FOUR_CURRENT;
+					break;
+				case 3:
+					if (countsItemInfo.isBounded())
+						total += SCORE_THREE_CURRENT_BOUNDED;
+					else
+						total += SCORE_THREE_CURRENT;
+					break;
+				case 2:
+					if (countsItemInfo.isBounded())
+						total += SCORE_TWO_CURRENT_BOUNDED;
+					else
+						total += SCORE_TWO_CURRENT;
+					break;
+				case 1:
+					break;
+				default:
+					if (actual >= 5) total += SCORE_WIN_CURRENT;
+					break;
+				}
+			}
+			else {
+				switch (actual) {
+				case 4:
+					if (countsItemInfo.isBounded())
+						total += SCORE_FOUR_OTHER_BOUNDED;
+					else
+						total += SCORE_FOUR_OTHER;
+					break;
+				case 3:
+					if (countsItemInfo.isBounded())
+						total += SCORE_THREE_OTHER_BOUNDED;
+					else
+						total += SCORE_THREE_OTHER;
+					break;
+				case 2:
+					if (countsItemInfo.isBounded())
+						total += SCORE_TWO_OTHER_BOUNDED;
+					else
+						total += SCORE_TWO_OTHER;
+					break;
+				case 1:
+					break;
+				default:
+					if (actual >= 5) total += SCORE_WIN_OTHER;
+					break;
+				}
+			}
+		}
+		total *= scoring_multiplier;
+
+		final int SCORE_POSSIBLE_ONE = 1;
+		final int SCORE_POSSIBLE_TWO = 5;
+		final int SCORE_POSSIBLE_THREE = 7;
+		final int SCORE_POSSIBLE_FOUR = 10;
+		final int SCORE_POSSIBLE_FIVE = 14;
+		final int SCORE_POSSIBLE_SIX = 19;
+		final int SCORE_POSSIBLE_SEVEN = 25;
+		final int SCORE_POSSIBLE_EIGHT = 32;
+		final int SCORE_POSSIBLE_NINE = 40;
+
+		switch (possible) {
+		case 9:
+			total += SCORE_POSSIBLE_NINE;
+			break;
+		case 8:
+			total += SCORE_POSSIBLE_EIGHT;
+			break;
+		case 7:
+			total += SCORE_POSSIBLE_SEVEN;
+			break;
+		case 6:
+			total += SCORE_POSSIBLE_SIX;
+			break;
+		case 5:
+			total += SCORE_POSSIBLE_FIVE;
+			break;
+		case 4:
+			total += SCORE_POSSIBLE_FOUR;
+			break;
+		case 3:
+			total += SCORE_POSSIBLE_THREE;
+			break;
+		case 2:
+			total += SCORE_POSSIBLE_TWO;
+			break;
+		case 1:
+			total += SCORE_POSSIBLE_ONE;
+			break;
+		default:
+			if (possible > 9) total += (possible - 9) * SCORE_POSSIBLE_NINE;
+			break;
+		}
+		return total;
+	}
+	
+	public void showScores (boolean bReact, String msg, Output output) {
+		if (bReact) {
+			showScoresReact(msg, output);
+		}
+		else {
+			showScoresGui(msg, output);
+		}		
+	}
+
+	private void showScoresGui (String msg, Output output) {
+		output.println(">>> Scoring::showScoresGui; "+msg);
+		for (int player = Players.PLAYER1; player <= Players.PLAYER2; player++) {
+			output.println ("Scores for "+m_players.getPlayerName(player));
+			for (int r = 0; r < m_board.getRows(); r++) {
+				boolean first = true;
+				for (int c = 0; c < m_board.getColumns(); c++) {
+					if (! first) output.print (",");
+					first = false;
+					if (m_board.isEmpty(r, c))
+						output.print (Utilities.leadingSpacesPad (m_scores.getScore(player, r, c), 8));
+					else {
+						output.print (Utilities.leadingSpacesPad (m_players.getPlayerName (m_board.getPlayerAt(r, c)).substring(0, 1), 8));
+//						output.print (leadingSpacesPad (Game.getPlayerName (board.getPlayerAt(r, c)).substring(0, 1) + " " + scores.getScore(player, r, c), 8));
+					}
+				}
+				output.print("\n");
+			}
+		}
+		output.println("<<< Scoring::showScoresGui; "+msg);
+	}
+	
+	private void showScoresReact (String msg, Output output) {
+		output.println(">>> Scoring::showScoresReact; "+msg);
+		for (int player = Players.PLAYER1; player <= Players.PLAYER2; player++) {
+			output.print("\n");
+			output.println ("Scores for "+m_players.getPlayerName(player));
+			output.print("\n");
+			for (int r = m_board.getRows() - 1; r >= 0; r--) {
+				boolean first = true;
+				for (int c = 0; c < m_board.getColumns(); c++) {
+					if (! first) output.print (",");
+					first = false;
+					if (m_board.isEmpty(r, c))
+						output.print (Utilities.leadingSpacesPad (m_scores.getScore(player, r, c), 8));
+					else {
+						output.print (Utilities.leadingSpacesPad (m_players.getPlayerName (m_board.getPlayerAt(r, c)).substring(0, 1), 8));
+					}
+				}
+				output.print("\n");
+			}
+		}
+		output.print("\n");
+		output.println("<<< Scoring::showScoresGui; "+msg);
+	}
+
+	public String getJson() {
+		return m_scores.getJson();
+	}
+}

@@ -1,0 +1,52 @@
+1597686966711	Move package
+1597687047207	Rename package 'io.johnvincent.gomoku.library.junit.game'
+1597687694644	Copy file
+1597687714673	Rename type 'Broken2Test'
+1597691643243	Rename type 'AllTests'
+1597691701605	Copy compilation unit
+1597691719796	Rename type 'CounterAllTests'
+1597691827735	Copy compilation unit
+1597691840969	Rename type 'BoardAllTests'
+1597692012214	Copy compilation unit
+1597692026796	Rename type 'SizingAllTests'
+1597692115481	Copy compilation unit
+1597692129565	Rename type 'MovesAllTests'
+1597693444562	Copy compilation unit
+1597708010188	Copy compilation unit
+1597708028054	Rename type 'Counter5Test'
+1597708225363	Copy compilation unit
+1597708242438	Rename type 'SizingAllTests'
+1597712494345	Copy compilation unit
+1597713274532	Copy compilation unit
+1597755724180	Copy compilation unit
+1597759229000	Copy compilation unit
+1597761314023	Copy compilation unit
+1597766418510	Copy compilation unit
+1597769034157	Copy compilation unit
+1597854483783	Delete element
+1597854554087	Delete element
+1597854569401	Delete element
+1597854654013	Delete element
+1598034966380	Move compilation units
+1598034995772	Move compilation unit
+1598035013012	Move compilation unit
+1598035049697	Copy compilation unit
+1598035070358	Rename type 'GamesAllTests'
+1598035100622	Rename type 'GamesAllTests'
+1598035130388	Delete element
+1598035141831	Move compilation unit
+1598035152270	Rename type 'GamesBAllTests'
+1598035236370	Copy compilation unit
+1598075098424	Rename resource 'a.gomoku'
+1598075129777	Copy compilation unit
+1598096907657	Copy compilation unit
+1598109162767	Rename type 'Game1Test'
+1598109197927	Copy compilation unit
+1598111555094	Copy files
+1598129176844	Copy compilation unit
+1598129190616	Rename type 'GameWhiteTest'
+1598130459860	Delete element
+1598130468208	Copy compilation unit
+1598130482370	Rename type 'GameTieTest'
+1598133908669	Copy compilation unit
+1598133929586	Rename type 'GameWinsTest'

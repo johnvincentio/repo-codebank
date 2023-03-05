@@ -1,0 +1,33 @@
+1645495047449	Rename type 'HighLethalForcingItemList'
+1645544165316	Rename package 'io.johnvincent.gomoku.library.junit.lethal'
+1645544187647	Rename type 'Lethal0Test'
+1645544200123	Rename type 'Lethal1Test'
+1645544212340	Rename type 'Lethal2Test'
+1645544223837	Rename type 'Lethal3Test'
+1645544239222	Rename type 'LethalAllTests'
+1645619927068	Move compilation units
+1645619933596	Delete element
+1645619956648	Rename type 'HighestMoveAllTests'
+1645619973493	Rename type 'HighestMove1Test'
+1645633518710	Delete element
+1645680711791	Copy compilation unit
+1645812435375	Rename type 'CounterScoringItem'
+1645815052187	Rename type 'BestMoveInfo'
+1645821105918	Copy compilation unit
+1645822701217	Rename type 'BestMoveOptionsItem'
+1645824087082	Delete element
+1645850225424	Delete element
+1645896500499	Rename type 'CounterLethalForcing'
+1645896522030	Move compilation unit
+1645897861172	Rename type 'HighestScoringMove'
+1645897869919	Move compilation unit
+1645900957688	Move compilation unit
+1645900971396	Move compilation unit
+1645901033620	Move compilation unit
+1645901079032	Move compilation unit
+1645901085271	Move compilation unit
+1645901090392	Move compilation unit
+1645901475388	Move compilation unit
+1645901482910	Move compilation unit
+1645902268448	Rename type 'HighScoreItem'
+1645902294487	Rename type 'HighScoreList'

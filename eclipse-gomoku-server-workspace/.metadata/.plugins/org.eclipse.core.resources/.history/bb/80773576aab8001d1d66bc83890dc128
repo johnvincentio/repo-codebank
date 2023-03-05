@@ -1,0 +1,140 @@
+package io.johnvincent.gomoku.library.rates;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+
+@JsonPropertyOrder({ "currentPlayer", "lethal1", "lethal2", "lethal3", "possibleWin2", "possibleWin3", "forcingMove1", "forcingMove2", "lethal", "forcing" })
+@JsonIgnoreProperties(value = { "useful" })
+public class SummaryRatesItem {
+
+	@JsonProperty("currentPlayer")
+	final private boolean m_currentPlayer;
+
+	private int lethal1 = 0;
+	private int lethal2 = 0;
+	private int lethal3 = 0;
+
+	private int possibleWin2 = 0;
+	private int possibleWin3 = 0;
+
+	private int forcingMove1 = 0;
+	private int forcingMove2 = 0;
+
+	public SummaryRatesItem(final boolean currentPlayer) {
+		m_currentPlayer = currentPlayer;
+	}
+
+	public boolean isUseful() {
+		return isLethal() || isForcingMove() || isPossibleWin();
+	}
+	
+	public boolean isLethal() {
+		if (lethal1 > 0) return true;
+		if (lethal2 > 0) return true;
+		if (lethal3 > 0) return true;
+		return false;
+	}
+
+	public boolean isPossibleWin() {
+		if (possibleWin2 > 0) return true;
+		if (possibleWin3 > 0) return true;
+		return false;
+	}
+	
+	public boolean isForcingMove() {
+		if (forcingMove1 > 0) return true;
+		if (forcingMove2 > 0) return true;
+		return false;
+	}
+
+	public void add(SummaryRatesItem item) {
+		if (item == null) return;
+		
+		this.lethal1 += item.lethal1;
+		this.lethal2 += item.lethal2;
+		this.lethal3 += item.lethal3;
+
+		this.possibleWin2 += item.possibleWin2;
+		this.possibleWin3 += item.possibleWin3;
+
+		this.forcingMove1 += item.forcingMove1;
+		this.forcingMove2 += item.forcingMove2;
+	}
+
+	private PlayerFlagsItem getFlags(final FlagsItem item) {
+		return m_currentPlayer ? item.getCurrentPlayer() : item.getOtherPlayer();
+	}
+	
+	public void add(SpecialCaseRatesItem item) {
+		if (item == null) return;
+		PlayerFlagsItem flags = getFlags(FlagsItem item);
+		PlayerFlagsItem flags = m_currentPlayer ? item.getCurrentPlayer() : item.getOtherPlayer();
+
+		int lethal = item.getCurrentPlayer().getLethal();
+		if (lethal == 1) this.lethal1++;
+		if (lethal == 2) this.lethal2++;
+		if (lethal == 3) this.lethal3++;
+
+		int possibleWin = item.getCurrentPlayer().getPossibleWin();
+		if (possibleWin == 2) this.possibleWin2++;
+		if (possibleWin == 3) this.possibleWin3++;	
+
+		int forcingMove = item.getCurrentPlayer().getForcingMove();
+		if (forcingMove == 1) this.forcingMove1++;
+		if (forcingMove == 2) this.forcingMove2++;
+	}
+
+	public void add(GroupRatesItem item) {
+		if (item == null) return;
+
+		int lethal = item.getCurrentPlayer().getLethal();
+		if (lethal == 1) this.lethal1++;
+		if (lethal == 2) this.lethal2++;
+		if (lethal == 3) this.lethal3++;
+
+		int possibleWin = item.getCurrentPlayer().getPossibleWin();
+		if (possibleWin == 2) this.possibleWin2++;
+		if (possibleWin == 3) this.possibleWin3++;	
+
+		int forcingMove = item.getCurrentPlayer().getForcingMove();
+		if (forcingMove == 1) this.forcingMove1++;
+		if (forcingMove == 2) this.forcingMove2++;
+	}
+	
+	public void add(ActualRatesItem item) {
+		if (item == null) return;
+
+//		if (! item.isAlwaysUsed())
+//			System.out.println("SummaryRatesItem; ActualRatesItem "+item);
+		int lethal = item.getCurrentPlayer().getLethal();
+		if (lethal == 1) this.lethal1++;
+		if (lethal == 2) this.lethal2++;
+		if (lethal == 3) this.lethal3++;
+
+		int possibleWin = item.getCurrentPlayer().getPossibleWin();
+		if (possibleWin == 2) this.possibleWin2++;
+//		if (possibleWin == 2 && item.isAlwaysUsed()) this.possibleWin2++;
+		if (possibleWin == 3) this.possibleWin3++;
+
+		int forcingMove = item.getCurrentPlayer().getForcingMove();
+		if (forcingMove == 1) this.forcingMove1++;
+		if (forcingMove == 2) this.forcingMove2++;
+	}
+
+	public int getLethal1() {return lethal1;}
+	public int getLethal2() {return lethal2;}
+	public int getLethal3() {return lethal3;}
+
+	public int getPossibleWin2() {return possibleWin2;}
+	public int getPossibleWin3() {return possibleWin3;}
+
+	public int getForcingMove1() {return forcingMove1;}
+	public int getForcingMove2() {return forcingMove2;}
+
+	public String toString() {
+		return "(L1="+getLethal1()+",L2="+getLethal2()+",L3="+getLethal3()+
+				",PW2="+getPossibleWin2()+",PW3="+getPossibleWin3()+
+				",FM1="+getForcingMove1()+",FM2="+getForcingMove2()+")";
+	}
+}

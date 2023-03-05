@@ -1,0 +1,98 @@
+
+package io.johnvincent.gomoku.library.scoring;
+
+import java.util.ArrayList;
+import java.util.Collections;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+
+import io.johnvincent.gomoku.library.rates.SummaryRatesItem;
+
+@JsonPropertyOrder({ "collection" })
+public class SquareForcingScoresList {
+
+	@JsonProperty("collection")
+	private ArrayList<SquareForcingScoresItem> m_collection = new ArrayList<SquareForcingScoresItem>();
+
+	@JsonIgnore
+	public ArrayList<SquareForcingScoresItem> getList() {return m_collection;}
+
+	@JsonIgnore
+	public int getSize() {return m_collection.size();}
+
+	public void add(SquareForcingScoresItem item) {if (item != null) m_collection.add(item);}
+
+	@JsonIgnore
+	public SquareForcingScoresItem getItem(int pos) {
+		if (pos < 0 || pos >= m_collection.size()) return null;
+		return m_collection.get(pos);
+	}
+
+	@JsonIgnore
+	public SquareForcingScoresItem getFirstPossibleWinItem(final int cnt) {
+		for (int i = 0; i < m_collection.size(); i++) {
+			SquareForcingScoresItem item = m_collection.get(i);
+			if (item == null) continue;
+			
+			SummaryRatesItem summaryRatesItem = item.getSummaryRatesItem();
+			if (summaryRatesItem == null) continue;
+
+			if (cnt == 1 && summaryRatesItem.getForcingMove1() > 0) return item;
+			if (cnt == 2 && summaryRatesItem.getForcingMove2() > 0) return item;
+		}
+		return null;
+	}
+	
+	@JsonIgnore
+	public SquareForcingScoresItem getFirstForcingWinItem(final int cnt) {
+		for (int i = 0; i < m_collection.size(); i++) {
+			SquareForcingScoresItem item = m_collection.get(i);
+			if (item == null) continue;
+			
+			SummaryRatesItem summaryRatesItem = item.getSummaryRatesItem();
+			if (summaryRatesItem == null) continue;
+
+			if (cnt == 2 && summaryRatesItem.getPossibleWin2() > 0) return item;
+			if (cnt == 3 && summaryRatesItem.getPossibleWin3() > 0) return item;
+		}
+		return null;
+	}
+
+	@JsonIgnore
+	public boolean isFound(final int player, final int row, final int col) {
+		for (int i = 0; i < m_collection.size(); i++) {
+			SquareForcingScoresItem item = m_collection.get(i);
+			if (item == null) continue;
+
+			if (item.getPlayer() == player && item.getRow() == row && item.getColumn() == col) return true;
+		}
+		return false;
+	}
+
+	@JsonIgnore
+	public void sort() {
+		Collections.sort(getList(), new SortByForcingMoves());
+	}
+
+	@JsonIgnore
+	public String toString() {
+		StringBuffer buf = new StringBuffer();
+		for (int i = 0; i < m_collection.size(); i++)
+			buf.append(((SquareForcingScoresItem) m_collection.get(i)).toString());
+		return "("+buf.toString()+")";
+	}
+
+	@JsonIgnore
+	public void show(String message) {
+		System.out.println("\n>>> SquareForcingScoresList::show; size "+m_collection.size()+", "+message);
+		System.out.println("(player,row,column,(lethal1,lethal2,lethal3,forcingWin2,forcingWin3,forcingMove1,forcingMove2),totalScore,currentPlayerScore,otherPlayerScore)");
+		for (int i = 0; i < m_collection.size(); i++) {
+			SquareForcingScoresItem item = m_collection.get(i);
+			System.out.println(item.toString());
+		}
+		System.out.println("<<< SquareForcingScoresList::show; "+message+"\n");
+	}
+}
+

@@ -1,0 +1,329 @@
+package io.johnvincent.gomoku.library.junit.rates.groups;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
+import org.junit.Before;
+import org.junit.Test;
+
+import io.johnvincent.gomoku.library.counter.CounterHelper;
+import io.johnvincent.gomoku.library.counter.CounterPatternsItem;
+import io.johnvincent.gomoku.library.counter.CounterInfo;
+import io.johnvincent.gomoku.library.game.Board;
+import io.johnvincent.gomoku.library.game.Moves;
+import io.johnvincent.gomoku.library.players.Players;
+import io.johnvincent.gomoku.library.rates.RateHelper;
+
+public class Groups2Test {
+
+	private Players m_players;
+	private Board m_board;
+	private Moves m_moves;
+
+	@Before
+	public void initialize() {
+		m_players = new Players();
+		m_board = new Board(m_players, 15, 15);
+		m_moves = new Moves (m_players, m_board);
+	}
+
+	@Test
+	public void test1() {
+		m_board.setPlayer(Players.PLAYER2, 7, 3);	// b.wW.w.b			ACTUAL_1_2_2, GROUP_1_3_4_1
+		m_board.setPlayer(Players.PLAYER1, 7, 5);	// 3456789012345
+		m_board.setPlayer(Players.PLAYER1, 7, 8);
+		m_board.setPlayer(Players.PLAYER2, 7, 10);
+		
+		CounterInfo counterInfo = CounterHelper.calculateAllCounters(m_board, m_moves);
+		
+		CounterPatternsItem counterPatternsItem = counterInfo.getCounterPatternsItem(Players.PLAYER1, 7, 6, 1);
+//		System.out.println("counterPatternsItem "+counterPatternsItem.toString());
+		assertNotNull(counterPatternsItem);
+		assertNotNull(counterPatternsItem.getLine());
+
+		assertEquals(counterPatternsItem.getCounterActual().getActual(), 2);
+		assertEquals(counterPatternsItem.getCounterActual().getBeforeActual(), 1);
+		assertEquals(counterPatternsItem.getCounterActual().getAfterActual(), 3);
+		assertEquals(counterPatternsItem.getCounterActual().getScore(), RateHelper.getActualRate(1, 2, 2));
+
+		assertEquals(counterPatternsItem.getGroupCounts(), 1);
+		assertEquals(counterPatternsItem.isGroupExist(RateHelper.getGroupRatesItem(1, 3, 4, 1).getKey()), true);
+		
+		assertEquals(counterPatternsItem.getPatternScore(), RateHelper.getActualRate(1, 2, 2) + RateHelper.getGroupRate(1, 3, 4, 1));
+	}
+
+	@Test
+	public void test1a() {
+		m_board.setPlayer(Players.PLAYER2, 7, 3);	// b.w.Ww.b			ACTUAL_2_2_1, GROUP_1_3_4_1
+		m_board.setPlayer(Players.PLAYER1, 7, 5);	// 3456789012345
+		m_board.setPlayer(Players.PLAYER1, 7, 8);
+		m_board.setPlayer(Players.PLAYER2, 7, 10);
+		
+		CounterInfo counterInfo = CounterHelper.calculateAllCounters(m_board, m_moves);
+		
+		CounterPatternsItem counterPatternsItem = counterInfo.getCounterPatternsItem(Players.PLAYER1, 7, 7, 1);
+//		System.out.println("counterPatternsItem "+counterPatternsItem.toString());
+		assertNotNull(counterPatternsItem);
+		assertNotNull(counterPatternsItem.getLine());
+
+		assertEquals(counterPatternsItem.getCounterActual().getActual(), 2);
+		assertEquals(counterPatternsItem.getCounterActual().getBeforeActual(), 3);
+		assertEquals(counterPatternsItem.getCounterActual().getAfterActual(), 1);
+		assertEquals(counterPatternsItem.getCounterActual().getScore(), RateHelper.getActualRate(2, 2, 1));
+
+		assertEquals(counterPatternsItem.getGroupCounts(), 1);
+		assertEquals(counterPatternsItem.isGroupExist(RateHelper.getGroupRatesItem(1, 3, 4, 1).getKey()), true);
+		
+		assertEquals(counterPatternsItem.getPatternScore(), RateHelper.getActualRate(2, 2, 1) + RateHelper.getGroupRate(1, 3, 4, 1));
+	}
+
+	@Test
+	public void test2() {
+		m_board.setPlayer(Players.PLAYER2, 7, 2);	// b..w.Ww.b			ACTUAL_2_2_1, GROUP_2_3_4_1, GROUP_1_3_5_1
+		m_board.setPlayer(Players.PLAYER1, 7, 5);	// 23456789012345
+		m_board.setPlayer(Players.PLAYER1, 7, 8);
+		m_board.setPlayer(Players.PLAYER2, 7, 10);
+		
+		CounterInfo counterInfo = CounterHelper.calculateAllCounters(m_board, m_moves);
+		
+		CounterPatternsItem counterPatternsItem = counterInfo.getCounterPatternsItem(Players.PLAYER1, 7, 7, 1);
+//		System.out.println("counterPatternsItem "+counterPatternsItem.toString());
+		assertNotNull(counterPatternsItem);
+		assertNotNull(counterPatternsItem.getLine());
+
+		assertEquals(counterPatternsItem.getCounterActual().getActual(), 2);
+		assertEquals(counterPatternsItem.getCounterActual().getBeforeActual(), 4);
+		assertEquals(counterPatternsItem.getCounterActual().getAfterActual(), 1);
+		assertEquals(counterPatternsItem.getCounterActual().getScore(), RateHelper.getActualRate(2, 2, 1));
+
+		assertEquals(counterPatternsItem.getGroupCounts(), 2);
+		assertEquals(counterPatternsItem.isGroupExist(RateHelper.getGroupRatesItem(2, 3, 4, 1).getKey()), true);
+		assertEquals(counterPatternsItem.isGroupExist(RateHelper.getGroupRatesItem(1, 3, 5, 1).getKey()), true);
+		assertEquals(counterPatternsItem.isGroupExist(RateHelper.getGroupRatesItem(2, 3, 4, 2).getKey()), false);
+		
+		assertEquals(counterPatternsItem.getPatternScore(), RateHelper.getActualRate(2, 2, 1) + RateHelper.getGroupRate(2, 3, 4, 1) + RateHelper.getGroupRate(1, 3, 5, 1));
+	}
+
+	@Test
+	public void test2a() {
+		m_board.setPlayer(Players.PLAYER2, 7, 1);	// b...w.Ww.b			ACTUAL_2_2_1, GROUP_2_3_4_1, GROUP_1_3_5_1
+		m_board.setPlayer(Players.PLAYER1, 7, 5);	// 123456789012345
+		m_board.setPlayer(Players.PLAYER1, 7, 8);
+		m_board.setPlayer(Players.PLAYER2, 7, 10);
+		
+		CounterInfo counterInfo = CounterHelper.calculateAllCounters(m_board, m_moves);
+		
+		CounterPatternsItem counterPatternsItem = counterInfo.getCounterPatternsItem(Players.PLAYER1, 7, 7, 1);
+//		System.out.println("counterPatternsItem "+counterPatternsItem.toString());
+		assertNotNull(counterPatternsItem);
+		assertNotNull(counterPatternsItem.getLine());
+
+		assertEquals(counterPatternsItem.getCounterActual().getActual(), 2);
+		assertEquals(counterPatternsItem.getCounterActual().getBeforeActual(), 5);
+		assertEquals(counterPatternsItem.getCounterActual().getAfterActual(), 1);
+		assertEquals(counterPatternsItem.getCounterActual().getScore(), RateHelper.getActualRate(2, 2, 1));
+
+		assertEquals(counterPatternsItem.getGroupCounts(), 2);
+		assertEquals(counterPatternsItem.isGroupExist(RateHelper.getGroupRatesItem(2, 3, 4, 1).getKey()), true);
+		assertEquals(counterPatternsItem.isGroupExist(RateHelper.getGroupRatesItem(2, 3, 5, 1).getKey()), true);
+		assertEquals(counterPatternsItem.isGroupExist(RateHelper.getGroupRatesItem(2, 3, 4, 2).getKey()), false);
+		
+		assertEquals(counterPatternsItem.getPatternScore(), RateHelper.getActualRate(2, 2, 1) + RateHelper.getGroupRate(2, 3, 4, 1) + RateHelper.getGroupRate(2, 3, 5, 1));
+	}
+
+	@Test
+	public void test3() {
+		m_board.setPlayer(Players.PLAYER2, 7, 3);	// b.w.Ww..b			ACTUAL_2_2_1, GROUP_1_3_4_2, GROUP_1_3_5_1
+		m_board.setPlayer(Players.PLAYER1, 7, 5);	// 3456789012345
+		m_board.setPlayer(Players.PLAYER1, 7, 8);
+		m_board.setPlayer(Players.PLAYER2, 7, 11);
+		
+		CounterInfo counterInfo = CounterHelper.calculateAllCounters(m_board, m_moves);
+		
+		CounterPatternsItem counterPatternsItem = counterInfo.getCounterPatternsItem(Players.PLAYER1, 7, 7, 1);
+//		System.out.println("counterPatternsItem "+counterPatternsItem.toString());
+		assertNotNull(counterPatternsItem);
+		assertNotNull(counterPatternsItem.getLine());
+
+		assertEquals(counterPatternsItem.getCounterActual().getActual(), 2);
+		assertEquals(counterPatternsItem.getCounterActual().getBeforeActual(), 3);
+		assertEquals(counterPatternsItem.getCounterActual().getAfterActual(), 2);
+		assertEquals(counterPatternsItem.getCounterActual().getScore(), RateHelper.getActualRate(2, 2, 2));
+
+		assertEquals(counterPatternsItem.getGroupCounts(), 2);
+		assertEquals(counterPatternsItem.isGroupExist(RateHelper.getGroupRatesItem(1, 3, 4, 2).getKey()), true);
+		assertEquals(counterPatternsItem.isGroupExist(RateHelper.getGroupRatesItem(1, 3, 5, 1).getKey()), true);
+		assertEquals(counterPatternsItem.isGroupExist(RateHelper.getGroupRatesItem(2, 3, 4, 2).getKey()), false);
+		
+		assertEquals(counterPatternsItem.getPatternScore(), RateHelper.getActualRate(2, 2, 2) + RateHelper.getGroupRate(1, 3, 4, 2) + RateHelper.getGroupRate(1, 3, 5, 1));
+	}
+
+	@Test
+	public void test3a() {
+		m_board.setPlayer(Players.PLAYER2, 7, 3);	// b.w.Ww.....b			ACTUAL_2_2_2, GROUP_1_3_4_2, GROUP_1_3_5_2
+		m_board.setPlayer(Players.PLAYER1, 7, 5);	// 3456789012345
+		m_board.setPlayer(Players.PLAYER1, 7, 8);
+		m_board.setPlayer(Players.PLAYER2, 7, 14);
+		
+		CounterInfo counterInfo = CounterHelper.calculateAllCounters(m_board, m_moves);
+		
+		CounterPatternsItem counterPatternsItem = counterInfo.getCounterPatternsItem(Players.PLAYER1, 7, 7, 1);
+//		System.out.println("counterPatternsItem "+counterPatternsItem.toString());
+		assertNotNull(counterPatternsItem);
+		assertNotNull(counterPatternsItem.getLine());
+
+		assertEquals(counterPatternsItem.getCounterActual().getActual(), 2);
+		assertEquals(counterPatternsItem.getCounterActual().getBeforeActual(), 3);
+		assertEquals(counterPatternsItem.getCounterActual().getAfterActual(), 5);
+		assertEquals(counterPatternsItem.getCounterActual().getScore(), RateHelper.getActualRate(2, 2, 2));
+
+		assertEquals(counterPatternsItem.getGroupCounts(), 2);
+		assertEquals(counterPatternsItem.isGroupExist(RateHelper.getGroupRatesItem(1, 3, 4, 2).getKey()), true);
+		assertEquals(counterPatternsItem.isGroupExist(RateHelper.getGroupRatesItem(1, 3, 5, 2).getKey()), true);
+		assertEquals(counterPatternsItem.isGroupExist(RateHelper.getGroupRatesItem(2, 3, 4, 2).getKey()), false);
+		
+		assertEquals(counterPatternsItem.getPatternScore(), RateHelper.getActualRate(2, 2, 2) + RateHelper.getGroupRate(1, 3, 4, 2) + RateHelper.getGroupRate(1, 3, 5, 2));
+	}
+
+	@Test
+	public void test4() {
+		m_board.setPlayer(Players.PLAYER2, 7, 2);	// b..w.Ww..b			ACTUAL_2_2_2, GROUP_2_3_4_2, GROUP_2_3_5_1, GROUP_1_3_5_2
+		m_board.setPlayer(Players.PLAYER1, 7, 5);	// 23456789012345
+		m_board.setPlayer(Players.PLAYER1, 7, 8);
+		m_board.setPlayer(Players.PLAYER2, 7, 11);
+		
+		CounterInfo counterInfo = CounterHelper.calculateAllCounters(m_board, m_moves);
+		
+		CounterPatternsItem counterPatternsItem = counterInfo.getCounterPatternsItem(Players.PLAYER1, 7, 7, 1);
+//		System.out.println("counterPatternsItem "+counterPatternsItem.toString());
+		assertNotNull(counterPatternsItem);
+		assertNotNull(counterPatternsItem.getLine());
+
+		assertEquals(counterPatternsItem.getCounterActual().getActual(), 2);
+		assertEquals(counterPatternsItem.getCounterActual().getBeforeActual(), 4);
+		assertEquals(counterPatternsItem.getCounterActual().getAfterActual(), 2);
+		assertEquals(counterPatternsItem.getCounterActual().getScore(), RateHelper.getActualRate(2, 2, 2));
+
+		assertEquals(counterPatternsItem.getGroupCounts(), 3);
+		assertEquals(counterPatternsItem.isGroupExist(RateHelper.getGroupRatesItem(2, 3, 4, 2).getKey()), true);
+		assertEquals(counterPatternsItem.isGroupExist(RateHelper.getGroupRatesItem(1, 3, 5, 2).getKey()), true);
+		assertEquals(counterPatternsItem.isGroupExist(RateHelper.getGroupRatesItem(2, 3, 5, 1).getKey()), true);
+		assertEquals(counterPatternsItem.isGroupExist(RateHelper.getGroupRatesItem(1, 3, 4, 2).getKey()), false);
+		
+		int score = RateHelper.getActualRate(2, 2, 2) + RateHelper.getGroupRate(2, 3, 4, 2) + RateHelper.getGroupRate(1, 3, 5, 2) + RateHelper.getGroupRate(2, 3, 5, 1);
+		assertEquals(counterPatternsItem.getPatternScore(), score);
+	}
+
+	@Test
+	public void test4a() {
+		m_board.setPlayer(Players.PLAYER2, 7, 2);	// b...w.Ww.....b		ACTUAL_2_2_2, GROUP_2_3_4_2, GROUP_1_3_5_2, GROUP_2_3_5_2
+		m_board.setPlayer(Players.PLAYER1, 7, 5);	// 123456789012345
+		m_board.setPlayer(Players.PLAYER1, 7, 8);
+		m_board.setPlayer(Players.PLAYER2, 7, 14);
+		
+		CounterInfo counterInfo = CounterHelper.calculateAllCounters(m_board, m_moves);
+		
+		CounterPatternsItem counterPatternsItem = counterInfo.getCounterPatternsItem(Players.PLAYER1, 7, 7, 1);
+//		System.out.println("counterPatternsItem "+counterPatternsItem.toString());
+		assertNotNull(counterPatternsItem);
+		assertNotNull(counterPatternsItem.getLine());
+
+		assertEquals(counterPatternsItem.getCounterActual().getActual(), 2);
+		assertEquals(counterPatternsItem.getCounterActual().getBeforeActual(), 4);
+		assertEquals(counterPatternsItem.getCounterActual().getAfterActual(), 5);
+		assertEquals(counterPatternsItem.getCounterActual().getScore(), RateHelper.getActualRate(2, 2, 2));
+
+		assertEquals(counterPatternsItem.getGroupCounts(), 3);
+		assertEquals(counterPatternsItem.isGroupExist(RateHelper.getGroupRatesItem(2, 3, 4, 2).getKey()), true);
+		assertEquals(counterPatternsItem.isGroupExist(RateHelper.getGroupRatesItem(1, 3, 5, 2).getKey()), true);
+		assertEquals(counterPatternsItem.isGroupExist(RateHelper.getGroupRatesItem(2, 3, 5, 2).getKey()), true);
+		assertEquals(counterPatternsItem.isGroupExist(RateHelper.getGroupRatesItem(1, 3, 4, 2).getKey()), false);
+		
+		int score = RateHelper.getActualRate(2, 2, 2) + RateHelper.getGroupRate(2, 3, 4, 2) + RateHelper.getGroupRate(1, 3, 5, 2) + RateHelper.getGroupRate(2, 3, 5, 2);
+		assertEquals(counterPatternsItem.getPatternScore(), score);
+	}
+	
+	@Test
+	public void test5() {
+		m_board.setPlayer(Players.PLAYER2, 7, 4);	// b.wW.w..b			ACTUAL_1_2_2, GROUP_1_3_4_2, GROUP_1_3_5_1
+		m_board.setPlayer(Players.PLAYER1, 7, 6);	// 456789012345
+		m_board.setPlayer(Players.PLAYER1, 7, 9);
+		m_board.setPlayer(Players.PLAYER2, 7, 12);
+		
+		CounterInfo counterInfo = CounterHelper.calculateAllCounters(m_board, m_moves);
+		
+		CounterPatternsItem counterPatternsItem = counterInfo.getCounterPatternsItem(Players.PLAYER1, 7, 7, 1);
+//		System.out.println("counterPatternsItem "+counterPatternsItem.toString());
+		assertNotNull(counterPatternsItem);
+		assertNotNull(counterPatternsItem.getLine());
+
+		assertEquals(counterPatternsItem.getCounterActual().getBeforeActual(), 1);
+		assertEquals(counterPatternsItem.getCounterActual().getActual(), 2);
+		assertEquals(counterPatternsItem.getCounterActual().getAfterActual(), 4);
+		assertEquals(counterPatternsItem.getCounterActual().getScore(), RateHelper.getActualRate(1, 2, 2));
+
+		assertEquals(counterPatternsItem.getGroupCounts(), 2);
+		assertEquals(counterPatternsItem.isGroupExist(RateHelper.getGroupRatesItem(1, 3, 4, 2).getKey()), true);
+		assertEquals(counterPatternsItem.isGroupExist(RateHelper.getGroupRatesItem(1, 3, 5, 1).getKey()), true);
+		
+		int score = RateHelper.getActualRate(1, 2, 2) + RateHelper.getGroupRate(1, 3, 4, 2) + RateHelper.getGroupRate(1, 3, 5, 1);
+		assertEquals(counterPatternsItem.getPatternScore(), score);
+	}
+
+	@Test
+	public void test6() {
+		m_board.setPlayer(Players.PLAYER2, 7, 5);	// bwW.w..b			ACTUAL_0_2_4, GROUP_0_3_4_2, GROUP_1_3_5_1
+		m_board.setPlayer(Players.PLAYER1, 7, 6);	// 56789012345
+		m_board.setPlayer(Players.PLAYER1, 7, 9);
+		m_board.setPlayer(Players.PLAYER2, 7, 12);
+		
+		CounterInfo counterInfo = CounterHelper.calculateAllCounters(m_board, m_moves);
+		
+		CounterPatternsItem counterPatternsItem = counterInfo.getCounterPatternsItem(Players.PLAYER1, 7, 7, 1);
+//		System.out.println("counterPatternsItem "+counterPatternsItem.toString());
+		assertNotNull(counterPatternsItem);
+		assertNotNull(counterPatternsItem.getLine());
+
+		assertEquals(counterPatternsItem.getCounterActual().getBeforeActual(), 0);
+		assertEquals(counterPatternsItem.getCounterActual().getActual(), 2);
+		assertEquals(counterPatternsItem.getCounterActual().getAfterActual(), 4);
+		assertEquals(counterPatternsItem.getCounterActual().getScore(), RateHelper.getActualRate(0, 2, 2));
+
+		assertEquals(counterPatternsItem.getGroupCounts(), 1);
+		assertEquals(counterPatternsItem.isGroupExist(RateHelper.getGroupRatesItem(0, 3, 4, 2).getKey()), true);
+		
+		int score = RateHelper.getActualRate(0, 2, 2) + RateHelper.getGroupRate(0, 3, 4, 2);
+		assertEquals(counterPatternsItem.getPatternScore(), score);
+	}
+	
+	@Test
+	public void test7() {
+		m_board.setPlayer(Players.PLAYER2, 7, 3);	// b..wW.ww.b		ACTUAL_2_2_2, GROUP_2_4_5_1, GROUP_1_4_6_1
+		m_board.setPlayer(Players.PLAYER1, 7, 6);	// 3456789012345
+		m_board.setPlayer(Players.PLAYER1, 7, 9);
+		m_board.setPlayer(Players.PLAYER1, 7, 10);
+		m_board.setPlayer(Players.PLAYER2, 7, 12);
+		
+		CounterInfo counterInfo = CounterHelper.calculateAllCounters(m_board, m_moves);
+		
+		CounterPatternsItem counterPatternsItem = counterInfo.getCounterPatternsItem(Players.PLAYER1, 7, 7, 1);
+		System.out.println("counterPatternsItem "+counterPatternsItem.toString());
+		assertNotNull(counterPatternsItem);
+		assertNotNull(counterPatternsItem.getLine());
+
+		assertEquals(counterPatternsItem.getCounterActual().getBeforeActual(), 2);
+		assertEquals(counterPatternsItem.getCounterActual().getActual(), 2);
+		assertEquals(counterPatternsItem.getCounterActual().getAfterActual(), 4);
+		assertEquals(counterPatternsItem.getCounterActual().getScore(), RateHelper.getActualRate(2, 2, 2));
+
+		assertEquals(counterPatternsItem.getGroupCounts(), 3);
+		assertEquals(counterPatternsItem.isGroupExist(RateHelper.getGroupRatesItem(2, 4, 5, 1).getKey()), true);
+		assertEquals(counterPatternsItem.isGroupExist(RateHelper.getGroupRatesItem(1, 4, 6, 1).getKey()), true);
+		assertEquals(counterPatternsItem.isGroupExist(RateHelper.getGroupRatesItem(2, 4, 6, 0).getKey()), true);
+		assertEquals(counterPatternsItem.isGroupExist(RateHelper.getGroupRatesItem(0, 3, 4, 2).getKey()), false);
+		assertEquals(counterPatternsItem.isGroupExist(RateHelper.getGroupRatesItem(2, 3, 4, 0).getKey()), false);
+		
+		int score = RateHelper.getActualRate(2, 2, 2) + RateHelper.getGroupRate(2, 4, 5, 1) + RateHelper.getGroupRate(2, 4, 6, 0) + RateHelper.getGroupRate(1, 4, 6, 1);
+		assertEquals(counterPatternsItem.getPatternScore(), score);
+	}
+}

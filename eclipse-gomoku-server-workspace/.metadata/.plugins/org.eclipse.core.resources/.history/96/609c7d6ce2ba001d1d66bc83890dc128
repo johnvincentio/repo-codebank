@@ -1,0 +1,58 @@
+
+package io.johnvincent.gomoku.library.rates;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+
+@JsonPropertyOrder({ "key", "rate", "currentPlayer", "otherPlayer" })
+public class FlagsItem {
+
+	final private String key;
+	final private int rate;
+	private PlayerFlagsItem currentPlayerFlagsItem = null;
+	private PlayerFlagsItem otherPlayerFlagsItem = null;
+
+	public FlagsItem (final String key, final int rate) {
+		assert rate > 0;
+	
+		this.key = key;
+		this.rate = rate;
+		this.currentPlayerFlagsItem = new PlayerFlagsItem();
+	}
+	
+	public FlagsItem (final String key, final int rate, PlayerFlagsItem currentPlayerFlagsItem) {
+		assert rate > 0;
+	
+		this.key = key;
+		this.rate = rate;
+		this.currentPlayerFlagsItem = currentPlayerFlagsItem;
+	}
+	
+	public FlagsItem (final String key, final int rate, PlayerFlagsItem currentPlayerFlagsItem, PlayerFlagsItem otherPlayerFlagsItem) {
+		assert rate > 0;
+	
+		this.key = key;
+		this.rate = rate;
+		this.currentPlayerFlagsItem = currentPlayerFlagsItem;
+		this.otherPlayerFlagsItem = otherPlayerFlagsItem;
+	}
+
+	public String getKey() {return key;}
+	public int getRate() {return rate;}
+	public PlayerFlagsItem JVgetCurrentPlayer() {return currentPlayerFlagsItem;}
+	public PlayerFlagsItem getOtherPlayer() {return otherPlayerFlagsItem;}
+	
+	@JsonIgnore
+	public boolean isOtherPlayerExist() {return otherPlayerFlagsItem != null;};
+	
+	@JsonIgnore
+	public PlayerFlagsItem getPlayerFlags(boolean currentPlayer) {
+		if (currentPlayer) return currentPlayerFlagsItem;
+		if (otherPlayerFlagsItem != null) return otherPlayerFlagsItem;
+		return currentPlayerFlagsItem;
+	}
+
+	public String toString() {
+		return "["+getKey()+","+","+getRate()+","+currentPlayerFlagsItem+","+otherPlayerFlagsItem+"]";
+	}
+}

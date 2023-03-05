@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Delete resource &apos;gomoku-server/src/test/resources/junit-tests/rates/special-cases/1/later.gomoku&apos;" deleteContents="false" description="Delete resource &apos;gomoku-server/src/test/resources/junit-tests/rates/special-cases/1/later.gomoku&apos;" element1="/gomoku-server/src/test/resources/junit-tests/rates/special-cases/1/later.gomoku" flags="7" id="org.eclipse.ltk.core.refactoring.delete.resources" resources="1" stamp="1643087203548"/>
+</session>

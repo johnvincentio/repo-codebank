@@ -1,0 +1,52 @@
+
+package io.johnvincent.gomoku.library.scoring;
+
+import java.util.Comparator;
+
+import io.johnvincent.gomoku.library.rates.SummaryRatesItem;
+
+/*
+Sort by:
+
+1. possibleWin2; Move that can win in 2 move; reverse sort, highest first
+2. possibleWin3; Move that can win in 3 move; reverse sort, highest first
+
+3. forcingMove2; Forcing move that forces 2 moves; reverse sort, highest first
+4. forcingMove1; Forcing move that forces 1 moves; reverse sort, highest first
+
+5. See SortCompare for the remaining rules
+*/
+
+class SortByForcingMoves implements Comparator<SquareForcingScoresItem> {
+	
+	private SortCompare m_sortCompare;
+	
+	public SortByForcingMoves() {
+		m_sortCompare = new SortCompare();
+	}
+
+	public int compare(SquareForcingScoresItem a, SquareForcingScoresItem b) {
+		
+		SummaryRatesItem aSummaryRatesItem = a.getSummaryRatesItem();
+		SummaryRatesItem bSummaryRatesItem = b.getSummaryRatesItem();
+
+		if (bSummaryRatesItem.getPossibleWin2() == aSummaryRatesItem.getPossibleWin2()) {	
+			
+			if (bSummaryRatesItem.getPossibleWin3() == aSummaryRatesItem.getPossibleWin3()) {
+				
+				if (bSummaryRatesItem.getForcingMove2() == aSummaryRatesItem.getForcingMove2()) {
+					
+					if (bSummaryRatesItem.getForcingMove1() == aSummaryRatesItem.getForcingMove1()) {
+						
+						return m_sortCompare.compare(a, b);
+
+					}
+					return bSummaryRatesItem.getForcingMove1() - aSummaryRatesItem.getForcingMove1();
+				}
+				return bSummaryRatesItem.getForcingMove2() - aSummaryRatesItem.getForcingMove2();
+			}
+			return bSummaryRatesItem.getPossibleWin3() - aSummaryRatesItem.getPossibleWin3();
+		}
+		return bSummaryRatesItem.getPossibleWin2() - aSummaryRatesItem.getPossibleWin2();
+	}
+}

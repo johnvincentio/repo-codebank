@@ -1,0 +1,109 @@
+package io.johnvincent.gomoku.library.junit.counter;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+
+import org.junit.Before;
+import org.junit.Test;
+
+import io.johnvincent.gomoku.library.counter.CounterHelper;
+import io.johnvincent.gomoku.library.counter.CounterPatternsItem;
+import io.johnvincent.gomoku.library.counter.CounterInfo;
+import io.johnvincent.gomoku.library.game.Board;
+import io.johnvincent.gomoku.library.game.Moves;
+import io.johnvincent.gomoku.library.players.Players;
+import io.johnvincent.gomoku.library.rates.RateHelper;
+
+public class Counter5Test {
+
+	private Players m_players;
+	private Board m_board;
+	private Moves m_moves;
+
+	@Before
+	public void initialize() {
+		m_players = new Players();
+		m_board = new Board(m_players, 15, 15);
+		m_moves = new Moves (m_players, m_board);
+	}
+
+	@Test
+	public void test1() {
+		m_board.setPlayer(Players.PLAYER1, 7, 7);
+
+//		Output output = new OutputTTY();
+//		m_board.showBoard(false, "Counter5Test::test1", output);
+		
+//		String boardJson = m_board.getJson();
+//		System.out.println("boardJson "+boardJson);
+		
+		CounterInfo counterInfo = CounterHelper.calculateAllCounters(m_board, m_moves);
+
+		CounterPatternsItem counterPatternsItem = counterInfo.getCounterPatternsItem(Players.PLAYER1, 8, 7, 0);
+		System.out.println("counterPatternsItem "+counterPatternsItem.toString());
+		assertNotNull(counterPatternsItem);
+		assertNotNull(counterPatternsItem.getLine());
+		
+//		CounterHelper.showLine("Counter5Test::test; line", counterPatternsItem.getLine());
+//		CounterHelper.showLine("Counter5Test::test; actuals", counterPatternsItem.getActuals());
+		assertEquals(counterPatternsItem.getCounterActual().getActual(), 2);
+
+		counterPatternsItem = counterInfo.getCounterPatternsItem(Players.PLAYER1, 5, 7, 0);
+		assertNotNull(counterPatternsItem);
+		assertNotNull(counterPatternsItem.getLine());
+		assertEquals(counterPatternsItem.getCounterActual().getActual(), 1);
+		assertEquals(counterPatternsItem.getGroupCount(RateHelper.getGroupRatesItem(2, 2, 3, 2).getKey()), 1);
+		assertEquals(counterPatternsItem.getGroupCounts(), 1);
+		
+		System.out.println("counterPatternsItem "+counterPatternsItem.toString());
+		
+		int[] line = counterPatternsItem.getLine();
+//		CounterHelper.showLine("Counter5Test::test1; line ", line);
+		
+		assertEquals(CounterHelper.lineCalculator(line, 1, 2, 3, 1), 0);
+		assertEquals(CounterHelper.lineCalculator(line, 2, 2, 3, 1), 0);
+		assertEquals(CounterHelper.lineCalculator(line, 1, 2, 3, 2), 0);
+		assertEquals(CounterHelper.lineCalculator(line, 2, 2, 3, 2), 1);
+	}
+
+	@Test
+	public void test2() {
+		m_board.setPlayer(Players.PLAYER1, 7, 7);
+		m_board.setPlayer(Players.PLAYER2, 7, 6);
+		m_board.setPlayer(Players.PLAYER1, 6, 6);
+
+//		Output output = new OutputTTY();
+//		m_board.showBoard(false, "Counter5Test::test2", output);
+		
+//		String boardJson = m_board.getJson();
+//		System.out.println("boardJson "+boardJson);
+		
+		CounterInfo counterInfo = CounterHelper.calculateAllCounters(m_board, m_moves);
+		CounterPatternsItem counterPatternsItem = counterInfo.getCounterPatternsItem(Players.PLAYER2, 8, 6, 0);
+		assertNotNull(counterPatternsItem);
+		assertNotNull(counterPatternsItem.getLine());
+		
+//		CounterHelper.showLine("Counter5Test::test2; line", counterPatternsItem.getLine());
+		assertEquals(counterPatternsItem.getCounterActual().getActual(), 2);
+	}
+	
+//	@Test
+//	public void test3() {
+//		m_board.setPlayer(Players.PLAYER1, 4, 2);
+//		m_board.setPlayer(Players.PLAYER1, 4, 3);
+//		m_board.setPlayer(Players.PLAYER1, 4, 4);
+//		m_board.setPlayer(Players.PLAYER2, 5, 4);
+//		m_board.setPlayer(Players.PLAYER2, 6, 3);
+//		m_board.setPlayer(Players.PLAYER2, 7, 2);
+//
+//		Output output = new OutputTTY();
+//		m_board.showBoard(true, "Counter5Test::test3", output);
+//		
+//		String boardJson = m_board.getJson();
+//		System.out.println("boardJson "+boardJson);
+//		
+//		CounterInfo counterInfo = CounterHelper.calculateAllCounters(m_board, m_moves);
+//		String counterJson = CounterHelper.getCountersJson(counterInfo);
+//		System.out.println("counterJson "+counterJson);
+//	}
+}

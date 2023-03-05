@@ -1,0 +1,5 @@
+package io.johnvincent.gomoku.library.rates;
+
+public class PlayerFlagsItem {
+
+}

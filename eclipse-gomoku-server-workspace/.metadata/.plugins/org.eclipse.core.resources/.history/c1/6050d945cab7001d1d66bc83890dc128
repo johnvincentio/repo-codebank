@@ -1,0 +1,535 @@
+
+ /Users/jv/tmp/f77/gomoku-server/gomoku-server/src/main/java/io/johnvincent/gomoku/library/rates/ActualRatesItem.java
+ /Users/jv/tmp/f77/gomoku-server/gomoku-server/src/main/java/io/johnvincent/gomoku/library/rates/Rates.java
+ /Users/jv/tmp/f77/gomoku-server/gomoku-server/src/main/java/io/johnvincent/gomoku/library/rates/SummaryRatesItem.java
+ /Users/jv/tmp/f77/gomoku-server/gomoku-server/src/main/java/io/johnvincent/gomoku/library/rates/ActualCollection.java
+ /Users/jv/tmp/f77/gomoku-server/gomoku-server/src/main/java/io/johnvincent/gomoku/library/rates/FlagsItem.java
+ /Users/jv/tmp/f77/gomoku-server/gomoku-server/src/main/java/io/johnvincent/gomoku/library/rates/RateHelper.java
+ 
+ 
+ 
+Comparing: (< = baseline) /Users/jv/tmp/master/gomoku-server/Patterns.md
+with: (> = compare) /Users/jv/tmp/f77/gomoku-server/Patterns.md
+Not found in the baseline: /Users/jv/tmp/f77/gomoku-server/Patterns.md
+ 
+Comparing: (< = baseline) /Users/jv/tmp/master/gomoku-server/gomoku-server/HELP.md
+with: (> = compare) /Users/jv/tmp/f77/gomoku-server/gomoku-server/HELP.md
+Not found in the baseline: /Users/jv/tmp/f77/gomoku-server/gomoku-server/HELP.md
+ 
+Comparing: (< = baseline) /Users/jv/tmp/master/gomoku-server/gomoku-server/src/main/java/io/johnvincent/gomoku/library/rates/ActualRatesItem.java
+with: (> = compare) /Users/jv/tmp/f77/gomoku-server/gomoku-server/src/main/java/io/johnvincent/gomoku/library/rates/ActualRatesItem.java
+Different
+13,14c13,14
+< 	public ActualRatesItem (String key, int before, int actual, int after, int rate, int forcingMove, int forcingWin, int lethal) {
+< 		super(key, rate, forcingMove, forcingWin, lethal);
+---
+> 	public ActualRatesItem (String key, int before, int actual, int after, int rate, int forcingMove, int forcingWin, int lethal, boolean alwaysUsed) {
+> 		super(key, rate, forcingMove, forcingWin, lethal, alwaysUsed);
+27c27
+< 		this(key, before, actual, after, rate, RateHelper.NONE, RateHelper.NONE, RateHelper.NONE);
+---
+> 		this(key, before, actual, after, rate, RateHelper.NONE, RateHelper.NONE, RateHelper.NONE, true);
+ 
+Comparing: (< = baseline) /Users/jv/tmp/master/gomoku-server/gomoku-server/src/main/java/io/johnvincent/gomoku/library/rates/Rates.java
+with: (> = compare) /Users/jv/tmp/f77/gomoku-server/gomoku-server/src/main/java/io/johnvincent/gomoku/library/rates/Rates.java
+Different
+3,4c3
+< /*
+< Rules:
+---
+> // see Patterns.md for details
+6,18d4
+< Lethal implies forced move
+< 
+< Lethal in N moves
+< 	0		SCORE_WIN
+< 	1
+< 	2
+< 
+< Forcing for N moves
+< 	0
+< 	1
+< 	2
+<  */
+< 
+23d8
+< //	private static final int SCORE_LETHAL_3 = 2000;			// wins in 3 moves, this and the next 2 moves
+25,34d9
+< 	protected static final int FORCING_MOVE_1 = 1;		// this move forces 1 move
+< 	protected static final int FORCING_MOVE_2 = 2;		// this move forces 2 moves
+< 	
+< 	protected static final int FORCING_WIN_2 = 2;		// this forcing move could win in 2 moves
+< 	protected static final int FORCING_WIN_3 = 3;
+< 	
+< //	private static final int SCORE_FORCING_1 = 0;			// this move forces 1 move
+< //	private static final int SCORE_FORCING_2 = 2000;		// this move forces 2 moves
+< //	private static final int SCORE_FORCING_3 = 0;			// this move forces 3 moves
+< 	
+41d15
+< 	
+54c28
+< 	protected static final int ACTUAL_0_5_0 = SCORE_WIN;	// xPPPPPx, x.PPPPPx, xPPPPP.x, x..PPPPP.x, x.PPPPP..x, x..PPPPP..x		LETHAL_0
+---
+> 	// Actual x_5_y
+56,64c30
+< 	protected static final int ACTUAL_0_4_0 = SCORE_FOUR_FOUR_MAXIMUM;		// xPPPPx
+< 	protected static final int ACTUAL_0_4_1 = SCORE_FOUR_SINGLE_BOUNDED;	// xPPPP.x		FORCING_1
+< 	protected static final int ACTUAL_1_4_0 = SCORE_FOUR_SINGLE_BOUNDED;	// x.PPPPx		FORCING_1
+< 	protected static final int ACTUAL_1_4_1 = SCORE_FOUR_UNBOUNDED;			// x.PPPP.x		LETHAL_1
+< 	protected static final int ACTUAL_2_4_0 = SCORE_FOUR_SINGLE_BOUNDED;	// x..PPPPx		FORCING_1
+< 	protected static final int ACTUAL_2_4_1 = SCORE_FOUR_UNBOUNDED;			// x..PPPP.x	LETHAL_1
+< 	protected static final int ACTUAL_0_4_2 = SCORE_FOUR_SINGLE_BOUNDED;	// xPPPP..x		FORCING_1
+< 	protected static final int ACTUAL_1_4_2 = SCORE_FOUR_UNBOUNDED;			// x.PPPP..x	LETHAL_1
+< 	protected static final int ACTUAL_2_4_2 = SCORE_FOUR_UNBOUNDED;			// x..PPPP..x	LETHAL_1
+---
+> 	protected static final int ACTUAL_0_5_0 = SCORE_WIN;
+66,74c32
+< 	protected static final int ACTUAL_0_3_0 = SCORE_THREE_THREE_MAXIMUM;	// xPPPx
+< 	protected static final int ACTUAL_0_3_1 = SCORE_THREE_FOUR_MAXIMUM;		// xPPP.x
+< 	protected static final int ACTUAL_1_3_0 = SCORE_THREE_FOUR_MAXIMUM;		// x.PPPx
+< 	protected static final int ACTUAL_1_3_1 = SCORE_THREE_FIVE_MAXIMUM;		// x.PPP.x
+< 	protected static final int ACTUAL_2_3_0 = SCORE_THREE_FIVE_MAXIMUM;		// x..PPPx
+< 	protected static final int ACTUAL_0_3_2 = SCORE_THREE_FIVE_MAXIMUM;		// xPPP..x
+< 	protected static final int ACTUAL_2_3_1 = SCORE_THREE_SINGLE_BOUNDED;	// x..PPP.x		FORCING_1
+< 	protected static final int ACTUAL_1_3_2 = SCORE_THREE_SINGLE_BOUNDED;	// x.PPP..x		FORCING_1
+< 	protected static final int ACTUAL_2_3_2 = SCORE_THREE_UNBOUNDED;		// x..PPP..x	FORCING_2
+---
+> 	// Actual x_4_y
+76,84c34,42
+< 	protected static final int ACTUAL_0_2_0 = SCORE_TWO_TWO_MAXIMUM;		// xPPx
+< 	protected static final int ACTUAL_1_2_0 = SCORE_TWO_THREE_MAXIMUM;		// x.PPx
+< 	protected static final int ACTUAL_0_2_1 = SCORE_TWO_THREE_MAXIMUM;		// xPP.x
+< 	protected static final int ACTUAL_1_2_1 = SCORE_TWO_FOUR_MAXIMUM;		// x.PP.x
+< 	protected static final int ACTUAL_2_2_0 = SCORE_TWO_FOUR_MAXIMUM;		// x..PPx
+< 	protected static final int ACTUAL_2_2_1 = SCORE_TWO_FIVE_MAXIMUM;		// x..PP.x
+< 	protected static final int ACTUAL_0_2_2 = SCORE_TWO_FOUR_MAXIMUM;		// xPP..x
+< 	protected static final int ACTUAL_1_2_2 = SCORE_TWO_FIVE_MAXIMUM;		// x.PP..x
+< 	protected static final int ACTUAL_2_2_2 = SCORE_TWO_SIX_MAXIMUM;		// x..PP..x	
+---
+> 	protected static final int ACTUAL_0_4_0 = SCORE_FOUR_FOUR_MAXIMUM;
+> 	protected static final int ACTUAL_0_4_1 = SCORE_FOUR_SINGLE_BOUNDED;
+> 	protected static final int ACTUAL_1_4_0 = SCORE_FOUR_SINGLE_BOUNDED;
+> 	protected static final int ACTUAL_1_4_1 = SCORE_FOUR_UNBOUNDED;
+> 	protected static final int ACTUAL_2_4_0 = SCORE_FOUR_SINGLE_BOUNDED;
+> 	protected static final int ACTUAL_2_4_1 = SCORE_FOUR_UNBOUNDED;
+> 	protected static final int ACTUAL_0_4_2 = SCORE_FOUR_SINGLE_BOUNDED;
+> 	protected static final int ACTUAL_1_4_2 = SCORE_FOUR_UNBOUNDED;
+> 	protected static final int ACTUAL_2_4_2 = SCORE_FOUR_UNBOUNDED;
+85a44
+> 	// Actual x_3_y
+86a46,69
+> 	protected static final int ACTUAL_0_3_0 = SCORE_THREE_THREE_MAXIMUM;
+> 	protected static final int ACTUAL_0_3_1 = SCORE_THREE_FOUR_MAXIMUM;
+> 	protected static final int ACTUAL_1_3_0 = SCORE_THREE_FOUR_MAXIMUM;
+> 	protected static final int ACTUAL_1_3_1 = SCORE_THREE_FIVE_MAXIMUM;
+> 	protected static final int ACTUAL_2_3_0 = SCORE_THREE_FIVE_MAXIMUM;
+> 	protected static final int ACTUAL_0_3_2 = SCORE_THREE_FIVE_MAXIMUM;
+> 	protected static final int ACTUAL_2_3_1 = SCORE_THREE_SINGLE_BOUNDED;
+> 	protected static final int ACTUAL_1_3_2 = SCORE_THREE_SINGLE_BOUNDED;
+> 	protected static final int ACTUAL_2_3_2 = SCORE_THREE_UNBOUNDED;
+> 
+> 	// Actual x_2_y
+> 
+> 	protected static final int ACTUAL_0_2_0 = SCORE_TWO_TWO_MAXIMUM;
+> 	protected static final int ACTUAL_1_2_0 = SCORE_TWO_THREE_MAXIMUM;
+> 	protected static final int ACTUAL_0_2_1 = SCORE_TWO_THREE_MAXIMUM;
+> 	protected static final int ACTUAL_1_2_1 = SCORE_TWO_FOUR_MAXIMUM;
+> 	protected static final int ACTUAL_2_2_0 = SCORE_TWO_FOUR_MAXIMUM;
+> 	protected static final int ACTUAL_2_2_1 = SCORE_TWO_FIVE_MAXIMUM;
+> 	protected static final int ACTUAL_0_2_2 = SCORE_TWO_FOUR_MAXIMUM;
+> 	protected static final int ACTUAL_1_2_2 = SCORE_TWO_FIVE_MAXIMUM;
+> 	protected static final int ACTUAL_2_2_2 = SCORE_TWO_SIX_MAXIMUM;
+> 
+> 	// Group x_2_3_y
+> 
+91,94c74,77
+< 	protected static final int GROUP_1_2_3_1 = SCORE_GROUP_TWO_THREE_0;	// x.P.P.x
+< 	protected static final int GROUP_2_2_3_1 = SCORE_GROUP_TWO_THREE_1;	// x..P.P.x
+< 	protected static final int GROUP_1_2_3_2 = SCORE_GROUP_TWO_THREE_2;	// x.P.P..x
+< 	protected static final int GROUP_2_2_3_2 = SCORE_GROUP_TWO_THREE_3;	// x..P.P..x
+---
+> 	protected static final int GROUP_1_2_3_1 = SCORE_GROUP_TWO_THREE_0;
+> 	protected static final int GROUP_2_2_3_1 = SCORE_GROUP_TWO_THREE_1;
+> 	protected static final int GROUP_1_2_3_2 = SCORE_GROUP_TWO_THREE_2;
+> 	protected static final int GROUP_2_2_3_2 = SCORE_GROUP_TWO_THREE_3;
+95a79,80
+> 	// Group x_3_4_y
+> 
+102,107c87,92
+< 	protected static final int GROUP_0_3_4_2 = SCORE_GROUP_THREE_FOUR_0;	// xP.PP..x, xPP.P..x
+< 	protected static final int GROUP_2_3_4_0 = SCORE_GROUP_THREE_FOUR_1;	// x..P.PPx, x..PP.Px
+< 	protected static final int GROUP_1_3_4_1 = SCORE_GROUP_THREE_FOUR_2;	// x.P.PP.x, x.PP.P.x		FORCING_1
+< 	protected static final int GROUP_2_3_4_1 = SCORE_GROUP_THREE_FOUR_3;	// x..P.PP.x, x..PP.P.x		FORCING_1
+< 	protected static final int GROUP_1_3_4_2 = SCORE_GROUP_THREE_FOUR_4;	// x.P.PP..x, x.PP.P..x		FORCING_1
+< 	protected static final int GROUP_2_3_4_2 = SCORE_GROUP_THREE_FOUR_5;	// x..P.PP..x, x..PP.P..x	FORCING_1
+---
+> 	protected static final int GROUP_0_3_4_2 = SCORE_GROUP_THREE_FOUR_0;
+> 	protected static final int GROUP_2_3_4_0 = SCORE_GROUP_THREE_FOUR_1;
+> 	protected static final int GROUP_1_3_4_1 = SCORE_GROUP_THREE_FOUR_2;
+> 	protected static final int GROUP_2_3_4_1 = SCORE_GROUP_THREE_FOUR_3;
+> 	protected static final int GROUP_1_3_4_2 = SCORE_GROUP_THREE_FOUR_4;
+> 	protected static final int GROUP_2_3_4_2 = SCORE_GROUP_THREE_FOUR_5;
+108a94,95
+> 	// Group x_3_5_y
+> 
+113,116c100,103
+< 	protected static final int GROUP_1_3_5_1 = SCORE_GROUP_THREE_FIVE_0;	// x.P.P.P.x
+< 	protected static final int GROUP_2_3_5_1 = SCORE_GROUP_THREE_FIVE_1;	// x..P.P.P.x
+< 	protected static final int GROUP_1_3_5_2 = SCORE_GROUP_THREE_FIVE_2;	// x.P.P.P..x
+< 	protected static final int GROUP_2_3_5_2 = SCORE_GROUP_THREE_FIVE_3;	// x..P.P.P..x
+---
+> 	protected static final int GROUP_1_3_5_1 = SCORE_GROUP_THREE_FIVE_0;
+> 	protected static final int GROUP_2_3_5_1 = SCORE_GROUP_THREE_FIVE_1;
+> 	protected static final int GROUP_1_3_5_2 = SCORE_GROUP_THREE_FIVE_2;
+> 	protected static final int GROUP_2_3_5_2 = SCORE_GROUP_THREE_FIVE_3;
+117a105,106
+> 	// Group x_4_5_y
+> 
+124,126c113,115
+< 	protected static final int GROUP_0_4_5_0 = SCORE_GROUP_FOUR_FORCING_0;	// xPP.PPx,	 xP.PPPx,  xPPP.Px			FORCING_1
+< 	protected static final int GROUP_0_4_5_1 = SCORE_GROUP_FOUR_FORCING_1;	// xPP.PP.x, xP.PPP.x, xPPP.P.x			FORCING_1
+< 	protected static final int GROUP_0_4_5_2 = SCORE_GROUP_FOUR_FORCING_2;	// xPP.PP.x, xP.PPP.x, xPPP.P..x		FORCING_1
+---
+> 	protected static final int GROUP_0_4_5_0 = SCORE_GROUP_FOUR_FORCING_0;
+> 	protected static final int GROUP_0_4_5_1 = SCORE_GROUP_FOUR_FORCING_1;
+> 	protected static final int GROUP_0_4_5_2 = SCORE_GROUP_FOUR_FORCING_2;
+128,130c117,119
+< 	protected static final int GROUP_1_4_5_0 = SCORE_GROUP_FOUR_FORCING_1;	// x.PP.PPx,   x.P.PPPx,   x.PPP.Px			FORCING_1
+< 	protected static final int GROUP_1_4_5_1 = SCORE_GROUP_FOUR_FORCING_3;	// x.PP.PP.x,  x.P.PPP.x,  x.PPP.P.x		FORCING_1
+< 	protected static final int GROUP_1_4_5_2 = SCORE_GROUP_FOUR_FORCING_4;	// x.PP.PP..x, x.P.PPP..x, x.PPP.P..x		FORCING_1
+---
+> 	protected static final int GROUP_1_4_5_0 = SCORE_GROUP_FOUR_FORCING_1;
+> 	protected static final int GROUP_1_4_5_1 = SCORE_GROUP_FOUR_FORCING_3;
+> 	protected static final int GROUP_1_4_5_2 = SCORE_GROUP_FOUR_FORCING_4;
+132,134c121,123
+< 	protected static final int GROUP_2_4_5_0 = SCORE_GROUP_FOUR_FORCING_2;	// x..PP.PP.x,	x..P.PPP.x, x..PPP.Px		FORCING_1
+< 	protected static final int GROUP_2_4_5_1 = SCORE_GROUP_FOUR_FORCING_4;	// x..PP.PP.x,	x..P.PPP.x, x..PPP.P.x		FORCING_1
+< 	protected static final int GROUP_2_4_5_2 = SCORE_GROUP_FOUR_FORCING_5;	// x..PP.PP..x, x..P.PPP.., x..PPP.P..x		FORCING_1
+---
+> 	protected static final int GROUP_2_4_5_0 = SCORE_GROUP_FOUR_FORCING_2;
+> 	protected static final int GROUP_2_4_5_1 = SCORE_GROUP_FOUR_FORCING_4;
+> 	protected static final int GROUP_2_4_5_2 = SCORE_GROUP_FOUR_FORCING_5;
+136c125
+< /*
+---
+> // Group x_4_6_y
+138,214d126
+< Notice that where the pattern is forcing, another pattern that is forcing is triggered.
+< 
+< Thus, these patterns do not need to support forcing.
+< 
+< GROUP_0_4_6_0:
+< 	xPPP..Px
+< 	xP..PPPx
+< 	xPP.P.Px
+< 	xP.P.PPx
+< 	xPP..PPx
+< 	xP.PP.Px
+< 
+< GROUP_0_4_6_1:
+< 	xPPP..P.x
+< 	xP..PPP.x
+< 	xPP.P.P.x
+< 	xP.P.PP.x		FORCING_1;  G_1_3_4_1 which is forcing.
+< 	xPP..PP.x
+< 	xP.PP.P.x		FORCING_1;	G_1_3_4_1 which is forcing.
+< 
+< GROUP_0_4_6_2:
+< 	xPPP..P..x
+< 	xP..PPP..x		FORCING_1; A_2_3_2 which is forcing.
+< 	xPP.P.P..x
+< 	xP.P.PP..x		FORCING_1; G_1_3_4_2 which is forcing.
+< 	xPP..PP..x
+< 	xP.PP.P..x		FORCING_1; G_1_3_4_2 which is forcing.
+< 
+< GROUP_1_4_6_0:
+< 	x.PPP..Px		FORCING_1; A_1_3_2 which is forcing.
+< 	x.P..PPPx
+< 	x.PP.P.Px		FORCING_1; G_1_3_4_1 which is forcing.
+< 	x.P.P.PPx
+< 	x.PP..PPx
+< 	x.P.PP.Px		FORCING_1; G_1_3_4_1 which is forcing.
+< 
+< GROUP_1_4_6_1:
+< 	x.PPP..P.x		FORCING_1; A_1_3_2 which is forcing.
+< 	x.P..PPP.x		FORCING_1; A_2_3_1 which is forcing.
+< 	x.PP.P.P.x		FORCING_1; G_1_3_4_1 which is forcing.
+< 	x.P.P.PP.x		FORCING_1; G_1_3_4_1 which is forcing.
+< 	x.PP..PP.x
+< 	x.P.PP.P.x		FORCING_1; G_1_3_4_1 which is forcing.
+< 
+< GROUP_1_4_6_2:
+< 	x.PPP..P..x		FORCING_1; A_1_3_2 which is forcing.
+< 	x.P..PPP..x		FORCING_1; A_2_3_2 which is forcing.
+< 	x.PP.P.P..x		FORCING_1; G_1_3_4_1 which is forcing.
+< 	x.P.P.PP..x		FORCING_1; G_1_3_4_2 which is forcing.
+< 	x.PP..PP..x
+< 	x.P.PP.P..x		FORCING_1; G_1_3_4_2 which is forcing.
+< 
+< GROUP_2_4_6_0:
+< 	x..PPP..Px		FORCING_1; A_2_3_2 which is forcing.
+< 	x..P..PPPx
+< 	x..PP.P.Px		FORCING_1; G_2_3_4_1 which is forcing.
+< 	x..P.P.PPx
+< 	x..PP..PPx
+< 	x..P.PP.Px		FORCING_1; G_2_3_4_1 which is forcing.
+< 	
+< GROUP_2_4_6_1:
+< 	x..PPP..P.x		FORCING_1; A_2_3_2 which is forcing.
+< 	x..P..PPP.x		FORCING_1; A_2_3_2 which is forcing.
+< 	x..PP.P.P.x		FORCING_1; G_2_3_4_1 which is forcing.
+< 	x..P.P.PP.x		FORCING_1; G_1_3_4_1 which is forcing.
+< 	x..PP..PP.x
+< 	x..P.PP.P.x		FORCING_1; G_2_3_4_1 which is forcing.
+< 
+< GROUP_2_4_6_2:
+< 	x..PPP..P..x	FORCING_1; A_2_3_2 which is forcing.
+< 	x..P..PPP..x	FORCING_1; A_2_3_2 which is forcing.
+< 	x..PP.P.P..x	FORCING_1; G_1_3_4_1 which is forcing.
+< 	x..P.P.PP..x	FORCING_1; G_1_3_4_2 which is forcing.
+< 	x..PP..PP..x
+< 	x..P.PP.P..x	FORCING_1; G_1_3_4_2 which is forcing.
+<  */
+< 
+221,223c133,135
+< 	protected static final int GROUP_0_4_6_0 = SCORE_GROUP_FOUR_SIX_0;	// xPPP..Px, xP..PPPx, xPP.P.Px, xP.P.PPx, xPP..PPx, xP.PP.Px
+< 	protected static final int GROUP_0_4_6_1 = SCORE_GROUP_FOUR_SIX_1;	// xPPP..P.x, xP..PPP.x, xPP.P.P.x, xP.P.PP.x, xPP..PP.x, xP.PP.P.x
+< 	protected static final int GROUP_0_4_6_2 = SCORE_GROUP_FOUR_SIX_3;	// xPPP..P..x, xP..PPP..x, xPP.P.P..x, xP.P.PP..x, xPP..PP..x, xP.PP.P..x
+---
+> 	protected static final int GROUP_0_4_6_0 = SCORE_GROUP_FOUR_SIX_0;
+> 	protected static final int GROUP_0_4_6_1 = SCORE_GROUP_FOUR_SIX_1;
+> 	protected static final int GROUP_0_4_6_2 = SCORE_GROUP_FOUR_SIX_3;
+225,227c137,139
+< 	protected static final int GROUP_1_4_6_0 = SCORE_GROUP_FOUR_SIX_1;	// x.PPP..Px, x.P..PPPx, x.PP.P.Px, x.P.P.PPx, x.PP..PPx, x.P.PP.Px
+< 	protected static final int GROUP_1_4_6_1 = SCORE_GROUP_FOUR_SIX_2;	// x.PPP..P.x, x.P..PPP.x, x.PP.P.P.x, x.P.P.PP.x, x.PP..PP.x, x.P.PP.P.x
+< 	protected static final int GROUP_1_4_6_2 = SCORE_GROUP_FOUR_SIX_4;	// x.PPP..P..x, x.P..PPP..x, x.PP.P.P..x, x.P.P.PP..x, x.PP..PP..x, x.P.PP.P..x
+---
+> 	protected static final int GROUP_1_4_6_0 = SCORE_GROUP_FOUR_SIX_1;
+> 	protected static final int GROUP_1_4_6_1 = SCORE_GROUP_FOUR_SIX_2;
+> 	protected static final int GROUP_1_4_6_2 = SCORE_GROUP_FOUR_SIX_4;
+229,231c141,143
+< 	protected static final int GROUP_2_4_6_0 = SCORE_GROUP_FOUR_SIX_3;	// x..PPP..Px, x..P..PPPx, x..PP.P.Px, x..P.P.PPx, x..PP..PPx, x..P.PP.Px
+< 	protected static final int GROUP_2_4_6_1 = SCORE_GROUP_FOUR_SIX_4;	// x..PPP..P.x, x..P..PPP.x, x..PP.P.P.x, x..P.P.PP.x, x..PP..PP.x, x..P.PP.P.x
+< 	protected static final int GROUP_2_4_6_2 = SCORE_GROUP_FOUR_SIX_5;	// x..PPP..P..x, x..P..PPP..x, x..PP.P.P..x, x..P.P.PP..x, x..PP..PP..x, x..P.PP.P..x
+---
+> 	protected static final int GROUP_2_4_6_0 = SCORE_GROUP_FOUR_SIX_3;
+> 	protected static final int GROUP_2_4_6_1 = SCORE_GROUP_FOUR_SIX_4;
+> 	protected static final int GROUP_2_4_6_2 = SCORE_GROUP_FOUR_SIX_5;
+232a145
+> 	// Group x_5_6_y
+253,255c166,168
+< 	protected static final int GROUP_0_5_6_0 = SCORE_GROUP_FIVE_SIX_0_0;	// x.PPPPPx, xP.PPPPx, xPP.PPPx, xPPP.PPx, xPPPP.Px, xPPPPP.x
+< 	protected static final int GROUP_0_5_6_1 = SCORE_GROUP_FIVE_SIX_0_1;	// x.PPPPP.x, xP.PPPP.x, xPP.PPP.x, xPPP.PP.x, xPPPP.P.x, xPPPPP..x
+< 	protected static final int GROUP_0_5_6_2 = SCORE_GROUP_FIVE_SIX_0_2;	// x.PPPPP..x, xP.PPPP..x, xPP.PPP..x, xPPP.PP..x, xPPPP.P..x, xPPPPP...x
+---
+> 	protected static final int GROUP_0_5_6_0 = SCORE_GROUP_FIVE_SIX_0_0;
+> 	protected static final int GROUP_0_5_6_1 = SCORE_GROUP_FIVE_SIX_0_1;
+> 	protected static final int GROUP_0_5_6_2 = SCORE_GROUP_FIVE_SIX_0_2;
+257,259c170,172
+< 	protected static final int GROUP_1_5_6_0 = SCORE_GROUP_FIVE_SIX_1_0;	// x..PPPPPx, x.P.PPPPx, x.PP.PPPx, x.PPP.PPx, x.PPPP.Px, x.PPPPP.x
+< 	protected static final int GROUP_1_5_6_1 = SCORE_GROUP_FIVE_SIX_1_1;	// x..PPPPP.x, x.P.PPPP.x, x.PP.PPP.x, x.PPP.PP.x, x.PPPP.P.x, x.PPPPP..x
+< 	protected static final int GROUP_1_5_6_2 = SCORE_GROUP_FIVE_SIX_1_2;	// x..PPPPP..x, x.P.PPPP..x, x.PP.PPP..x, x.PPP.PP..x, x.PPPP.P..x, x.PPPPP...x
+---
+> 	protected static final int GROUP_1_5_6_0 = SCORE_GROUP_FIVE_SIX_1_0;
+> 	protected static final int GROUP_1_5_6_1 = SCORE_GROUP_FIVE_SIX_1_1;
+> 	protected static final int GROUP_1_5_6_2 = SCORE_GROUP_FIVE_SIX_1_2;
+261,263c174,176
+< 	protected static final int GROUP_2_5_6_0 = SCORE_GROUP_FIVE_SIX_2_0;	// x...PPPPPx, x..P.PPPPx, x..PP.PPPx, x..PPP.PPx, x..PPPP.Px, x..PPPPP.x
+< 	protected static final int GROUP_2_5_6_1 = SCORE_GROUP_FIVE_SIX_2_1;	// x...PPPPP.x, x..P.PPPP.x, x..PP.PPP.x, x..PPP.PP.x, x..PPPP.P.x, x..PPPPP..x
+< 	protected static final int GROUP_2_5_6_2 = SCORE_GROUP_FIVE_SIX_2_2;	// x...PPPPP..x, x..P.PPPP..x, x..PP.PPP..x, x..PPP.PP..x, x..PPPP.P..x, x..PPPPP...x
+---
+> 	protected static final int GROUP_2_5_6_0 = SCORE_GROUP_FIVE_SIX_2_0;
+> 	protected static final int GROUP_2_5_6_1 = SCORE_GROUP_FIVE_SIX_2_1;
+> 	protected static final int GROUP_2_5_6_2 = SCORE_GROUP_FIVE_SIX_2_2;
+ 
+Comparing: (< = baseline) /Users/jv/tmp/master/gomoku-server/gomoku-server/src/main/java/io/johnvincent/gomoku/library/rates/SummaryRatesItem.java
+with: (> = compare) /Users/jv/tmp/f77/gomoku-server/gomoku-server/src/main/java/io/johnvincent/gomoku/library/rates/SummaryRatesItem.java
+Different
+95a96,97
+> //		if (! item.isAlwaysUsed())
+> //			System.out.println("SummaryRatesItem; ActualRatesItem "+item);
+102c104,105
+< 		if (forcingWin == 2) this.forcingWin2++;
+---
+> //		if (forcingWin == 2) this.forcingWin2++;
+> 		if (forcingWin == 2 && item.isAlwaysUsed()) this.forcingWin2++;
+ 
+Comparing: (< = baseline) /Users/jv/tmp/master/gomoku-server/gomoku-server/src/main/java/io/johnvincent/gomoku/library/rates/ActualCollection.java
+with: (> = compare) /Users/jv/tmp/f77/gomoku-server/gomoku-server/src/main/java/io/johnvincent/gomoku/library/rates/ActualCollection.java
+Different
+16a17,20
+> 		add(before, actual, after, rate, forcingMove, forcingWin, lethal, true);
+> 	}
+> 
+> 	public void add(int before, int actual, int after, int rate, int forcingMove, int forcingWin, int lethal, boolean alwaysUsed) {
+18c22
+< 		m_map.put(key, new ActualRatesItem (key, before, actual, after, rate, forcingMove, forcingWin, lethal));
+---
+> 		m_map.put(key, new ActualRatesItem (key, before, actual, after, rate, forcingMove, forcingWin, lethal, alwaysUsed));
+ 
+Comparing: (< = baseline) /Users/jv/tmp/master/gomoku-server/gomoku-server/src/main/java/io/johnvincent/gomoku/library/rates/FlagsItem.java
+with: (> = compare) /Users/jv/tmp/f77/gomoku-server/gomoku-server/src/main/java/io/johnvincent/gomoku/library/rates/FlagsItem.java
+Different
+6c6
+< @JsonPropertyOrder({ "key", "rate", "forcingMove", "forcingWin", "lethal" })
+---
+> @JsonPropertyOrder({ "key", "rate", "forcingMove", "forcingWin", "lethal", "alwaysUsed" })
+13a14
+> 	private boolean alwaysUsed;
+15c16
+< 	public FlagsItem (String key, int rate, int forcingMove, int forcingWin, int lethal) {
+---
+> 	public FlagsItem (String key, int rate, int forcingMove, int forcingWin, int lethal, boolean alwaysUsed) {
+25a27
+> 		this.alwaysUsed = alwaysUsed;
+27a30,33
+> 	public FlagsItem (String key, int rate, int forcingMove, int forcingWin, int lethal) {
+> 		this(key, rate, forcingMove, forcingWin, lethal, true);
+> 	}
+> 
+29c35
+< 		this(key, rate, RateHelper.NONE, RateHelper.NONE, RateHelper.NONE);
+---
+> 		this(key, rate, RateHelper.NONE, RateHelper.NONE, RateHelper.NONE, true);
+36a43
+> 	public boolean isAlwaysUsed() {return alwaysUsed;}
+40c47
+< 				getForcingMove()+","+getForcingWin()+","+getLethal()+"]";
+---
+> 				getForcingMove()+","+getForcingWin()+","+getLethal()+","+isAlwaysUsed()+"]";
+ 
+Comparing: (< = baseline) /Users/jv/tmp/master/gomoku-server/gomoku-server/src/main/java/io/johnvincent/gomoku/library/rates/RateHelper.java
+with: (> = compare) /Users/jv/tmp/f77/gomoku-server/gomoku-server/src/main/java/io/johnvincent/gomoku/library/rates/RateHelper.java
+Different
+17a18,68
+> 	// Actuals
+> 
+> 	private static ActualCollection m_actualCollection = new ActualCollection();
+> 		
+> 	static {
+> 		m_actualCollection.add(0, 5, 0, Rates.ACTUAL_0_5_0, NONE, NONE, LETHAL_1);
+> 		
+> 		m_actualCollection.add(0, 4, 0, Rates.ACTUAL_0_4_0);
+> 		m_actualCollection.add(0, 4, 1, Rates.ACTUAL_0_4_1, FORCING_MOVE_1, FORCING_WIN_3, NONE);		// FW3 to reduce the priority
+> 		m_actualCollection.add(1, 4, 0, Rates.ACTUAL_1_4_0, FORCING_MOVE_1, FORCING_WIN_3, NONE);		// FW3 to reduce the priority
+> 		m_actualCollection.add(1, 4, 1, Rates.ACTUAL_1_4_1, NONE, NONE, LETHAL_2);
+> 		m_actualCollection.add(2, 4, 0, Rates.ACTUAL_2_4_0, FORCING_MOVE_1, FORCING_WIN_2, NONE, false);
+> 		m_actualCollection.add(2, 4, 1, Rates.ACTUAL_2_4_1, NONE, NONE, LETHAL_2);
+> 		m_actualCollection.add(0, 4, 2, Rates.ACTUAL_0_4_2, FORCING_MOVE_1, FORCING_WIN_2, NONE, false);
+> 		m_actualCollection.add(1, 4, 2, Rates.ACTUAL_1_4_2, NONE, NONE, LETHAL_2);
+> 		m_actualCollection.add(2, 4, 2, Rates.ACTUAL_2_4_2, NONE, NONE, LETHAL_2);
+> 
+> 		m_actualCollection.add(0, 3, 0, Rates.ACTUAL_0_3_0);
+> 		m_actualCollection.add(0, 3, 1, Rates.ACTUAL_0_3_1);
+> 		m_actualCollection.add(1, 3, 0, Rates.ACTUAL_1_3_0);
+> 		m_actualCollection.add(1, 3, 1, Rates.ACTUAL_1_3_1);
+> 		m_actualCollection.add(2, 3, 0, Rates.ACTUAL_2_3_0);
+> 		m_actualCollection.add(0, 3, 2, Rates.ACTUAL_0_3_2);
+> 		m_actualCollection.add(2, 3, 1, Rates.ACTUAL_2_3_1, FORCING_MOVE_1, FORCING_WIN_3, NONE);
+> 		m_actualCollection.add(1, 3, 2, Rates.ACTUAL_1_3_2, FORCING_MOVE_1, FORCING_WIN_3, NONE);
+> 		m_actualCollection.add(2, 3, 2, Rates.ACTUAL_2_3_2, FORCING_MOVE_2, FORCING_WIN_3, NONE);
+> 		
+> 		m_actualCollection.add(0, 2, 0, Rates.ACTUAL_0_2_0);
+> 		m_actualCollection.add(1, 2, 0, Rates.ACTUAL_1_2_0);
+> 		m_actualCollection.add(0, 2, 1, Rates.ACTUAL_0_2_1);
+> 		m_actualCollection.add(1, 2, 1, Rates.ACTUAL_1_2_1);
+> 		
+> 		m_actualCollection.add(2, 2, 0, Rates.ACTUAL_2_2_0);
+> 		m_actualCollection.add(2, 2, 1, Rates.ACTUAL_2_2_1);
+> 		
+> 		m_actualCollection.add(0, 2, 2, Rates.ACTUAL_0_2_2);
+> 		m_actualCollection.add(1, 2, 2, Rates.ACTUAL_1_2_2);
+> 		m_actualCollection.add(2, 2, 2, Rates.ACTUAL_2_2_2);
+> 	}
+> 
+> 	public static ActualRatesItem getActualRatesItem(int before, int actual, int after) {
+> 		return m_actualCollection.get(before, actual, after);
+>  	}
+> 
+> 	public static int getActualRate(int before, int actual, int after) {
+> 		ActualRatesItem actualRatesItem = getActualRatesItem(before, actual, after);
+> 		return actualRatesItem == null ? 0 : actualRatesItem.getRate();
+> 	}
+> 
+> 	// Groups
+> 
+84,132d134
+< // Actuals
+< 
+< 	private static ActualCollection m_actualCollection = new ActualCollection();
+< 	
+< 	static {
+< 		m_actualCollection.add(0, 5, 0, Rates.ACTUAL_0_5_0, NONE, NONE, LETHAL_1);
+< 		
+< 		m_actualCollection.add(0, 4, 0, Rates.ACTUAL_0_4_0);
+< 		m_actualCollection.add(0, 4, 1, Rates.ACTUAL_0_4_1, FORCING_MOVE_1, FORCING_WIN_3, NONE);		// FW3 to reduce the priority
+< 		m_actualCollection.add(1, 4, 0, Rates.ACTUAL_1_4_0, FORCING_MOVE_1, FORCING_WIN_3, NONE);
+< 		m_actualCollection.add(1, 4, 1, Rates.ACTUAL_1_4_1, NONE, NONE, LETHAL_2);
+< 		m_actualCollection.add(2, 4, 0, Rates.ACTUAL_2_4_0, FORCING_MOVE_1, FORCING_WIN_2, NONE);
+< 		m_actualCollection.add(2, 4, 1, Rates.ACTUAL_2_4_1, NONE, NONE, LETHAL_2);
+< 		m_actualCollection.add(0, 4, 2, Rates.ACTUAL_0_4_2, FORCING_MOVE_1, FORCING_WIN_2, NONE);
+< 		m_actualCollection.add(1, 4, 2, Rates.ACTUAL_1_4_2, NONE, NONE, LETHAL_2);
+< 		m_actualCollection.add(2, 4, 2, Rates.ACTUAL_2_4_2, NONE, NONE, LETHAL_2);
+< 
+< 		m_actualCollection.add(0, 3, 0, Rates.ACTUAL_0_3_0);
+< 		m_actualCollection.add(0, 3, 1, Rates.ACTUAL_0_3_1);
+< 		m_actualCollection.add(1, 3, 0, Rates.ACTUAL_1_3_0);
+< 		m_actualCollection.add(1, 3, 1, Rates.ACTUAL_1_3_1);
+< 		m_actualCollection.add(2, 3, 0, Rates.ACTUAL_2_3_0);
+< 		m_actualCollection.add(0, 3, 2, Rates.ACTUAL_0_3_2);
+< 		m_actualCollection.add(2, 3, 1, Rates.ACTUAL_2_3_1, FORCING_MOVE_1, FORCING_WIN_3, NONE);
+< 		m_actualCollection.add(1, 3, 2, Rates.ACTUAL_1_3_2, FORCING_MOVE_1, FORCING_WIN_3, NONE);
+< 		m_actualCollection.add(2, 3, 2, Rates.ACTUAL_2_3_2, FORCING_MOVE_2, FORCING_WIN_3, NONE);
+< 		
+< 		m_actualCollection.add(0, 2, 0, Rates.ACTUAL_0_2_0);
+< 		m_actualCollection.add(1, 2, 0, Rates.ACTUAL_1_2_0);
+< 		m_actualCollection.add(0, 2, 1, Rates.ACTUAL_0_2_1);
+< 		m_actualCollection.add(1, 2, 1, Rates.ACTUAL_1_2_1);
+< 		
+< 		m_actualCollection.add(2, 2, 0, Rates.ACTUAL_2_2_0);
+< 		m_actualCollection.add(2, 2, 1, Rates.ACTUAL_2_2_1);
+< 		
+< 		m_actualCollection.add(0, 2, 2, Rates.ACTUAL_0_2_2);
+< 		m_actualCollection.add(1, 2, 2, Rates.ACTUAL_1_2_2);
+< 		m_actualCollection.add(2, 2, 2, Rates.ACTUAL_2_2_2);
+< 	}
+< 
+< 	public static ActualRatesItem getActualRatesItem(int before, int actual, int after) {
+< 		return m_actualCollection.get(before, actual, after);
+<  	}
+< 
+< 	public static int getActualRate(int before, int actual, int after) {
+< 		ActualRatesItem actualRatesItem = getActualRatesItem(before, actual, after);
+< 		return actualRatesItem == null ? 0 : actualRatesItem.getRate();
+< 	}
+< 	
+135,140c137,142
+< 	private static final int SPECIAL_CASE_1 = 4000;		// lethal in 3
+< 	private static final int SPECIAL_CASE_2 = 3000;		// lethal in 3
+< 	private static final int SPECIAL_CASE_3 = 3100;		// lethal in 3, probably already high score anyway
+< 	private static final int SPECIAL_CASE_4 = 5000;		// lethal in 2, probably already high score anyway
+< 	private static final int SPECIAL_CASE_5 = 5100;		// lethal in 2, probably already high score anyway
+< 	private static final int SPECIAL_CASE_6 = 3000;		// lethal in 3
+---
+> 	private static final int SPECIAL_CASE_1 = 4000;
+> 	private static final int SPECIAL_CASE_2 = 3000;
+> 	private static final int SPECIAL_CASE_3 = 3100;
+> 	private static final int SPECIAL_CASE_4 = 5000;
+> 	private static final int SPECIAL_CASE_5 = 5100;
+> 	private static final int SPECIAL_CASE_6 = 3000;
+ 
+Comparing: (< = baseline) /Users/jv/tmp/master/gomoku-server/gomoku-server/src/main/java/io/johnvincent/gomoku/library/bestmove/BestMoveHelper.java
+with: (> = compare) /Users/jv/tmp/f77/gomoku-server/gomoku-server/src/main/java/io/johnvincent/gomoku/library/bestmove/BestMoveHelper.java
+Different
+6a7
+> import io.johnvincent.gomoku.library.scoring.ScoringListsItem;
+35,36c36,37
+< //		currentPlayerOptions.show("currentPlayer BestMoveOptions");
+< //		otherPlayerOptions.show("otherPlayer BestMoveOptions");
+---
+> 		currentPlayerOptions.show("currentPlayer BestMoveOptions");
+> 		otherPlayerOptions.show("otherPlayer BestMoveOptions");
+
+Cleaning pass through /Users/jv/tmp/master
+
+Cleaning pass through /Users/jv/tmp/f77

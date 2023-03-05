@@ -1,0 +1,172 @@
+package io.johnvincent.gomoku.library.rates;
+
+import java.util.HashMap;
+
+public class RateHelper {
+
+	protected static final int NONE = -1;				// nothing
+	protected static final int LETHAL_1 = 1;			// wins in 1 move
+	protected static final int LETHAL_2 = 2;			// wins in 2 more move
+	protected static final int LETHAL_3 = 3;			// wins in 3 more moves
+	
+	protected static final int FORCING_MOVE_1 = 1;		// this move forces 1 move
+	protected static final int FORCING_MOVE_2 = 2;		// this move forces 2 moves
+	
+	protected static final int FORCING_WIN_2 = 2;		// this forcing move could win in 2 moves
+	protected static final int FORCING_WIN_3 = 3;		// this forcing move could win in 3 moves
+
+	//TODO; make the code smarter than this.
+	public static final int OTHER_PLAYER_RATIO = 70;	// 75
+
+	private static final HashMap<String, GroupRatesItem> m_catalogGroups = new HashMap<String, GroupRatesItem>();
+
+	static {
+		GroupRatesItem item;
+		item = new GroupRatesItem(1, 2, 3, 1, Rates.GROUP_1_2_3_1); m_catalogGroups.put(item.getKey(), item);
+		item = new GroupRatesItem(2, 2, 3, 1, Rates.GROUP_2_2_3_1); m_catalogGroups.put(item.getKey(), item);
+		item = new GroupRatesItem(1, 2, 3, 2, Rates.GROUP_1_2_3_2); m_catalogGroups.put(item.getKey(), item);
+		item = new GroupRatesItem(2, 2, 3, 2, Rates.GROUP_2_2_3_2); m_catalogGroups.put(item.getKey(), item);
+		
+		item = new GroupRatesItem(0, 3, 4, 2, Rates.GROUP_0_3_4_2); m_catalogGroups.put(item.getKey(), item);
+		item = new GroupRatesItem(2, 3, 4, 0, Rates.GROUP_2_3_4_0); m_catalogGroups.put(item.getKey(), item);
+		item = new GroupRatesItem(1, 3, 4, 1, Rates.GROUP_1_3_4_1, FORCING_MOVE_1, FORCING_WIN_3, NONE); m_catalogGroups.put(item.getKey(), item);
+		item = new GroupRatesItem(2, 3, 4, 1, Rates.GROUP_2_3_4_1, FORCING_MOVE_1, FORCING_WIN_3, NONE); m_catalogGroups.put(item.getKey(), item);
+		item = new GroupRatesItem(1, 3, 4, 2, Rates.GROUP_1_3_4_2, FORCING_MOVE_1, FORCING_WIN_3, NONE); m_catalogGroups.put(item.getKey(), item);
+		item = new GroupRatesItem(2, 3, 4, 2, Rates.GROUP_2_3_4_2, FORCING_MOVE_1, FORCING_WIN_3, NONE); m_catalogGroups.put(item.getKey(), item);
+		
+		item = new GroupRatesItem(1, 3, 5, 1, Rates.GROUP_1_3_5_1); m_catalogGroups.put(item.getKey(), item);
+		item = new GroupRatesItem(2, 3, 5, 1, Rates.GROUP_2_3_5_1); m_catalogGroups.put(item.getKey(), item);
+		item = new GroupRatesItem(1, 3, 5, 2, Rates.GROUP_1_3_5_2); m_catalogGroups.put(item.getKey(), item);
+		item = new GroupRatesItem(2, 3, 5, 2, Rates.GROUP_2_3_5_2); m_catalogGroups.put(item.getKey(), item);
+		
+		item = new GroupRatesItem(0, 4, 5, 0, Rates.GROUP_0_4_5_0, FORCING_MOVE_1, FORCING_WIN_2, NONE); m_catalogGroups.put(item.getKey(), item);
+		item = new GroupRatesItem(0, 4, 5, 1, Rates.GROUP_0_4_5_1, FORCING_MOVE_1, FORCING_WIN_2, NONE); m_catalogGroups.put(item.getKey(), item);
+		item = new GroupRatesItem(0, 4, 5, 2, Rates.GROUP_0_4_5_2, FORCING_MOVE_1, FORCING_WIN_2, NONE); m_catalogGroups.put(item.getKey(), item);
+		
+		item = new GroupRatesItem(1, 4, 5, 0, Rates.GROUP_1_4_5_0, FORCING_MOVE_1, FORCING_WIN_2, NONE); m_catalogGroups.put(item.getKey(), item);
+		item = new GroupRatesItem(1, 4, 5, 1, Rates.GROUP_1_4_5_1, FORCING_MOVE_1, FORCING_WIN_2, NONE); m_catalogGroups.put(item.getKey(), item);
+		item = new GroupRatesItem(1, 4, 5, 2, Rates.GROUP_1_4_5_2, FORCING_MOVE_1, FORCING_WIN_2, NONE); m_catalogGroups.put(item.getKey(), item);
+		
+		item = new GroupRatesItem(2, 4, 5, 0, Rates.GROUP_2_4_5_0, FORCING_MOVE_1, FORCING_WIN_2, NONE); m_catalogGroups.put(item.getKey(), item);
+		item = new GroupRatesItem(2, 4, 5, 1, Rates.GROUP_2_4_5_1, FORCING_MOVE_1, FORCING_WIN_2, NONE); m_catalogGroups.put(item.getKey(), item);
+		item = new GroupRatesItem(2, 4, 5, 2, Rates.GROUP_2_4_5_2, FORCING_MOVE_1, FORCING_WIN_2, NONE); m_catalogGroups.put(item.getKey(), item);
+		
+		item = new GroupRatesItem(0, 4, 6, 0, Rates.GROUP_0_4_6_0); m_catalogGroups.put(item.getKey(), item);
+		item = new GroupRatesItem(0, 4, 6, 1, Rates.GROUP_0_4_6_1); m_catalogGroups.put(item.getKey(), item);
+		item = new GroupRatesItem(0, 4, 6, 2, Rates.GROUP_0_4_6_2); m_catalogGroups.put(item.getKey(), item);
+		
+		item = new GroupRatesItem(1, 4, 6, 0, Rates.GROUP_1_4_6_0); m_catalogGroups.put(item.getKey(), item);
+		item = new GroupRatesItem(1, 4, 6, 1, Rates.GROUP_1_4_6_1); m_catalogGroups.put(item.getKey(), item);
+		item = new GroupRatesItem(1, 4, 6, 2, Rates.GROUP_1_4_6_2); m_catalogGroups.put(item.getKey(), item);
+		
+		item = new GroupRatesItem(2, 4, 6, 0, Rates.GROUP_2_4_6_0); m_catalogGroups.put(item.getKey(), item);
+		item = new GroupRatesItem(2, 4, 6, 1, Rates.GROUP_2_4_6_1); m_catalogGroups.put(item.getKey(), item);
+		item = new GroupRatesItem(2, 4, 6, 2, Rates.GROUP_2_4_6_2); m_catalogGroups.put(item.getKey(), item);
+	}
+
+	protected static String createGroupRatesKey(int before, int find, int of, int after) { return "G_" + before + "_" + find + "_" + of + "_" + after; }
+
+	public static GroupRatesItem getGroupRatesItem(final int before, final int find, final int of, final int after) {
+		assert before >= 0;
+		assert find >= 0;
+		assert of >= 0;
+		assert after >= 0;
+
+		int num1 = before > 2 ? 2 : before;
+		int num3 = after > 2 ? 2 : after;
+
+		return m_catalogGroups.get(createGroupRatesKey(num1, find, of, num3));
+	}
+
+	public static int getGroupRate(int before, int find, int of, int after) {
+		GroupRatesItem groupRatesItem = getGroupRatesItem(before, find, of, after);
+		return groupRatesItem == null ? 0 : groupRatesItem.getRate();
+	}
+
+// Actuals
+
+	private static final HashMap<String, ActualRatesItem> m_catalogActuals = new HashMap<String, ActualRatesItem>();
+	
+	static {
+		ActualRatesItem item;
+		item = new ActualRatesItem(0, 5, 0, Rates.ACTUAL_0_5_0, NONE, NONE, LETHAL_1); m_catalogActuals.put(item.getKey(), item);
+		
+		item = new ActualRatesItem(0, 4, 0, Rates.ACTUAL_0_4_0); m_catalogActuals.put(item.getKey(), item);
+		item = new ActualRatesItem(0, 4, 1, Rates.ACTUAL_0_4_1, FORCING_MOVE_1, FORCING_WIN_2, NONE); m_catalogActuals.put(item.getKey(), item);
+		item = new ActualRatesItem(1, 4, 0, Rates.ACTUAL_1_4_0, FORCING_MOVE_1, FORCING_WIN_2, NONE); m_catalogActuals.put(item.getKey(), item);
+		item = new ActualRatesItem(1, 4, 1, Rates.ACTUAL_1_4_1, NONE, NONE, LETHAL_2); m_catalogActuals.put(item.getKey(), item);
+		item = new ActualRatesItem(2, 4, 0, Rates.ACTUAL_2_4_0, FORCING_MOVE_1, FORCING_WIN_2, NONE); m_catalogActuals.put(item.getKey(), item);
+		item = new ActualRatesItem(2, 4, 1, Rates.ACTUAL_2_4_1, NONE, NONE, LETHAL_2); m_catalogActuals.put(item.getKey(), item);
+		item = new ActualRatesItem(0, 4, 2, Rates.ACTUAL_0_4_2, FORCING_MOVE_1, FORCING_WIN_2, NONE); m_catalogActuals.put(item.getKey(), item);
+		item = new ActualRatesItem(1, 4, 2, Rates.ACTUAL_1_4_2, NONE, NONE, LETHAL_2); m_catalogActuals.put(item.getKey(), item);
+		item = new ActualRatesItem(2, 4, 2, Rates.ACTUAL_2_4_2, NONE, NONE, LETHAL_2); m_catalogActuals.put(item.getKey(), item);
+
+		item = new ActualRatesItem(0, 3, 0, Rates.ACTUAL_0_3_0); m_catalogActuals.put(item.getKey(), item);
+		item = new ActualRatesItem(0, 3, 1, Rates.ACTUAL_0_3_1); m_catalogActuals.put(item.getKey(), item);
+		item = new ActualRatesItem(1, 3, 0, Rates.ACTUAL_1_3_0); m_catalogActuals.put(item.getKey(), item);
+		item = new ActualRatesItem(1, 3, 1, Rates.ACTUAL_1_3_1); m_catalogActuals.put(item.getKey(), item);
+		item = new ActualRatesItem(2, 3, 0, Rates.ACTUAL_2_3_0); m_catalogActuals.put(item.getKey(), item);
+		item = new ActualRatesItem(0, 3, 2, Rates.ACTUAL_0_3_2); m_catalogActuals.put(item.getKey(), item);
+		item = new ActualRatesItem(2, 3, 1, Rates.ACTUAL_2_3_1, FORCING_MOVE_1, FORCING_WIN_3, NONE); m_catalogActuals.put(item.getKey(), item);
+		item = new ActualRatesItem(1, 3, 2, Rates.ACTUAL_1_3_2, FORCING_MOVE_1, FORCING_WIN_3, NONE); m_catalogActuals.put(item.getKey(), item);
+		item = new ActualRatesItem(2, 3, 2, Rates.ACTUAL_2_3_2, FORCING_MOVE_2, FORCING_WIN_3, NONE); m_catalogActuals.put(item.getKey(), item);
+		
+		item = new ActualRatesItem(0, 2, 0, Rates.ACTUAL_0_2_0); m_catalogActuals.put(item.getKey(), item);
+		item = new ActualRatesItem(1, 2, 0, Rates.ACTUAL_1_2_0); m_catalogActuals.put(item.getKey(), item);
+		item = new ActualRatesItem(0, 2, 1, Rates.ACTUAL_0_2_1); m_catalogActuals.put(item.getKey(), item);
+		item = new ActualRatesItem(1, 2, 1, Rates.ACTUAL_1_2_1); m_catalogActuals.put(item.getKey(), item);
+		
+		item = new ActualRatesItem(2, 2, 0, Rates.ACTUAL_2_2_0); m_catalogActuals.put(item.getKey(), item);
+		item = new ActualRatesItem(2, 2, 1, Rates.ACTUAL_2_2_1); m_catalogActuals.put(item.getKey(), item);
+		
+		item = new ActualRatesItem(0, 2, 2, Rates.ACTUAL_0_2_2); m_catalogActuals.put(item.getKey(), item);
+		item = new ActualRatesItem(1, 2, 2, Rates.ACTUAL_1_2_2); m_catalogActuals.put(item.getKey(), item);
+		item = new ActualRatesItem(2, 2, 2, Rates.ACTUAL_2_2_2); m_catalogActuals.put(item.getKey(), item);
+	}
+	protected static String createActualRatesKey(int before, int actual, int after) { return "A_" + before + "_" + actual + "_" + after; }
+	
+	public static ActualRatesItem getActualRatesItem(final int beforeActual, final int actual, final int afterActual) {
+		assert beforeActual >= 0;
+		assert actual >= 0;
+		assert afterActual >= 0;
+		
+		int num1 = beforeActual > 2 ? 2 : beforeActual;
+		int num2 = actual;
+		int num3 = afterActual > 2 ? 2 : afterActual;
+		if (actual >= 5) {		// only one entry in catalog as before and after do not matter.
+			num2 = 5;
+			num1 = 0;
+			num3 = 0;
+		}
+		return m_catalogActuals.get(createActualRatesKey(num1, num2, num3));
+	}
+
+	public static int getActualRate(int before, int actual, int after) {
+		ActualRatesItem actualRatesItem = getActualRatesItem(before, actual, after);
+		return actualRatesItem == null ? 0 : actualRatesItem.getRate();
+	}
+	
+// Special Cases
+
+	private static final HashMap<String, SpecialCaseRatesItem> m_catalogSpecialCases = new HashMap<String, SpecialCaseRatesItem>();
+	
+	static {
+		SpecialCaseRatesItem item;
+		item = new SpecialCaseRatesItem(1, Rates.SCORE_SPECIAL_CASE_1, NONE, NONE, LETHAL_3); m_catalogSpecialCases.put(item.getKey(), item);
+		item = new SpecialCaseRatesItem(2, Rates.SCORE_SPECIAL_CASE_2, NONE, NONE, LETHAL_3); m_catalogSpecialCases.put(item.getKey(), item);
+		item = new SpecialCaseRatesItem(3, Rates.SCORE_SPECIAL_CASE_3, NONE, NONE, LETHAL_3); m_catalogSpecialCases.put(item.getKey(), item);
+		item = new SpecialCaseRatesItem(4, Rates.SCORE_SPECIAL_CASE_4, NONE, NONE, LETHAL_2); m_catalogSpecialCases.put(item.getKey(), item);
+		item = new SpecialCaseRatesItem(5, Rates.SCORE_SPECIAL_CASE_5, NONE, NONE, LETHAL_2); m_catalogSpecialCases.put(item.getKey(), item);
+	}
+
+	protected static String createSpecialCaseRatesKey(int id) { return "SC_" + id; }
+
+	public static SpecialCaseRatesItem getSpecialCasesRatesItem(int id) {
+		return m_catalogSpecialCases.get(createSpecialCaseRatesKey(id));
+	}
+
+	public static int getSpecialCasesRate(int id) {
+		SpecialCaseRatesItem specialCaseRatesItem = getSpecialCasesRatesItem(id);
+		return specialCaseRatesItem == null ? 0 : getSpecialCasesRatesItem(id).getRate();
+	}
+}

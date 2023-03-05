@@ -1,0 +1,146 @@
+package io.johnvincent.gomoku.library.counter;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+
+import io.johnvincent.gomoku.library.bestmove.BestMoveItem;
+import io.johnvincent.gomoku.library.bestmove.BestMoveOptions;
+import io.johnvincent.gomoku.library.game.Board;
+import io.johnvincent.gomoku.library.game.Coordinate;
+import io.johnvincent.gomoku.library.game.Moves;
+import io.johnvincent.gomoku.library.pattern.PatternUtils;
+import io.johnvincent.gomoku.library.players.Players;
+import io.johnvincent.gomoku.library.rates.SummaryRatesItem;
+import io.johnvincent.gomoku.library.scoring.ScoringListsItem;
+import io.johnvincent.gomoku.library.winner.WinnerList;
+
+@JsonPropertyOrder({ "currentPlayer", "currentMove", "totalMoves", "whitePlayer", "blackPlayer" })
+
+public class CounterInfo {
+	private Board m_board;
+
+	@JsonProperty("whitePlayer")
+	private CounterPlayer whitePlayer;
+
+	@JsonProperty("blackPlayer")
+	private CounterPlayer blackPlayer;
+
+	@JsonProperty("currentPlayer")
+	private int currentPlayer;
+
+	@JsonProperty("currentMove")
+	private int currentMove;
+	
+	@JsonProperty("totalMoves")
+	private int totalMoves;
+	
+	public CounterInfo(Board board, Moves moves) {
+		m_board = board;
+		currentPlayer = moves.getCurrentPlayer();
+		currentMove = moves.getCurrentMove();
+		totalMoves = board.getRows() * board.getColumns();
+		
+		whitePlayer = new CounterPlayer(1, currentPlayer);
+		blackPlayer = new CounterPlayer(2, currentPlayer);
+	}
+
+	private CounterPlayer getPlayer(final int player) {
+		if (player == 1) return whitePlayer;
+		if (player == 2) return blackPlayer;
+		return null;
+	}
+	
+	public BestMoveItem getBestMoveItem(final int player) {
+		assert Players.isValidPlayer(player);
+		return getPlayer(player).getBestMoveItem();	
+	}
+	public void setBestMoveItem(final int player, final BestMoveItem bestMoveItem) {
+		assert Players.isValidPlayer(player);
+		getPlayer(player).setBestMoveItem(bestMoveItem);	
+	}
+
+	public BestMoveOptions getBestMoveOptions(final int player) {
+		assert Players.isValidPlayer(player);
+		return getPlayer(player).getBestMoveOptions();	
+	}
+	
+	public void addSquare(final int player, final CounterSquare counterSquare) {
+//		System.out.println("CounterInfo::addSquare; player "+player);
+		assert Players.isValidPlayer(player);
+		assert counterSquare != null;
+		getPlayer(player).addSquare(counterSquare);
+	}
+
+	public CounterPatternsItem getCounterPatternsItem(final int player, final int row, final int col, final int pattern) {
+//		System.out.println("CounterInfo::getCounterPatternsItem; player "+player+" row "+row+" col "+col+" pattern "+pattern);
+		assert Players.isValidPlayer(player);
+		assert m_board.isValidRow(row);
+		assert m_board.isValidColumn(col);
+		assert PatternUtils.isValidPattern(pattern);
+		return getPlayer(player).getCounterPatternsItem(row, col, pattern);
+	}
+
+	public void calculateSquareTotal(final int player, final int row, final int col) {
+		assert Players.isValidPlayer(player);
+		assert m_board.isValidRow(row);
+		assert m_board.isValidColumn(col);
+		getPlayer(player).calculateSquareTotal(row, col);
+	}
+	
+	public int getCurrentPlayerScore(final int player, final int row, final int col) {
+		assert Players.isValidPlayer(player);
+		assert m_board.isValidRow(row);
+		assert m_board.isValidColumn(col);
+		return getPlayer(player).getCurrentPlayerScore(row, col);
+	}
+	
+	public int getOtherPlayerScore(final int player, final int row, final int col) {
+		assert Players.isValidPlayer(player);
+		assert m_board.isValidRow(row);
+		assert m_board.isValidColumn(col);
+		return getPlayer(player).getOtherPlayerScore(row, col);
+	}
+	
+	public void setOtherPlayerScore(final int score, final int player, final int row, final int col) {
+		assert Players.isValidPlayer(player);
+		assert m_board.isValidRow(row);
+		assert m_board.isValidColumn(col);
+		getPlayer(player).setOtherPlayerScore(score, row, col);
+	}
+
+	public void createScoringLists(final int player) {
+		assert Players.isValidPlayer(player);
+		getPlayer(player).createScoringLists(m_board);
+	}
+	public ScoringListsItem getScoringLists(final int player) {
+		assert Players.isValidPlayer(player);
+		return getPlayer(player).getScoringListsItem();
+	}
+
+	public void handleSpecialCases(final int player, final int row, final int col) {
+		assert Players.isValidPlayer(player);
+		assert m_board.isValidRow(row);
+		assert m_board.isValidColumn(col);
+		getPlayer(player).handleSpecialCases(row, col);
+	}
+
+	public void calculateSummaryRates(final int player, final int row, final int col) {
+		assert Players.isValidPlayer(player);
+		assert m_board.isValidRow(row);
+		assert m_board.isValidColumn(col);
+		getPlayer(player).calculateSummaryRates(row, col);
+	}
+
+	public SummaryRatesItem getSummaryRatesItem(final int player, final int row, final int col) {
+		assert Players.isValidPlayer(player);
+		assert m_board.isValidRow(row);
+		assert m_board.isValidColumn(col);
+		return getPlayer(player).getSummaryRatesItem(row, col);	
+	}
+
+	public WinnerList getWinnerList(final int player, final Coordinate coordinate) {
+		assert Players.isValidPlayer(player);
+		assert coordinate != null;
+		return getPlayer(player).getWinnerList(player, coordinate);
+	}
+}

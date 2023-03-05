@@ -1,0 +1,49 @@
+
+package io.johnvincent.gomoku.library.rates;
+
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+
+@JsonPropertyOrder({ "key", "rate", "forcingMove", "forcingWin", "lethal", "alwaysUsed" })
+public class FlagsItem {
+
+	private String key;
+	private int rate;
+	private int forcingMove;
+	private int forcingWin;
+	private int lethal;
+	private boolean alwaysUsed;
+
+	public FlagsItem (String key, int rate, int forcingMove, int forcingWin, int lethal, boolean alwaysUsed) {
+		assert rate > 0;
+		assert forcingMove >= -1;
+		assert forcingWin >= -1;
+		assert lethal >= -1;
+
+		this.key = key;
+		this.rate = rate;
+		this.forcingMove = forcingMove;
+		this.forcingWin = forcingWin;
+		this.lethal = lethal;
+		this.alwaysUsed = alwaysUsed;
+	}
+
+	public FlagsItem (String key, int rate, int forcingMove, int forcingWin, int lethal) {
+		this(key, rate, forcingMove, forcingWin, lethal, true);
+	}
+
+	public FlagsItem (String key, int rate) {
+		this(key, rate, RateHelper.NONE, RateHelper.NONE, RateHelper.NONE, true);
+	}
+	
+	public String getKey() {return key;}
+	public int getRate() {return rate;}
+	public int getForcingMove() {return forcingMove;}
+	public int getForcingWin() {return forcingWin;}
+	public int getLethal() {return lethal;}
+	public boolean isAlwaysUsed() {return alwaysUsed;}
+	
+	public String toString() {
+		return "["+getKey()+","+","+getRate()+","+
+				getForcingMove()+","+getForcingWin()+","+getLethal()+","+isAlwaysUsed()+"]";
+	}
+}

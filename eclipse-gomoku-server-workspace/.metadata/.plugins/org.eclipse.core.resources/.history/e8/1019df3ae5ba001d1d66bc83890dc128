@@ -1,0 +1,29 @@
+package io.johnvincent.gomoku.library.rates;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+public class SpecialCasesCollection {
+
+	@JsonProperty("map")
+	private Map<String, SpecialCaseRatesItem> m_map = new HashMap<String, SpecialCaseRatesItem>();
+
+	private static String createSpecialCaseRatesKey(int id) { return "SC_" + id; }
+
+	public void add(int id, int rate, PlayerFlagsItem currentPlayerFlagsItem) {
+		String key = createSpecialCaseRatesKey(id);
+		m_map.put(key, new SpecialCaseRatesItem (key, id, rate, currentPlayerFlagsItem));
+	}	
+
+	public void add(int id, int rate, PlayerFlagsItem currentPlayerFlagsItem, PlayerFlagsItem otherPlayerFlagsItem) {
+		String key = createSpecialCaseRatesKey(id);
+		m_map.put(key, new SpecialCaseRatesItem (key, id, rate, currentPlayerFlagsItem, otherPlayerFlagsItem));
+	}
+
+	public SpecialCaseRatesItem get(int id) {
+		String key = createSpecialCaseRatesKey(id);
+		return m_map.get(key);
+	}
+}

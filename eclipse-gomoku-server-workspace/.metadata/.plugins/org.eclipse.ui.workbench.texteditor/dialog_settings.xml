@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
+		<item key="selection" value="currentPlayer"/>
+		<item key="wrap" value="true"/>
+		<item key="casesensitive" value="true"/>
+		<item key="wholeword" value="false"/>
+		<item key="incremental" value="false"/>
+		<item key="isRegEx" value="false"/>
+		<list key="findhistory">
+			<item value="currentPlayer"/>
+			<item value="counterActual"/>
+			<item value="groupCounts"/>
+			<item value="player"/>
+			<item value="ScoringListsItem"/>
+			<item value="calculateBestBuildingMove"/>
+			<item value="whiteCurrentPlayer"/>
+			<item value="calculateSummaryRates"/>
+			<item value="getGroupRatesItem"/>
+			<item value="FORCING_WIN"/>
+			<item value="forcingWin"/>
+			<item value="ForcingWin"/>
+			<item value="getForcingWin"/>
+			<item value="forcingwin"/>
+			<item value="7200"/>
+		</list>
+		<list key="replacehistory">
+			<item value="m_player"/>
+			<item value="POSSIBLE_WIN"/>
+			<item value="possibleWin"/>
+			<item value="PossibleWin"/>
+			<item value="getPossibleWin"/>
+			<item value="252"/>
+			<item value="testB"/>
+			<item value="PLAYER2"/>
+			<item value="242"/>
+			<item value="testBd"/>
+			<item value="m_board"/>
+			<item value="setup"/>
+			<item value=""/>
+			<item value="ACTUAL"/>
+			<item value="GROUP"/>
+		</list>
+	</section>
+	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
+		<item key="DIALOG_X_ORIGIN" value="1472"/>
+		<item key="DIALOG_Y_ORIGIN" value="217"/>
+		<item key="DIALOG_WIDTH" value="406"/>
+		<item key="DIALOG_HEIGHT" value="490"/>
+		<item key="DIALOG_FONT_NAME" value="1|.AppleSystemUIFont|11.0|0|COCOA|1|.AppleSystemUIFont"/>
+	</section>
+</section>

@@ -1,0 +1,99 @@
+package io.johnvincent.gomoku.library.counter;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import io.johnvincent.gomoku.library.pattern.PatternUtils;
+import io.johnvincent.gomoku.library.rates.ActualRatesItem;
+import io.johnvincent.gomoku.library.rates.SummaryRatesItem;
+import io.johnvincent.gomoku.library.winner.WinnerList;
+
+@JsonIgnoreProperties(value = { "counterActual", "groupCounts", "actualsSummaryRatesItem", "groupsSummaryRatesItem" })
+public class CounterPatterns {
+
+	@JsonProperty("map")
+	private Map<Integer, CounterPatternsItem> m_collection = new HashMap<Integer, CounterPatternsItem>(4);
+
+	public void add(final int pattern, final CounterPatternsItem item) {
+		assert PatternUtils.isValidPattern(pattern);
+
+		if (item != null) {
+//			System.out.println("CounterPatterns::add; pattern "+pattern+" CounterPatternsItem "+item.toString());
+			m_collection.put(pattern, item);
+		}
+	}
+
+	public int getSize() {return m_collection.size();}
+	
+	public CounterPatternsItem getCounterPatternsItem(final int pattern) {
+//		System.out.println("CounterPatterns::getCounterPatternsItem; pattern "+pattern);
+		assert PatternUtils.isValidPattern(pattern);
+
+		return m_collection.get(pattern);	
+	}
+	
+	public int getPatternsScore() {
+		int total = 0;
+		for (Map.Entry<Integer, CounterPatternsItem> entry : m_collection.entrySet()) {
+//		    System.out.println(entry.getKey() + " = " + entry.getValue().toString());
+		    total += entry.getValue().getPatternScore();
+		}
+		return total;
+	}
+
+	public WinnerList getWinnerList() {
+		for (Map.Entry<Integer, CounterPatternsItem> entry : m_collection.entrySet()) {
+			CounterPatternsItem counterPatternsItem = entry.getValue();
+			if (counterPatternsItem == null) continue;
+			
+			WinnerList winnerList = counterPatternsItem.getWinnerList();
+			if (winnerList != null) return winnerList;
+		}
+		return null;
+	}
+
+	public SummaryRatesItem JVgetActualsSummaryRatesItem() {
+		SummaryRatesItem summaryRatesItem = new SummaryRatesItem();
+		for (Map.Entry<Integer, CounterPatternsItem> entry : m_collection.entrySet()) {
+			CounterPatternsItem counterPatternsItem = entry.getValue();
+			if (counterPatternsItem == null) continue;
+			
+			CounterActual counterActual = counterPatternsItem.getCounterActual();
+			if (counterActual == null) continue;
+			
+			ActualRatesItem actualRatesItem = counterActual.getActualRatesItem();
+ 			if (actualRatesItem == null) continue;
+
+			summaryRatesItem.add(actualRatesItem);
+		}
+		return summaryRatesItem.isUseful() ? summaryRatesItem : null;
+	}
+
+	public SummaryRatesItem getGroupsSummaryRatesItem() {
+		SummaryRatesItem summaryRatesItem = new SummaryRatesItem();
+		for (Map.Entry<Integer, CounterPatternsItem> entry1 : m_collection.entrySet()) {
+			CounterPatternsItem counterPatternsItem = entry1.getValue();
+			if (counterPatternsItem == null) continue;
+			
+			CounterGroups counterGroups = counterPatternsItem.getCounterGroups();
+			if (counterGroups == null) continue;
+			
+			summaryRatesItem.add(counterGroups.getGroupsSummaryRatesItem());
+		}
+		return summaryRatesItem.isUseful() ? summaryRatesItem : null;
+	}
+	
+	public String toString() {
+		StringBuffer buf = new StringBuffer();
+		buf.append("[");
+		for (Map.Entry<Integer, CounterPatternsItem> entry : m_collection.entrySet()) {
+			buf.append("(").append(entry.getKey()).append(",").append(entry.getValue().toString()).append(")");
+//		    System.out.println(entry.getKey() + " = " + entry.getValue().toString());
+		}
+		buf.append("]");
+		return buf.toString();
+	}
+}

@@ -1,0 +1,370 @@
+package io.johnvincent.gomoku.library.junit.counter;
+
+import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertEquals;
+
+import org.junit.Test;
+
+import io.johnvincent.gomoku.library.counter.CounterHelper;
+import io.johnvincent.gomoku.library.players.Players;
+
+public class Counter4Test {
+
+	@Test
+	public void testa0() {
+		int[] line = { 0, 0, 0, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0 };
+		
+		int find = 3;
+		int of = 5;
+		int before = 1;
+		int after = 1;
+		int count = CounterHelper.lineCalculator(line, before, find, of, after);
+		assertEquals(count, 0);
+	}
+	
+	@Test
+	public void testa1() {
+		int[] line = { 0, 0, 0, 1, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0 };
+		
+		int find = 3;
+		int of = 5;
+		int before = 1;
+		int after = 1;
+		int count = CounterHelper.lineCalculator(line, before, find, of, after);
+		assertEquals(count, 0);
+	}
+
+	@Test
+	public void testa2() {
+		int[] line = { 0, 0, 2, 1, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0 };
+		
+		int find = 3;
+		int of = 5;
+		int before = 1;
+		int after = 1;
+		int count = CounterHelper.lineCalculator(line, before, find, of, after);
+		assertEquals(count, 0);
+	}
+	
+	@Test
+	public void testa3() {
+		int[] line = { 0, 2, 0, 1, 1, 0, 0, 1, 0, 2, 0, 0, 0, 0, 0 };
+		
+		int find = 3;
+		int of = 5;
+		int before = 1;
+		int after = 1;
+		int count = CounterHelper.lineCalculator(line, before, find, of, after);
+		assertEquals(count, 1);
+	}
+	
+	@Test
+	public void testa4() {
+		int[] line = { 0, 0, 0, 1, 1, 0, 0, 1, 0, 2, 0, 0, 0, 0, 0 };
+		
+		int find = 3;
+		int of = 5;
+		int before = 1;
+		int after = 1;
+		int count = CounterHelper.lineCalculator(line, before, find, of, after);
+		assertEquals(count, 0);
+	}
+	
+	@Test
+	public void testa5() {
+		int[] line = { 0, -1, 0, 1, 1, 0, 0, 1, 0, -1, 0, 0, 0, 0, 0 };
+		
+		int find = 3;
+		int of = 5;
+		int before = 1;
+		int after = 1;
+		int count = CounterHelper.lineCalculator(line, before, find, of, after);
+		assertEquals(count, 1);
+	}
+
+	@Test
+	public void testb1() {
+		int[] line = { 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 0, 0, 0, 0 };
+		
+		int find = 3;
+		int of = 5;
+		int before = 1;
+		int after = 1;
+		int count = CounterHelper.lineCalculator(line, before, find, of, after);
+		assertEquals(count, 0);
+	}
+
+	@Test
+	public void testb2() {
+		int[] line = { 0, 0, 0, 0, 2, 0, 1, 1, 0, 1, 0, 0, 0, 0, 0 };
+		
+		int find = 3;
+		int of = 5;
+		int before = 1;
+		int after = 1;
+		int count = CounterHelper.lineCalculator(line, before, find, of, after);
+		assertEquals(count, 0);
+	}
+	
+	@Test
+	public void testb3() {
+		int[] line = { 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 2, 0, 0, 0 };
+		
+		int find = 3;
+		int of = 5;
+		int before = 1;
+		int after = 1;
+		int count = CounterHelper.lineCalculator(line, before, find, of, after);
+		assertEquals(count, 0);
+	}
+
+	@Test
+	public void testb4() {
+		int[] line = { 0, 0, 0, 0, 2, 0, 1, 1, 0, 1, 0, 0, 2, 0, 0 };
+		
+		int find = 3;
+		int of = 5;
+		int before = 1;
+		int after = 1;
+		int count = CounterHelper.lineCalculator(line, before, find, of, after);
+		assertEquals(count, 1);
+	}
+	
+	@Test
+	public void testc1() {
+		int[] line = { 0, 0, 0, 0, 2, 0, 1, 1, 0, 1, 0, 0, 2, 0, 0 };
+		
+		int find = 3;
+		int of = 5;
+		int before = 2;
+		int after = 1;
+		int count = CounterHelper.lineCalculator(line, before, find, of, after);
+		assertEquals(count, 0);
+	}
+	
+	@Test
+	public void testc2() {
+		int[] line = { 0, 0, 0, 0, 2, 0, 1, 1, 0, 1, 0, 0, 2, 0, 0 };
+		
+		int find = 3;
+		int of = 5;
+		int before = 1;
+		int after = 2;
+		int count = CounterHelper.lineCalculator(line, before, find, of, after);
+		assertEquals(count, 0);
+	}
+	
+	@Test
+	public void testd1() {
+		int[] line = { 0, 0, 0, 0, 2, 0, 1, 1, 0, 1, 0, 0, 0, 2, 0 };
+		
+		int find = 3;
+		int of = 5;
+		int before = 2;
+		int after = 2;
+		int count = CounterHelper.lineCalculator(line, before, find, of, after);
+		assertEquals(count, 0);
+	}
+	
+	@Test
+	public void testd2() {
+		int[] line = { 0, 0, 0, 2, 0, 0, 1, 1, 0, 1, 0, 0, 0, 2, 0 };
+		
+		int find = 3;
+		int of = 5;
+		int before = 2;
+		int after = 2;
+		int count = CounterHelper.lineCalculator(line, before, find, of, after);
+		assertEquals(count, 1);
+	}
+	
+	@Test
+	public void testd3() {
+		int[] line = { 0, 0, 2, 0, 0, 0, 1, Players.PLAYER1, 0, 1, 0, 0, 0, 2, 0 };
+		
+		int find = 3;
+		int of = 5;
+		int before = 2;
+		int after = 2;
+		int count = CounterHelper.lineCalculator(line, before, find, of, after);
+		assertEquals(count, 2);
+	}
+	
+	@Test
+	public void testd4() {
+		int[] line = { 0, 0, 2, 0, 0, 0, 1, Players.PLAYER1, 0, 1, 0, 0, 2, 0, 0 };
+		
+		int find = 3;
+		int of = 5;
+		int before = 2;
+		int after = 2;
+		int count = CounterHelper.lineCalculator(line, before, find, of, after);
+		assertEquals(count, 1);
+	}
+	
+	@Test
+	public void testd5() {
+		int[] line = { 0, 0, 2, 0, 0, 0, 1, Players.PLAYER1, 1, 0, 0, 0, 2, 0, 0 };
+		
+		int find = 3;
+		int of = 5;
+		int before = 2;
+		int after = 2;
+		int count = CounterHelper.lineCalculator(line, before, find, of, after);
+		assertEquals(count, 1);
+	}
+	
+	@Test
+	public void testd6() {
+		int[] line = { 2, 0, 0, 0, 0, 0, 1, Players.PLAYER1, 1, 0, 0, 0, 0, 2, 0 };
+		
+		int find = 3;
+		int of = 5;
+		int before = 2;
+		int after = 2;
+		int count = CounterHelper.lineCalculator(line, before, find, of, after);
+		assertEquals(count, 3);
+	}
+
+	@Test
+	public void teste1() {
+		int[] line = { 0, 0, 2, 0, 0, 0, 1, Players.PLAYER1, 1, 0, 0, 0, 2, 0, 0 };
+		
+		int find = 3;
+		int of = 5;
+		int before = 1;
+		int after = 1;
+		int count = CounterHelper.lineCalculator(line, before, find, of, after);
+		assertEquals(count, 0);
+	}
+	
+	@Test
+	public void teste2() {
+		int[] line = { 0, 0, 2, 0, 0, 0, 1, Players.PLAYER1, 1, 0, 0, 0, 2, 0, 0 };
+		
+		int find = 3;
+		int of = 5;
+		int before = 2;
+		int after = 1;
+		int count = CounterHelper.lineCalculator(line, before, find, of, after);
+		assertEquals(count, 1);
+	}
+	
+	@Test
+	public void teste3() {
+		int[] line = { 0, 0, 2, 0, 0, 0, 1, Players.PLAYER1, 1, 0, 0, 0, 2, 0, 0 };
+		
+		int find = 3;
+		int of = 5;
+		int before = 1;
+		int after = 2;
+		int count = CounterHelper.lineCalculator(line, before, find, of, after);
+		assertEquals(count, 1);
+	}
+	
+	@Test
+	public void testf1() {
+		int[] line = { -1, -1, 0, 0, 0, 0, 0, Players.PLAYER1, 0, 1, 0, 0, 0, 0, -1 };
+//		CounterHelper.showLine("Counter4Test::testf1; line ", line);
+		
+		int find = 2;
+		int of = 3;
+		int before = 2;
+		int after = 2;
+		int count = CounterHelper.lineCalculator(line, before, find, of, after);
+		assertEquals(count, 1);
+	}
+
+/*
+                        X
+-1, -1, -1, 0, 0, 0, 0, 1, 0, 1, 1,  2,  0,  0,  0
+ 0,  1,  2, 3, 4, 5, 6, 7, 8, 9, 10, 11,12, 13, 14 
+ 
+ [3, 7]
+ [4, 8]
+ [5, 9]
+ [6, 10]
+ [7, 11]
+
+ 
+*/
+	@Test
+	public void testg1() {
+		int[] line = { -1, -1, -1, 0, 0, 0, 0, Players.PLAYER1, 0, 1, 1, 2, 0, 0, 0 };
+		CounterHelper.showLine("Counter4Test::testg1; line ", line);
+
+		int[] actuals = CounterHelper.getActual(line);
+//		CounterHelper.showLine("testg1; actuals ", actuals);
+		int[] result2 = { 4, 1, 1 };
+		assertArrayEquals(actuals, result2);
+
+		int find, of, before, after, count;
+		
+		find = 3;
+		of = 5;
+		before = 1;
+		after = 1;
+		count = CounterHelper.lineCalculator(line, before, find, of, after);
+		assertEquals(count, 0);
+	}
+	
+	@Test
+	public void testg2() {
+		int[] line = { -1, -1, -1, 0, 0, 0, 0, Players.PLAYER1, 0, 1, 1, 2, 0, 0, 0 };
+		CounterHelper.showLine("Counter4Test::testg2; line ", line);
+
+		int[] actuals = CounterHelper.getActual(line);
+//		CounterHelper.showLine("testg2; actuals ", actuals);
+		int[] result2 = { 4, 1, 1 };
+		assertArrayEquals(actuals, result2);
+
+		int find, of, before, after, count;
+		
+		find = 3;
+		of = 5;
+		before = 2;
+		after = 2;
+		count = CounterHelper.lineCalculator(line, before, find, of, after);
+		assertEquals(count, 0);
+	}
+
+	@Test
+	public void testg3() {
+		int[] line = { -1, -1, -1, 0, 0, 0, 2, Players.PLAYER1, 0, 1, 1, 0, 0, 0, 0 };
+		CounterHelper.showLine("Counter4Test::testg3; line ", line);
+
+		int[] actuals = CounterHelper.getActual(line);
+		CounterHelper.showLine("testg3; actuals ", actuals);
+		int[] result2 = { 0, 1, 1 };
+		assertArrayEquals(actuals, result2);
+
+		int find, of, before, after, count;
+		
+		find = 3;
+		of = 5;
+		before = 2;
+		after = 2;
+		count = CounterHelper.lineCalculator(line, before, find, of, after);
+		assertEquals(count, 0);
+	}
+	
+	@Test
+	public void testg4() {
+		int[] line = { -1, -1, -1, 0, 0, 0, 2, Players.PLAYER1, 0, 1, 1, 0, 0, 0, 0 };
+		CounterHelper.showLine("Counter4Test::testg4; line ", line);
+
+		int[] actuals = CounterHelper.getActual(line);
+//		CounterHelper.showLine("testg4; actuals ", actuals);
+		int[] result2 = { 4, 1, 1 };
+		assertArrayEquals(actuals, result2);
+
+		int find, of, before, after, count;
+		
+		find = 3;
+		of = 5;
+		before = 2;
+		after = 2;
+		count = CounterHelper.lineCalculator(line, before, find, of, after);
+		assertEquals(count, 0);
+	}
+}

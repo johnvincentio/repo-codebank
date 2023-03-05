@@ -1,0 +1,65 @@
+package io.johnvincent.gomoku.library.specialcases;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+
+import io.johnvincent.gomoku.library.rates.SpecialCaseRatesItem;
+import io.johnvincent.gomoku.library.rates.SummaryRatesItem;
+
+@JsonPropertyOrder({ "player", "row", "column", "map" })
+@JsonIgnoreProperties(value = { "specialCasesSummaryRatesItem" })
+public class SpecialCases {
+
+	@JsonProperty("map")
+	private Map<String, SpecialCasesItem> m_specialCases = new HashMap<String, SpecialCasesItem>();
+
+	private int player;
+	private int row;
+	private int column;
+	
+	public SpecialCases(final int player, final int row, final int column) {
+		this.player = player;
+		this.row = row;
+		this.column = column;
+	}
+
+	public int getPlayer() {return player;}
+	public int getRow() {return row;}
+	public int getColumn() {return column;}
+
+	public void addSpecialCase(final SpecialCaseRatesItem specialCaseRatesItem, final int count, final int score) {
+		assert specialCaseRatesItem != null;
+		assert count > 0;
+		assert score > 0;
+
+		String key = specialCaseRatesItem.getKey();
+		assert key != null;
+
+		m_specialCases.put(key, new SpecialCasesItem(specialCaseRatesItem, count, score));
+	}
+
+	public int getSpecialCasesScore() {
+		int total = 0;
+		for (Map.Entry<String, SpecialCasesItem> entry : m_specialCases.entrySet()) {
+			int totalScore = entry.getValue().getScore();
+			if (totalScore < 1) continue;
+			total += totalScore;
+		}
+		return total;
+	}
+
+	@JsonProperty("specialCasesSummaryRatesItem")
+	public SummaryRatesItem JVgetSpecialCasesSummaryRatesItem() {
+		SummaryRatesItem summaryRatesItem = new SummaryRatesItem();
+		for (Map.Entry<String, SpecialCasesItem> entry : m_specialCases.entrySet()) {
+			SpecialCaseRatesItem specialCaseRatesItem = entry.getValue().getSpecialCaseRatesItem();
+			if (specialCaseRatesItem == null) continue;
+			summaryRatesItem.add(specialCaseRatesItem);
+		}
+		return summaryRatesItem.isUseful() ? summaryRatesItem : null;
+	}
+}

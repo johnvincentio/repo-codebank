@@ -1,0 +1,547 @@
+package io.johnvincent.gomoku.library.counter;
+
+import io.johnvincent.gomoku.library.bestmove.BestMoveHelper;
+import io.johnvincent.gomoku.library.bestmove.BestMoveItem;
+import io.johnvincent.gomoku.library.game.Board;
+import io.johnvincent.gomoku.library.game.Coordinate;
+import io.johnvincent.gomoku.library.game.Moves;
+import io.johnvincent.gomoku.library.pattern.PatternUtils;
+import io.johnvincent.gomoku.library.players.Players;
+import io.johnvincent.gomoku.library.rates.RateHelper;
+import io.johnvincent.gomoku.library.winner.WinnerList;
+
+public class CounterHelper {
+
+	public static BestMoveItem JVgetBestMoveItem(CounterInfo counterInfo, int player) {
+		assert counterInfo != null;
+		assert Players.isValidPlayer(player);
+		
+		return counterInfo.getBestMoveItem(player);
+	}
+
+	public static BestMoveItem JVsuggestMove(final int player, final Board m_board, final Moves m_moves) {
+		CounterInfo counterInfo = calculateAllCounters(m_board, m_moves);
+		return getBestMoveItem(counterInfo, player);
+	}
+	
+	public static CounterInfo JVcalculateAllCounters(Board board, Moves moves) {
+		CounterInfo counterInfo = phase1(board, moves);
+		phase2(board, counterInfo);
+		phase3(board, counterInfo);
+		phase4(board, counterInfo);
+		phase5(board, counterInfo);
+		phase6(counterInfo);
+		phase7(board, counterInfo);
+		return counterInfo;
+	}
+
+	/**
+	 * For each empty square, for each player, calculate Patterns, Actuals and Groups with Counts.
+	 * 
+	 * 1. Create CounterPatternsItem; Actual and Group Patterns with Counts.
+	 *    Calculate scores for all patterns and groups of patterns for each empty square.
+	 * 2. Add to CounterPatterns
+	 * 3. Create CounterSquare with CounterPatterns
+	 * 4. Add CounterSquare to CounterInfo
+	 * 
+	 * @param board
+	 * @return CounterInfo
+	 */
+	private static CounterInfo phase1(Board board, Moves moves) {
+		CounterInfo counterInfo = new CounterInfo(board, moves);
+			
+		for (int r = 0; r < board.getRows(); r++) {
+			assert board.isValidRow(r);
+			
+			for (int c = 0; c < board.getColumns(); c++) {
+				assert board.isValidColumn(c);
+				
+				if (board.isNotEmpty(r, c)) continue;
+
+				for (int player = 1; player <= 2; player++) {
+					assert Players.isValidPlayer(player);
+						
+					CounterPatterns counterPatterns = new CounterPatterns();
+					
+					for (int pattern = 0; pattern < PatternUtils.getNumberOfVictoryPatterns(); pattern++) {
+						assert PatternUtils.isValidPattern(pattern);
+					
+						CounterPatternsItem counterPatternsItem = calculateCountersAndScores(board, player, r, c, pattern);	// 1
+						if (counterPatternsItem != null) {
+//							System.out.println("counterPatternsItem "+counterPatternsItem.toString());
+							counterPatterns.add(pattern, counterPatternsItem);		// 2
+						}
+					}
+					
+//					System.out.println("counterPatterns.getSize() "+counterPatterns.getSize());
+//					if (counterPatterns.getSize() > 0) {
+						CounterSquare counterSquare = new CounterSquare(counterPatterns, player, r, c);		// 3
+						counterInfo.addSquare(player, counterSquare);		// 4
+//					}
+				}
+			}
+		}
+		return counterInfo;
+	}
+
+	/**
+	 * Calculate the total scores for each empty square for each player for special cases.
+	 * 
+	 * 1. Handle special cases
+	 * 
+	 * @param board
+	 * @param counterInfo
+	 */
+	private static void phase2(final Board board, CounterInfo counterInfo) {
+			
+		for (int r = 0; r < board.getRows(); r++) {
+			assert board.isValidRow(r);
+
+			for (int c = 0; c < board.getColumns(); c++) {
+				assert board.isValidColumn(c);
+
+				if (board.isNotEmpty(r, c)) continue;
+
+				for (int player = 1; player <= 2; player++) {
+					assert Players.isValidPlayer(player);
+					
+					counterInfo.handleSpecialCases(player, r, c);		// 1
+				}
+			}
+		}
+	}
+
+
+	/**
+	 * Calculate the total scores for each empty square for each player.
+	 * 
+	 * 1. Calculate totals for each empty square
+	 * 
+	 * @param board
+	 * @param counterInfo
+	 */
+	private static void phase3(final Board board, CounterInfo counterInfo) {
+			
+		for (int r = 0; r < board.getRows(); r++) {
+			assert board.isValidRow(r);
+
+			for (int c = 0; c < board.getColumns(); c++) {
+				assert board.isValidColumn(c);
+
+				if (board.isNotEmpty(r, c)) continue;
+
+				for (int player = 1; player <= 2; player++) {
+					assert Players.isValidPlayer(player);
+					
+					counterInfo.calculateSquareTotal(player, r, c);		// 1
+				}
+			}
+		}
+	}
+
+	/**
+	 * Calculate the grand total scores for each square for each player
+	 * 
+	 * @param board
+	 * @param counterInfo
+	 */
+	private static void phase4(final Board board, CounterInfo counterInfo) {
+		
+		int ratio = RateHelper.OTHER_PLAYER_RATIO;
+
+		for (int r = 0; r < board.getRows(); r++) {
+			assert board.isValidRow(r);
+
+			for (int c = 0; c < board.getColumns(); c++) {
+				assert board.isValidColumn(c);
+
+				if (board.isNotEmpty(r, c)) continue;
+
+				int whiteScore = counterInfo.getCurrentPlayerScore(Players.PLAYER1, r, c);
+				int blackScore = counterInfo.getCurrentPlayerScore(Players.PLAYER2, r, c);
+//				System.out.println("r "+r+" c "+c+" whiteScore "+whiteScore+" blackScore "+blackScore);
+				counterInfo.setOtherPlayerScore(blackScore * ratio / 100, Players.PLAYER1, r, c);
+				counterInfo.setOtherPlayerScore(whiteScore * ratio / 100, Players.PLAYER2, r, c);
+			}
+		}
+	}
+
+	/**
+	 * Calculate SummaryRatesItem for each square for each player
+	 * 
+	 * @param board
+	 * @param counterInfo
+	 */
+	private static void phase5(final Board board, CounterInfo counterInfo) {
+		for (int r = 0; r < board.getRows(); r++) {
+			assert board.isValidRow(r);
+
+			for (int c = 0; c < board.getColumns(); c++) {
+				assert board.isValidColumn(c);
+
+				if (board.isNotEmpty(r, c)) continue;
+
+				for (int player = 1; player <= 2; player++) {
+					assert Players.isValidPlayer(player);
+					
+					counterInfo.calculateSummaryRates(player, r, c);
+				}
+			}
+		}
+	}
+
+	/**
+	 * 1. Create ScoringListsItem object for each player.
+	 * 
+	 * @param counterInfo
+	 */
+	private static void phase6(CounterInfo counterInfo) {
+		for (int player = 1; player <= 2; player++) {
+			assert Players.isValidPlayer(player);
+
+			counterInfo.createScoringLists(player);
+		}
+	}
+
+	/**
+	 * Calculate the Highest Rated next move for each player and store in Player.
+	 * 
+	 * @param board
+	 * @param counterInfo
+	 */
+	private static void phase7(final Board board, CounterInfo counterInfo) {
+		for (int player = 1; player <= 2; player++) {
+			assert Players.isValidPlayer(player);
+
+			BestMoveItem bestMoveItem = BestMoveHelper.calculateHighestRatedMove(counterInfo, board, player);
+			Coordinate coordinate = bestMoveItem.getCoordinate();
+			WinnerList winnerList = counterInfo.getWinnerList(player, coordinate);
+			bestMoveItem.setWinnerList(winnerList);
+			
+			counterInfo.setBestMoveItem(player, bestMoveItem);
+		}
+	}
+
+	public static CounterPatternsItem calculateCountersAndScores(final Board board, final int player, final int r, final int c, final int pattern) {
+		assert Players.isValidPlayer(player);
+		assert board.isValidRow(r);
+		assert board.isValidColumn(c);
+		assert PatternUtils.isValidPattern(pattern);
+
+		int[] line = makeLine(board, player, r, c, pattern);
+
+		CounterPatternsItem item = new CounterPatternsItem(player, r, c, pattern, line, getActual(line));
+
+		CounterGroups groups = new CounterGroups();
+		int actual = item.getCounterActual().getActual();
+//		if (r == 7 && c == 6 && pattern == 1)
+//		System.out.println("CounterHelper::calculateCounters; player "+player+" r "+r+" c "+c+" pattern "+pattern+" actual "+actual);
+		if (actual < 2) {
+			groups.add(RateHelper.getGroupRatesItem(1, 2, 3, 1), lineCalculator(line, 1, 2, 3, 1));
+			groups.add(RateHelper.getGroupRatesItem(2, 2, 3, 1), lineCalculator(line, 2, 2, 3, 1));
+			groups.add(RateHelper.getGroupRatesItem(1, 2, 3, 2), lineCalculator(line, 1, 2, 3, 2));
+			groups.add(RateHelper.getGroupRatesItem(2, 2, 3, 2), lineCalculator(line, 2, 2, 3, 2));
+		}
+
+		if (actual < 3) {
+			groups.add(RateHelper.getGroupRatesItem(0, 3, 4, 2), lineCalculator(line, 0, 3, 4, 2));
+			groups.add(RateHelper.getGroupRatesItem(2, 3, 4, 0), lineCalculator(line, 2, 3, 4, 0));
+			groups.add(RateHelper.getGroupRatesItem(1, 3, 4, 1), lineCalculator(line, 1, 3, 4, 1));
+			groups.add(RateHelper.getGroupRatesItem(2, 3, 4, 1), lineCalculator(line, 2, 3, 4, 1));
+			groups.add(RateHelper.getGroupRatesItem(1, 3, 4, 2), lineCalculator(line, 1, 3, 4, 2));
+			groups.add(RateHelper.getGroupRatesItem(2, 3, 4, 2), lineCalculator(line, 2, 3, 4, 2));
+			
+			groups.add(RateHelper.getGroupRatesItem(1, 3, 5, 1), lineCalculator(line, 1, 3, 5, 1));
+			groups.add(RateHelper.getGroupRatesItem(2, 3, 5, 1), lineCalculator(line, 2, 3, 5, 1));
+			groups.add(RateHelper.getGroupRatesItem(1, 3, 5, 2), lineCalculator(line, 1, 3, 5, 2));
+			groups.add(RateHelper.getGroupRatesItem(2, 3, 5, 2), lineCalculator(line, 2, 3, 5, 2));
+		}
+
+		if (actual < 4) {
+			groups.add(RateHelper.getGroupRatesItem(0, 4, 5, 0), lineCalculator(line, 0, 4, 5, 0));
+			groups.add(RateHelper.getGroupRatesItem(0, 4, 5, 1), lineCalculator(line, 0, 4, 5, 1));
+			groups.add(RateHelper.getGroupRatesItem(0, 4, 5, 2), lineCalculator(line, 0, 4, 5, 2));
+
+			groups.add(RateHelper.getGroupRatesItem(1, 4, 5, 0), lineCalculator(line, 1, 4, 5, 0));
+			groups.add(RateHelper.getGroupRatesItem(1, 4, 5, 1), lineCalculator(line, 1, 4, 5, 1));
+			groups.add(RateHelper.getGroupRatesItem(1, 4, 5, 2), lineCalculator(line, 1, 4, 5, 2));
+			
+			groups.add(RateHelper.getGroupRatesItem(2, 4, 5, 0), lineCalculator(line, 2, 4, 5, 0));
+			groups.add(RateHelper.getGroupRatesItem(2, 4, 5, 1), lineCalculator(line, 2, 4, 5, 1));
+			groups.add(RateHelper.getGroupRatesItem(2, 4, 5, 2), lineCalculator(line, 2, 4, 5, 2));
+
+			groups.add(RateHelper.getGroupRatesItem(0, 4, 6, 0), lineCalculator(line, 0, 4, 6, 0));
+			groups.add(RateHelper.getGroupRatesItem(0, 4, 6, 1), lineCalculator(line, 0, 4, 6, 1));
+			groups.add(RateHelper.getGroupRatesItem(0, 4, 6, 2), lineCalculator(line, 0, 4, 6, 2));
+
+			groups.add(RateHelper.getGroupRatesItem(1, 4, 6, 0), lineCalculator(line, 1, 4, 6, 0));
+			groups.add(RateHelper.getGroupRatesItem(1, 4, 6, 1), lineCalculator(line, 1, 4, 6, 1));
+			groups.add(RateHelper.getGroupRatesItem(1, 4, 6, 2), lineCalculator(line, 1, 4, 6, 2));
+
+			groups.add(RateHelper.getGroupRatesItem(2, 4, 6, 0), lineCalculator(line, 2, 4, 6, 0));
+			groups.add(RateHelper.getGroupRatesItem(2, 4, 6, 1), lineCalculator(line, 2, 4, 6, 1));
+			groups.add(RateHelper.getGroupRatesItem(2, 4, 6, 2), lineCalculator(line, 2, 4, 6, 2));	
+		}
+		
+		if (actual < 5) {
+			groups.add(RateHelper.getGroupRatesItem(0, 5, 6, 0), lineCalculator(line, 0, 5, 6, 0));
+			groups.add(RateHelper.getGroupRatesItem(0, 5, 6, 1), lineCalculator(line, 0, 5, 6, 1));
+			groups.add(RateHelper.getGroupRatesItem(0, 5, 6, 2), lineCalculator(line, 0, 5, 6, 2));
+
+			groups.add(RateHelper.getGroupRatesItem(1, 5, 6, 0), lineCalculator(line, 1, 5, 6, 0));
+			groups.add(RateHelper.getGroupRatesItem(1, 5, 6, 1), lineCalculator(line, 1, 5, 6, 1));
+			groups.add(RateHelper.getGroupRatesItem(1, 5, 6, 2), lineCalculator(line, 1, 5, 6, 2));
+
+			groups.add(RateHelper.getGroupRatesItem(2, 5, 6, 0), lineCalculator(line, 2, 5, 6, 0));
+			groups.add(RateHelper.getGroupRatesItem(2, 5, 6, 1), lineCalculator(line, 2, 5, 6, 1));
+			groups.add(RateHelper.getGroupRatesItem(2, 5, 6, 2), lineCalculator(line, 2, 5, 6, 2));	
+		}
+
+//		System.out.println("groups.getSize "+groups.getSize());
+		if (groups.getSize() > 0) item.setCounterGroups(groups);
+
+//		System.out.println("item.getGroupCounts() "+item.getGroupCounts());
+
+		if (actual >= 5) {
+			WinnerList winnerList = makeWinnerList(board, player, r, c, pattern, line);
+			item.setWinnerList(winnerList);
+		}
+		
+		if (item.isUseful()) return item;
+		return null;
+	}
+
+	public static int[] makeLine(final Board board, final int player, final int r, final int c, final int pattern) {
+		assert Players.isValidPlayer(player);
+		assert board.isValidRow(r);
+		assert board.isValidColumn(c);
+		assert PatternUtils.isValidPattern(pattern);
+
+		int result[] = { -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1 };
+		int middle = 7;
+		result[middle] = player;
+		for (int i = 1; i < 8; i++) {
+			int row = r + PatternUtils.getVictoryPatternRow (pattern) * i;
+			int col = c + PatternUtils.getVictoryPatternCol (pattern) * i;
+			if (row < 0 || row >= board.getRows()) break;
+			if (col < 0 || col >= board.getColumns()) break;
+//			System.out.println("i "+i+" row "+row+" col "+col);
+			if (board.isEmpty (row, col)) {
+				result[middle + i] = Board.EMPTY;
+			}
+			else {
+				result[middle + i] = board.getPlayerAt(row, col);
+			}	
+		}
+		for (int i = 1; i < 8; i++) {
+			int row = r - PatternUtils.getVictoryPatternRow (pattern) * i;
+			int col = c - PatternUtils.getVictoryPatternCol (pattern) * i;
+			if (row < 0 || row >= board.getRows()) break;
+			if (col < 0 || col >= board.getColumns()) break;
+//			System.out.println("i "+i+" row "+row+" col "+col);
+			if (board.isEmpty (row, col)) {
+				result[middle - i] = Board.EMPTY;
+			}
+			else {
+//				System.out.println("row "+row+" col "+col+" playerAt "+board.getPlayerAt(row, col));
+				result[middle - i] = board.getPlayerAt(row, col);
+			}
+		}
+		return result;
+	}
+	
+	public static int[] getActual(final int[] line) {
+		assert line.length == 15;
+		int middle = 7;
+		int player = line[middle];
+		assert player == 1 || player == 2;
+		int before = 0;
+		int after = 0;
+		int count = 1;
+		for (int i = middle + 1; i < line.length; i++) {
+			assert line[i] >= -1 && line[i] <= 2;
+			if (line[i] == Board.INVALID) break;
+			if (after == 0 && line[i] == player) {
+				count++;
+				continue;
+			}
+			if (line[i] == Board.EMPTY || line[i] == player) {
+				after++;
+				continue;
+			}
+			break;
+		}
+		for (int i = middle - 1; i > -1; i--) {
+			assert line[i] >= -1 && line[i] <= 2;
+			if (line[i] == Board.INVALID) break;
+			if (before == 0 && line[i] == player) {
+				count++;
+				continue;
+			}
+			if (line[i] == Board.EMPTY || line[i] == player) {
+				before++;
+				continue;
+			}
+			break;
+		}
+//		System.out.println("before "+before+" after "+after);
+		int[] arr = { before, count, after };
+		return arr;
+	}
+
+/*
+3 of 5:
+01234x67890
+1-x
+2-6
+3-7
+4-8
+x-9
+
+1-x;
+x, 4, 3, 2, 1
+
+2-6:
+x, 4, 3, 2
+x, 6
+
+3-7:
+x, 4, 3
+x, 6, 7
+
+ */
+/*
+before & after
+ = 0 => any number
+ = 1 => exactly one
+ = 2 => 2 or more
+ */
+	public static int lineCalculator(final int[] line, final int before, final int find, final int of, final int after) {
+		boolean debug = false;
+		if (debug) System.out.println(">>> CounterHelper.lineCalculator; find "+find+" of "+of+" before "+before+" after "+after);
+		assert line.length == 15;
+		assert find > 1 && find < 6 && find < of;
+		assert of < line.length;
+		assert before == 0 || before == 1 || before == 2;
+		assert after == 0 || after == 1 || after == 2;
+
+		int middle = 7;
+		int player = line[middle];
+		int otherPlayer = Players.whoIsOtherPlayer(player);
+		if (debug) System.out.println("player "+player+" otherPlayer "+otherPlayer);
+		assert player == 1 || player == 2;
+		
+		int howMany = 0;
+		
+		for (int outer = of; outer > 0; outer--) {
+			int count1 = 1;
+			int count2 = 1;
+			int spos = middle - outer + 1;
+			int epos = spos + of - 1;
+			if (debug) System.out.println("\nouter "+outer+" spos "+spos+" epos "+epos);
+			int inner1, inner2;
+			for (inner1 = middle - 1; inner1 >= spos; inner1--) {
+				assert line[inner1] >= -1 && line[inner1] <= 2;
+				if (debug) System.out.println("inner1 "+inner1);
+				if (line[inner1] == player) {
+					count1++;
+					count2++;
+					continue;
+				}
+				if (line[inner1] != Board.EMPTY) break;
+				count2++;
+			}
+			for (inner2 = middle + 1; inner2 <= epos; inner2++) {
+				assert line[inner2] >= -1 && line[inner2] <= 2;
+				if (debug) System.out.println("inner2 "+inner2);
+				if (line[inner2] == player) {
+					count1++;
+					count2++;
+					continue;
+				}
+				if (line[inner2] != Board.EMPTY) break;
+				count2++;
+			}
+
+			if (debug) System.out.println("count1 "+count1+" count2 "+count2);
+			if (count1 != find) continue;
+			if (count2 < of) continue;
+
+			if (debug) System.out.println("spos "+spos+" inner1 "+inner1);
+			if (debug) System.out.println("inner2 "+inner2+" epos "+epos);
+			if (debug) System.out.println("before "+before+" after "+after);
+			if (debug) System.out.println("line[spos-1] "+line[spos-1]+" line[epos+1] "+line[epos+1]);
+			
+			if (before == 0 && (line[spos-1] != -1 && line[spos-1] != otherPlayer)) continue;
+			if (after == 0 && (line[epos+1] != -1 && line[epos+1] != otherPlayer)) continue;
+
+			int countBefore = 0;
+			int countAfter = 0;
+			for (int inner3 = inner1; inner3 >= 0; inner3--) {
+				assert line[inner3] >= -1 && line[inner3] <= 2;
+				if (debug) System.out.println("inner3 "+inner3+" line[inner3] "+line[inner3]);
+				if (line[inner3] != Board.EMPTY) break;
+				countBefore++;
+			}
+			for (int inner4 = inner2; inner4 < line.length; inner4++) {
+				assert line[inner4] >= -1 && line[inner4] <= 2;
+				if (debug) System.out.println("inner4 "+inner4+" line[inner4] "+line[inner4]);
+				if (line[inner4] != Board.EMPTY) break;
+				countAfter++;
+			}
+			if (debug) System.out.println("countBefore "+countBefore+" countAfter "+countAfter);
+			if (before == 0 && countBefore != before) continue;
+			if (after == 0 && countAfter != after) continue;
+			if (before == 1 && countBefore != before) continue;
+			if (after == 1 && countAfter != after) continue;
+			if (before == 2 && countBefore < 2) continue;
+			if (after == 2 && countAfter < 2) continue;
+			howMany++;
+		}
+		if (debug) System.out.println("<<< CounterHelper.lineCalculator; howMany "+howMany);
+		return howMany;
+	}
+	
+	public static WinnerList makeWinnerList(final Board board, final int player, final int r, final int c, final int pattern, final int[] line) {
+		assert Players.isValidPlayer(player);
+		assert board.isValidRow(r);
+		assert board.isValidColumn(c);
+		assert PatternUtils.isValidPattern(pattern);
+
+		int middle = 7;
+		if (line[middle] != player) return null;
+
+		WinnerList winnerList = new WinnerList(player, r, c, pattern);
+		winnerList.add(r, c);
+
+		for (int i = 1; i < 8; i++) {
+			int row = r + PatternUtils.getVictoryPatternRow (pattern) * i;
+			int col = c + PatternUtils.getVictoryPatternCol (pattern) * i;
+			if (row < 0 || row >= board.getRows()) break;
+			if (col < 0 || col >= board.getColumns()) break;
+//			System.out.println("i "+i+" row "+row+" col "+col);
+			
+			if (line[middle + i] != player) break;
+			if (line[middle + i] != board.getPlayerAt(row, col)) break;
+			
+			winnerList.add(row, col);
+		}
+		
+		for (int i = 1; i < 8; i++) {
+			int row = r - PatternUtils.getVictoryPatternRow (pattern) * i;
+			int col = c - PatternUtils.getVictoryPatternCol (pattern) * i;
+			if (row < 0 || row >= board.getRows()) break;
+			if (col < 0 || col >= board.getColumns()) break;
+//			System.out.println("i "+i+" row "+row+" col "+col);
+			
+			if (line[middle - i] != player) break;
+			if (line[middle - i] != board.getPlayerAt(row, col)) break;
+			
+			winnerList.add(row, col);
+		}
+		
+		winnerList.sort();
+
+		return winnerList;
+	}
+}

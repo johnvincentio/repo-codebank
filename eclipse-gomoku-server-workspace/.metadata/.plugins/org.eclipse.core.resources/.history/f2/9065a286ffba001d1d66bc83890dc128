@@ -1,0 +1,163 @@
+package io.johnvincent.gomoku.library.rates;
+
+public class RateHelper {
+
+	protected static final int NONE = -1;				// nothing
+	protected static final int LETHAL_1 = 1;			// wins in 1 move
+	protected static final int LETHAL_2 = 2;			// wins in 2 more move
+	protected static final int LETHAL_3 = 3;			// wins in 3 more moves
+	
+	protected static final int FORCING_MOVE_1 = 1;		// this move forces 1 move
+	protected static final int FORCING_MOVE_2 = 2;		// this move forces 2 moves
+	
+	protected static final int POSSIBLE_WIN_2 = 2;		// this forcing move could win in 2 moves
+	protected static final int POSSIBLE_WIN_3 = 3;		// this forcing move could win in 3 moves
+
+	public static final int OTHER_PLAYER_RATIO = 70;	// 75
+
+	// Actuals
+
+	private static ActualCollection m_actualCollection = new ActualCollection();
+		
+	static {
+		m_actualCollection.add(0, 5, 0, Rates.ACTUAL_0_5_0, new PlayerFlagsItem(NONE, NONE, LETHAL_1));
+		
+		m_actualCollection.add(0, 4, 0, Rates.ACTUAL_0_4_0);
+		m_actualCollection.add(0, 4, 1, Rates.ACTUAL_0_4_1, new PlayerFlagsItem(FORCING_MOVE_1, POSSIBLE_WIN_3));		// FW3 to reduce the priority
+		m_actualCollection.add(1, 4, 0, Rates.ACTUAL_1_4_0, new PlayerFlagsItem(FORCING_MOVE_1, POSSIBLE_WIN_3));		// FW3 to reduce the priority
+		m_actualCollection.add(1, 4, 1, Rates.ACTUAL_1_4_1, new PlayerFlagsItem(NONE, NONE, LETHAL_2));
+		m_actualCollection.add(2, 4, 0, Rates.ACTUAL_2_4_0, new PlayerFlagsItem(FORCING_MOVE_1, POSSIBLE_WIN_2));	// change this
+		m_actualCollection.add(2, 4, 1, Rates.ACTUAL_2_4_1, new PlayerFlagsItem(NONE, NONE, LETHAL_2));
+		m_actualCollection.add(0, 4, 2, Rates.ACTUAL_0_4_2, new PlayerFlagsItem(FORCING_MOVE_1, POSSIBLE_WIN_2));	// change this
+		m_actualCollection.add(1, 4, 2, Rates.ACTUAL_1_4_2, new PlayerFlagsItem(NONE, NONE, LETHAL_2));
+		m_actualCollection.add(2, 4, 2, Rates.ACTUAL_2_4_2, new PlayerFlagsItem(NONE, NONE, LETHAL_2));
+
+		m_actualCollection.add(0, 3, 0, Rates.ACTUAL_0_3_0);
+		m_actualCollection.add(0, 3, 1, Rates.ACTUAL_0_3_1);
+		m_actualCollection.add(1, 3, 0, Rates.ACTUAL_1_3_0);
+		m_actualCollection.add(1, 3, 1, Rates.ACTUAL_1_3_1);
+		m_actualCollection.add(2, 3, 0, Rates.ACTUAL_2_3_0);
+		m_actualCollection.add(0, 3, 2, Rates.ACTUAL_0_3_2);
+		m_actualCollection.add(2, 3, 1, Rates.ACTUAL_2_3_1, new PlayerFlagsItem(FORCING_MOVE_1, POSSIBLE_WIN_3));
+		m_actualCollection.add(1, 3, 2, Rates.ACTUAL_1_3_2, new PlayerFlagsItem(FORCING_MOVE_1, POSSIBLE_WIN_3));
+		m_actualCollection.add(2, 3, 2, Rates.ACTUAL_2_3_2, new PlayerFlagsItem(FORCING_MOVE_2, POSSIBLE_WIN_3));
+		
+		m_actualCollection.add(0, 2, 0, Rates.ACTUAL_0_2_0);
+		m_actualCollection.add(1, 2, 0, Rates.ACTUAL_1_2_0);
+		m_actualCollection.add(0, 2, 1, Rates.ACTUAL_0_2_1);
+		m_actualCollection.add(1, 2, 1, Rates.ACTUAL_1_2_1);
+		
+		m_actualCollection.add(2, 2, 0, Rates.ACTUAL_2_2_0);
+		m_actualCollection.add(2, 2, 1, Rates.ACTUAL_2_2_1);
+		
+		m_actualCollection.add(0, 2, 2, Rates.ACTUAL_0_2_2);
+		m_actualCollection.add(1, 2, 2, Rates.ACTUAL_1_2_2);
+		m_actualCollection.add(2, 2, 2, Rates.ACTUAL_2_2_2);
+	}
+
+	public static ActualRatesItem getActualRatesItem(int before, int actual, int after) {
+		return m_actualCollection.get(before, actual, after);
+ 	}
+
+	public static int getActualRate(int before, int actual, int after) {
+		ActualRatesItem actualRatesItem = getActualRatesItem(before, actual, after);
+		return actualRatesItem == null ? 0 : actualRatesItem.getRate();
+	}
+
+	// Groups
+
+	private static GroupCollection m_groupCollection = new GroupCollection();
+
+	static {
+		m_groupCollection.add(1, 2, 3, 1, Rates.GROUP_1_2_3_1);
+		m_groupCollection.add(2, 2, 3, 1, Rates.GROUP_2_2_3_1);
+		m_groupCollection.add(1, 2, 3, 2, Rates.GROUP_1_2_3_2);
+		m_groupCollection.add(2, 2, 3, 2, Rates.GROUP_2_2_3_2);
+		
+		m_groupCollection.add(0, 3, 4, 2, Rates.GROUP_0_3_4_2);
+		m_groupCollection.add(2, 3, 4, 0, Rates.GROUP_2_3_4_0);
+		m_groupCollection.add(1, 3, 4, 1, Rates.GROUP_1_3_4_1, new PlayerFlagsItem(FORCING_MOVE_1, POSSIBLE_WIN_3));
+		m_groupCollection.add(2, 3, 4, 1, Rates.GROUP_2_3_4_1, new PlayerFlagsItem(FORCING_MOVE_1, POSSIBLE_WIN_3));
+		m_groupCollection.add(1, 3, 4, 2, Rates.GROUP_1_3_4_2, new PlayerFlagsItem(FORCING_MOVE_1, POSSIBLE_WIN_3));
+		m_groupCollection.add(2, 3, 4, 2, Rates.GROUP_2_3_4_2, new PlayerFlagsItem(FORCING_MOVE_1, POSSIBLE_WIN_3), new PlayerFlagsItem(FORCING_MOVE_2, POSSIBLE_WIN_3));
+		
+		m_groupCollection.add(1, 3, 5, 1, Rates.GROUP_1_3_5_1);
+		m_groupCollection.add(2, 3, 5, 1, Rates.GROUP_2_3_5_1);
+		m_groupCollection.add(1, 3, 5, 2, Rates.GROUP_1_3_5_2);
+		m_groupCollection.add(2, 3, 5, 2, Rates.GROUP_2_3_5_2);
+		
+		m_groupCollection.add(0, 4, 5, 0, Rates.GROUP_0_4_5_0, new PlayerFlagsItem(FORCING_MOVE_1, POSSIBLE_WIN_3));		// FW3 to reduce the priority
+		m_groupCollection.add(0, 4, 5, 1, Rates.GROUP_0_4_5_1, new PlayerFlagsItem(FORCING_MOVE_1, POSSIBLE_WIN_2));
+		m_groupCollection.add(0, 4, 5, 2, Rates.GROUP_0_4_5_2, new PlayerFlagsItem(FORCING_MOVE_1, POSSIBLE_WIN_2));
+		
+		m_groupCollection.add(1, 4, 5, 0, Rates.GROUP_1_4_5_0, new PlayerFlagsItem(FORCING_MOVE_1, POSSIBLE_WIN_2));
+		m_groupCollection.add(1, 4, 5, 1, Rates.GROUP_1_4_5_1, new PlayerFlagsItem(FORCING_MOVE_1, POSSIBLE_WIN_2));
+		m_groupCollection.add(1, 4, 5, 2, Rates.GROUP_1_4_5_2, new PlayerFlagsItem(FORCING_MOVE_1, POSSIBLE_WIN_2));
+		
+		m_groupCollection.add(2, 4, 5, 0, Rates.GROUP_2_4_5_0, new PlayerFlagsItem(FORCING_MOVE_1, POSSIBLE_WIN_2));
+		m_groupCollection.add(2, 4, 5, 1, Rates.GROUP_2_4_5_1, new PlayerFlagsItem(FORCING_MOVE_1, POSSIBLE_WIN_2));
+		m_groupCollection.add(2, 4, 5, 2, Rates.GROUP_2_4_5_2, new PlayerFlagsItem(FORCING_MOVE_1, POSSIBLE_WIN_2));
+		
+		m_groupCollection.add(0, 4, 6, 0, Rates.GROUP_0_4_6_0);
+		m_groupCollection.add(0, 4, 6, 1, Rates.GROUP_0_4_6_1);
+		m_groupCollection.add(0, 4, 6, 2, Rates.GROUP_0_4_6_2);
+		
+		m_groupCollection.add(1, 4, 6, 0, Rates.GROUP_1_4_6_0);
+		m_groupCollection.add(1, 4, 6, 1, Rates.GROUP_1_4_6_1);
+		m_groupCollection.add(1, 4, 6, 2, Rates.GROUP_1_4_6_2);
+		
+		m_groupCollection.add(2, 4, 6, 0, Rates.GROUP_2_4_6_0);
+		m_groupCollection.add(2, 4, 6, 1, Rates.GROUP_2_4_6_1);
+		m_groupCollection.add(2, 4, 6, 2, Rates.GROUP_2_4_6_2);
+
+		m_groupCollection.add(0, 5, 6, 0, Rates.GROUP_0_5_6_0, new PlayerFlagsItem(FORCING_MOVE_1, POSSIBLE_WIN_2));
+		m_groupCollection.add(0, 5, 6, 1, Rates.GROUP_0_5_6_1, new PlayerFlagsItem(FORCING_MOVE_1, POSSIBLE_WIN_2));
+		m_groupCollection.add(0, 5, 6, 2, Rates.GROUP_0_5_6_2, new PlayerFlagsItem(FORCING_MOVE_1, POSSIBLE_WIN_2));
+		
+		m_groupCollection.add(1, 5, 6, 0, Rates.GROUP_1_5_6_0, new PlayerFlagsItem(FORCING_MOVE_1, POSSIBLE_WIN_2));
+		m_groupCollection.add(1, 5, 6, 1, Rates.GROUP_1_5_6_1, new PlayerFlagsItem(FORCING_MOVE_1, POSSIBLE_WIN_2));
+		m_groupCollection.add(1, 5, 6, 2, Rates.GROUP_1_5_6_2, new PlayerFlagsItem(FORCING_MOVE_1, POSSIBLE_WIN_2));
+		
+		m_groupCollection.add(2, 5, 6, 0, Rates.GROUP_2_5_6_0, new PlayerFlagsItem(FORCING_MOVE_1, POSSIBLE_WIN_2));
+		m_groupCollection.add(2, 5, 6, 1, Rates.GROUP_2_5_6_1, new PlayerFlagsItem(FORCING_MOVE_1, POSSIBLE_WIN_2));
+		m_groupCollection.add(2, 5, 6, 2, Rates.GROUP_2_5_6_2, new PlayerFlagsItem(FORCING_MOVE_1, POSSIBLE_WIN_2));
+	}
+
+	public static GroupRatesItem getGroupRatesItem(final int before, final int find, final int of, final int after) {
+		return m_groupCollection.get(before, find, of, after);
+ 	}
+	
+	public static int getGroupRate(int before, int find, int of, int after) {
+		GroupRatesItem groupRatesItem = getGroupRatesItem(before, find, of, after);
+		return groupRatesItem == null ? 0 : groupRatesItem.getRate();
+	}
+	
+// Special Cases
+	
+	private static final int SPECIAL_CASE_1 = 4000;
+	private static final int SPECIAL_CASE_2 = 3000;
+	private static final int SPECIAL_CASE_3 = 3100;
+	private static final int SPECIAL_CASE_4 = 5000;
+	private static final int SPECIAL_CASE_5 = 5100;
+	private static final int SPECIAL_CASE_6 = 3000;
+
+	private static SpecialCasesCollection m_specialCasesCollection = new SpecialCasesCollection();
+
+	static {
+		m_specialCasesCollection.add(1, SPECIAL_CASE_1, new PlayerFlagsItem(FORCING_MOVE_2, POSSIBLE_WIN_3, LETHAL_3));
+		m_specialCasesCollection.add(2, SPECIAL_CASE_2, new PlayerFlagsItem(FORCING_MOVE_2, POSSIBLE_WIN_3, LETHAL_3));
+		m_specialCasesCollection.add(3, SPECIAL_CASE_3, new PlayerFlagsItem(FORCING_MOVE_2, POSSIBLE_WIN_3, LETHAL_3));
+		m_specialCasesCollection.add(4, SPECIAL_CASE_4, new PlayerFlagsItem(FORCING_MOVE_1, POSSIBLE_WIN_2, LETHAL_2));
+		m_specialCasesCollection.add(5, SPECIAL_CASE_5, new PlayerFlagsItem(FORCING_MOVE_1, POSSIBLE_WIN_2, LETHAL_2));
+		m_specialCasesCollection.add(6, SPECIAL_CASE_6, new PlayerFlagsItem(FORCING_MOVE_2, POSSIBLE_WIN_3, LETHAL_3));
+	}
+
+	public static SpecialCaseRatesItem getSpecialCasesRatesItem(int id) {
+		return m_specialCasesCollection.get(id);
+	}
+
+	public static int getSpecialCasesRate(int id) {
+		SpecialCaseRatesItem specialCaseRatesItem = getSpecialCasesRatesItem(id);
+		return specialCaseRatesItem == null ? 0 : getSpecialCasesRatesItem(id).getRate();
+	}
+}

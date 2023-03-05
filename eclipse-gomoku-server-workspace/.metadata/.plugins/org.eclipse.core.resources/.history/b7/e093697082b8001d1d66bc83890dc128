@@ -1,0 +1,249 @@
+package io.johnvincent.gomoku.library.counter;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+
+import io.johnvincent.gomoku.library.bestmove.BestMoveItem;
+import io.johnvincent.gomoku.library.bestmove.BestMoveOptions;
+import io.johnvincent.gomoku.library.game.Board;
+import io.johnvincent.gomoku.library.game.Coordinate;
+import io.johnvincent.gomoku.library.players.Players;
+import io.johnvincent.gomoku.library.rates.SummaryRatesItem;
+
+import io.johnvincent.gomoku.library.scoring.SquareForcingScoresList;
+import io.johnvincent.gomoku.library.scoring.SquareForcingScoresItem;
+import io.johnvincent.gomoku.library.scoring.SquareLethalScoresList;
+import io.johnvincent.gomoku.library.scoring.SquareLethalScoresItem;
+import io.johnvincent.gomoku.library.scoring.SquareScoresItem;
+
+import io.johnvincent.gomoku.library.scoring.SquareScoresList;
+import io.johnvincent.gomoku.library.winner.WinnerList;
+import io.johnvincent.gomoku.library.scoring.ScoringListsItem;
+
+@JsonPropertyOrder({ "player", "currentPlayer", "squares", "bestMoveItem", "scoringListsItem", "bestMoveOptions" })
+public class CounterPlayer {
+
+	@JsonProperty("squares")
+	private HashMap<String, CounterSquare> m_squares = new HashMap<String, CounterSquare>();
+
+	@JsonProperty("player")
+	final private int m_player;
+
+	@JsonProperty("currentPlayer")
+	final private boolean m_currentPlayer;
+
+	@JsonProperty("bestMoveItem")
+	private BestMoveItem m_bestMoveItem = null;
+	
+	@JsonProperty("scoringListsItem")
+	private ScoringListsItem m_scoringListsItem = null;
+
+	@JsonProperty("bestMoveOptions")
+	BestMoveOptions m_bestMoveOptions = null;
+	
+	public CounterPlayer(int player, int currentPlayer) {
+		System.out.println("CounterPlayer; player "+player+" currentPlayer "+currentPlayer);
+		this.m_player = player;
+		this.m_currentPlayer = player == currentPlayer;
+	}
+
+	@JsonIgnore
+	public BestMoveItem getBestMoveItem() {return m_bestMoveItem;}
+
+	@JsonIgnore
+	public void setBestMoveItem(final BestMoveItem bestMoveItem) {m_bestMoveItem = bestMoveItem;}
+
+	@JsonIgnore
+	public ScoringListsItem getScoringListsItem() {return m_scoringListsItem;}
+
+	@JsonIgnore
+	public BestMoveOptions getBestMoveOptions() {return m_bestMoveOptions;}
+	
+	public void addSquare(final CounterSquare counterSquare) {
+//		System.out.println("CounterPlayer::addSquare; player "+player+" counterSquare "+counterSquare.toString());
+		assert counterSquare != null;
+		
+		CounterSquareKey key = new CounterSquareKey(m_player, counterSquare.getRow(), counterSquare.getColumn());
+//		System.out.println("CounterPlayer::addSquare; CounterSquareKey :"+key+":");
+		m_squares.put(key.toString(), counterSquare);
+//		System.out.println("CounterPlayer::addSquare; (after) m_squares");
+	}
+
+	@JsonIgnore
+	public CounterPatternsItem getCounterPatternsItem(final int row, final int col, final int pattern) {
+//		System.out.println("CounterPlayer::getCounterPatternsItem; player "+player+" row "+row+" col "+col+" pattern "+pattern);
+		
+		CounterSquareKey key = new CounterSquareKey(m_player, row, col);
+//		System.out.println("CounterPlayer::getCounterPatternsItem; CounterSquareKey :"+key+":");
+		CounterSquare counterSquare = m_squares.get(key.toString());
+//		System.out.println("CounterPlayer::getCounterPatternsItem; counterSquare :"+counterSquare+":");
+		if (counterSquare == null) return null;
+		return counterSquare.getCounterPatternsItem(pattern);	
+	}
+
+	public void calculateSquareTotal(final int row, final int col) {
+		CounterSquareKey key = new CounterSquareKey(m_player, row, col);
+		CounterSquare counterSquare = m_squares.get(key.toString());
+		if (counterSquare != null) counterSquare.calculateSquareTotal();
+	}
+	
+	public int getCurrentPlayerScore(final int row, final int col) {
+		CounterSquareKey key = new CounterSquareKey(m_player, row, col);
+		CounterSquare counterSquare = m_squares.get(key.toString());
+		if (counterSquare == null) return 0;
+		return counterSquare.getCurrentPlayerScore();
+	}
+	
+	public int getOtherPlayerScore(final int row, final int col) {
+		CounterSquareKey key = new CounterSquareKey(m_player, row, col);
+		CounterSquare counterSquare = m_squares.get(key.toString());
+		if (counterSquare == null) return 0;
+		return counterSquare.getOtherPlayerScore();
+	}
+	
+	public void setOtherPlayerScore(final int score, final int row, final int col) {
+		CounterSquareKey key = new CounterSquareKey(m_player, row, col);
+		CounterSquare counterSquare = m_squares.get(key.toString());
+		if (counterSquare == null) return;
+		counterSquare.setOtherPlayerScore(score);
+	}
+
+	public void calculateSummaryRates(final int row, final int col) {
+		CounterSquareKey key = new CounterSquareKey(m_player, row, col);
+		CounterSquare counterSquare = m_squares.get(key.toString());
+		if (counterSquare == null) return;
+		counterSquare.calculateSummaryRates();
+	}
+
+	public SummaryRatesItem getSummaryRatesItem(final int row, final int col) {
+		CounterSquareKey key = new CounterSquareKey(m_player, row, col);
+		CounterSquare counterSquare = m_squares.get(key.toString());
+		if (counterSquare == null) return null;
+		
+		return counterSquare.getSummaryRatesItem();
+	}
+
+	public void handleSpecialCases(final int row, final int col) {
+		CounterSquareKey key = new CounterSquareKey(m_player, row, col);
+		CounterSquare counterSquare = m_squares.get(key.toString());
+		if (counterSquare == null) return;
+		counterSquare.handleSpecialCases();
+	}
+	
+	public void createScoringLists(final Board board) {
+		m_scoringListsItem = new ScoringListsItem(
+				m_player,
+				createSortedSquareScoresList(m_player, board),
+				createSortedLethalLists(m_player, board),
+				createSortedForcingLists(m_player, board));
+
+		m_bestMoveOptions = new BestMoveOptions(m_player, m_scoringListsItem);
+	}
+
+	private SquareScoresList createSortedSquareScoresList(final int player, final Board board) {
+		SquareScoresList list = new SquareScoresList();
+
+		for (Map.Entry<String, CounterSquare> entry : m_squares.entrySet()) {
+//			System.out.println(entry.getKey() + " = " + entry.getValue().toString());
+
+			int totalScore = entry.getValue().getTotalScore();
+			if (totalScore < 1) continue;
+			
+			int row = entry.getValue().getRow();
+			int column = entry.getValue().getColumn();
+			int currentPlayerScore = entry.getValue().getCurrentPlayerScore();
+			int otherPlayerScore = entry.getValue().getOtherPlayerScore();
+		
+			list.add(new SquareScoresItem (player, row, column, board.getCentral(row, column), totalScore, currentPlayerScore, otherPlayerScore));
+		}
+		
+		list.sort();
+
+		return list;
+	}
+
+	private SquareLethalScoresList createSortedLethalLists(final int player, final Board board) {
+		SquareLethalScoresList squareLethalScoresList = new SquareLethalScoresList();
+
+		for (Map.Entry<String, CounterSquare> entry : m_squares.entrySet()) {
+
+			CounterSquare counterSquare = entry.getValue();
+			if (counterSquare == null) continue;
+//			System.out.println(entry.getKey() + " = " + entry.getValue().toString());
+
+			int row = counterSquare.getRow();
+			int column = counterSquare.getColumn();
+
+			int totalScore = entry.getValue().getTotalScore();
+			int currentPlayerScore = counterSquare.getCurrentPlayerScore();
+			int otherPlayerScore = counterSquare.getOtherPlayerScore();
+
+			SummaryRatesItem summaryRatesItem = counterSquare.getSummaryRatesItem();
+			if (summaryRatesItem == null) continue;
+
+			if (summaryRatesItem.isLethal()) {
+				squareLethalScoresList.add(new SquareLethalScoresItem (player, row, column, board.getCentral(row, column), summaryRatesItem, totalScore, currentPlayerScore, otherPlayerScore));
+			}
+		}
+		
+		squareLethalScoresList.sort();
+
+		return squareLethalScoresList;
+	}
+
+	private SquareForcingScoresList createSortedForcingLists(final int player, final Board board) {
+		SquareForcingScoresList squareForcingScoresList = new SquareForcingScoresList();
+
+		for (Map.Entry<String, CounterSquare> entry : m_squares.entrySet()) {
+
+			CounterSquare counterSquare = entry.getValue();
+			if (counterSquare == null) continue;
+//			System.out.println(entry.getKey() + " = " + entry.getValue().toString());
+
+			int row = counterSquare.getRow();
+			int column = counterSquare.getColumn();
+
+			int totalScore = entry.getValue().getTotalScore();
+			int currentPlayerScore = counterSquare.getCurrentPlayerScore();
+			int otherPlayerScore = counterSquare.getOtherPlayerScore();
+
+			SummaryRatesItem summaryRatesItem = counterSquare.getSummaryRatesItem();
+			if (summaryRatesItem == null) continue;
+
+			if (summaryRatesItem.isForcingMove() || summaryRatesItem.isPossibleWin()) {
+				squareForcingScoresList.add(new SquareForcingScoresItem (player, row, column, board.getCentral(row, column), summaryRatesItem, totalScore, currentPlayerScore, otherPlayerScore));
+			}
+		}
+
+		squareForcingScoresList.sort();
+
+		return squareForcingScoresList;
+	}
+
+	@JsonIgnore
+	public WinnerList getWinnerList(final int player, final Coordinate coordinate) {
+		assert Players.isValidPlayer(player);
+		assert coordinate != null;
+		
+		CounterSquareKey key = new CounterSquareKey(player, coordinate.getRow(), coordinate.getCol());
+		CounterSquare counterSquare = m_squares.get(key.toString());
+		if (counterSquare == null) return null;
+
+		return counterSquare.getWinnerList();
+	}
+
+	public String toString() {
+		StringBuffer buf = new StringBuffer();
+		buf.append("[");
+		for (Map.Entry<String, CounterSquare> entry : m_squares.entrySet()) {
+			buf.append("(").append(entry.getKey().toString()).append(",").append(entry.getValue().toString()).append(")");
+//		    System.out.println(entry.getKey() + " = " + entry.getValue().toString());
+		}
+		buf.append("]");
+		return buf.toString();
+	}
+}

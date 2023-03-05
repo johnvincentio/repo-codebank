@@ -1,0 +1,26 @@
+package io.johnvincent.gomoku.library.rates;
+
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+
+@JsonPropertyOrder({ "key", "id" })
+public class SpecialCaseRatesItem extends FlagsItem {
+	
+	private String key;
+	private int id;
+
+	public SpecialCaseRatesItem (String key, int id, int rate, PlayerFlagsItem currentPlayerFlagsItem, PlayerFlagsItem otherPlayerFlagsItem) {
+		super(key, rate, currentPlayerFlagsItem, otherPlayerFlagsItem);
+
+		assert id > 0;
+
+		this.key = key;
+		this.id = id;
+	}
+	
+	public String getKey() {return key;}
+	public int getId() {return id;}
+	
+	public String toString() {
+		return "("+getKey()+","+getId()+","+super.toString();
+	}
+}

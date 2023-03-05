@@ -1,0 +1,21 @@
+1595249522132	Copy compilation units
+1595249577657	Rename type 'CounterPatternsItem'
+1595249789359	Rename type 'CounterPatterns'
+1595254692426	Rename type 'CounterHelper'
+1595254900014	Rename type 'CountersInfo'
+1595255067476	Rename type 'CounterPlayer'
+1595255107493	Rename type 'CounterSquare'
+1595255150878	Rename type 'CounterSquareKey'
+1595255181344	Rename type 'CounterKey'
+1595255214578	Rename type 'TotalSquareKey'
+1595256692794	Rename type 'CountersInfo'
+1595261804922	Rename type 'TotalsPatternsTotals'
+1595279591079	Delete element
+1595284312793	Rename type 'TotalsPatternsTotals'
+1595284333634	Rename type 'TotalsPatternsTotalsItem'
+1595369682684	Rename resource 'tie-1.gomoku'
+1595371988367	Rename package 'io.johnvincent.gomoku.library.scoring.pattern'
+1595433627689	Copy compilation units
+1595433639698	Delete elements
+1595433655429	Copy compilation units
+1595433660426	Delete elements

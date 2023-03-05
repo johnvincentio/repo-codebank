@@ -1,0 +1,62 @@
+
+package io.johnvincent.gomoku.library.rates;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+public class ActualCollection {
+
+	@JsonProperty("map")
+	private Map<String, ActualRatesItem> m_map = new HashMap<String, ActualRatesItem>();
+
+	private static String createActualRatesKey(int before, int actual, int after) { return "A_" + before + "_" + actual + "_" + after; }
+
+	// PlayerFlagsItem
+
+	public void add(int before, int actual, int after, int rate, PlayerFlagsItem currentPlayerFlagsItem) {
+//		String key = createActualRatesKey(before, actual, after);
+//		m_map.put(key, new ActualRatesItem (key, before, actual, after, rate, currentPlayerFlagsItem));
+		add(before, actual, after, rate, currentPlayerFlagsItem);
+	}
+
+	public void add(int before, int actual, int after, int rate, PlayerFlagsItem currentPlayerFlagsItem, PlayerFlagsItem otherPlayerFlagsItem) {
+		String key = createActualRatesKey(before, actual, after);
+		m_map.put(key, new ActualRatesItem (key, before, actual, after, rate, currentPlayerFlagsItem, otherPlayerFlagsItem));
+//		add(before, actual, after, rate, forcingMove, possibleWin, lethal, true);
+	}
+
+//	public void add(int before, int actual, int after, int rate, int forcingMove, int possibleWin, int lethal) {
+//		String key = createActualRatesKey(before, actual, after);
+//		m_map.put(key, new ActualRatesItem (key, before, actual, after, rate, forcingMove, possibleWin, lethal));
+////		add(before, actual, after, rate, forcingMove, possibleWin, lethal, true);
+//	}
+
+//	public void add(int before, int actual, int after, int rate, int forcingMove, int possibleWin, int lethal, boolean alwaysUsed) {
+//		String key = createActualRatesKey(before, actual, after);
+//		m_map.put(key, new ActualRatesItem (key, before, actual, after, rate, forcingMove, possibleWin, lethal, alwaysUsed));
+//	}
+
+	public void add(int before, int actual, int after, int rate) {
+		add(before, actual, after, rate, null, null);
+//		String key = createActualRatesKey(before, actual, after);
+//		m_map.put(key, new ActualRatesItem (key, before, actual, after, rate));
+	}
+
+	public ActualRatesItem get(final int beforeActual, final int actual, final int afterActual) {
+		assert beforeActual >= 0;
+		assert actual >= 0;
+		assert afterActual >= 0;
+		
+		int num1 = beforeActual > 2 ? 2 : beforeActual;
+		int num2 = actual;
+		int num3 = afterActual > 2 ? 2 : afterActual;
+		if (actual >= 5) {		// only one entry in catalog as before and after do not matter.
+			num2 = 5;
+			num1 = 0;
+			num3 = 0;
+		}
+		return m_map.get(createActualRatesKey(num1, num2, num3));
+	}
+}

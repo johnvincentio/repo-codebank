@@ -1,0 +1,86 @@
+package io.johnvincent.gomoku.library.bestmove;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import io.johnvincent.gomoku.library.game.Coordinate;
+import io.johnvincent.gomoku.library.scoring.ScoringListsItem;
+
+public class BestMoveOptions {
+
+	private int m_player;
+	private ScoringListsItem m_scoringListsItem;
+
+	private Coordinate m_lethal1 = null;
+	private Coordinate m_lethal2 = null;
+	private Coordinate m_lethal3 = null;
+
+	private Coordinate m_forcingMove = null;
+	private Coordinate m_forcingMove1 = null;
+	private Coordinate m_forcingMove2 = null;
+
+	private Coordinate m_possibleWin2 = null;
+	private Coordinate m_possibleWin3 = null;
+
+	private Coordinate m_buildingMove = null;
+
+	public BestMoveOptions(final int player, final ScoringListsItem scoringListsItem) {
+		m_player = player;
+		m_scoringListsItem = scoringListsItem;
+		this.populate();
+	}
+
+	public void populate() {
+		m_lethal1 = m_scoringListsItem.calculateBestLethal(1);
+		m_lethal2 = m_scoringListsItem.calculateBestLethal(2);
+		m_lethal3 = m_scoringListsItem.calculateBestLethal(3);
+
+		m_forcingMove = m_scoringListsItem.calculateBestForcingMove();
+		m_forcingMove1 = m_scoringListsItem.calculateBestForcingMove(1);
+		m_forcingMove2 = m_scoringListsItem.calculateBestForcingMove(2);
+		
+		m_possibleWin2 = m_scoringListsItem.calculateBestPossibleWin(2);
+		m_possibleWin3 = m_scoringListsItem.calculateBestpossibleWin(3);
+		
+		m_buildingMove = m_scoringListsItem.getBuildingMove();
+	}
+
+	public int getPlayer() {return m_player;}
+	
+	public Coordinate getLethal1() {return m_lethal1;}
+	public Coordinate getLethal2() {return m_lethal2;}
+	public Coordinate getLethal3() {return m_lethal3;}
+
+	public Coordinate getForcingMove() {return m_forcingMove;}
+	public Coordinate getForcingMove1() {return m_forcingMove1;}
+	public Coordinate getForcingMove2() {return m_forcingMove2;}
+	
+	public Coordinate getPossibleWin2() {return m_possibleWin2;}
+	public Coordinate getPossibleWin3() {return m_possibleWin3;}
+
+	public Coordinate getBuildingMove() {return m_buildingMove;}
+
+	public String toString() {
+		return "(BestMoveOptions[player="+getPlayer()+
+				", lethal1="+getLethal1()+", lethal2="+getLethal2()+", lethal3="+getLethal3()+
+				", forcingMove="+getForcingMove()+", forcingMove1="+getForcingMove1()+", forcingMove2="+getForcingMove2()+
+				", possibleWin2="+getPossibleWin2()+", possibleWin3="+getPossibleWin3()+
+				", buildingMove="+getBuildingMove()+
+				"])";
+	}
+	
+	@JsonIgnore
+	public void show(String message) {
+		System.out.println("\n>>> BestMoveOptions::show; "+message);
+		System.out.println("player="+getPlayer());
+		System.out.println("lethal1="+getLethal1());
+		System.out.println("lethal2="+getLethal2());
+		System.out.println("lethal3="+getLethal3());
+		System.out.println("forcingMove="+getForcingMove());
+		System.out.println("forcingMove1="+getForcingMove1());
+		System.out.println("forcingMove2="+getForcingMove2());
+		System.out.println("possibleWin2="+getPossibleWin2());
+		System.out.println("possibleWin3="+getPossibleWin3());
+		System.out.println("buildingMove="+getBuildingMove());
+		System.out.println("<<< BestMoveOptions::show; "+message+"\n");
+	}
+}

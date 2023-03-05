@@ -1,0 +1,293 @@
+package io.johnvincent.gomoku.library.rates;
+
+/*
+Rules:
+
+TODO;
+
+Lethal implies forced move
+
+Lethal in N moves
+	0		SCORE_WIN
+	1
+	2
+
+Forcing for N moves
+	0
+	1
+	2
+ */
+
+public class Rates {
+
+	private static final int SCORE_LETHAL_0 = 100000;		// wins this move
+	private static final int SCORE_LETHAL_2 = 10000;		// wins in 2 moves, this and the next
+	
+//	private static final int SCORE_FORCING_1 = 0;			// this move forces 1 move
+//	private static final int SCORE_FORCING_2 = 2000;		// this move forces 2 moves
+//	private static final int SCORE_FORCING_3 = 0;			// this move forces 3 moves
+	
+	private static final int SCORE_WIN = SCORE_LETHAL_0;
+
+	private static final int SCORE_FOUR_FOUR_MAXIMUM = 750;
+	private static final int SCORE_FOUR_UNBOUNDED = SCORE_LETHAL_2;
+	private static final int SCORE_FOUR_SINGLE_BOUNDED = 7500;		// 2000, 7500 - this is too high, forcing but not lethal
+	
+	
+	private static final int SCORE_THREE_UNBOUNDED = 2000;
+	private static final int SCORE_THREE_SINGLE_BOUNDED = 500;
+	private static final int SCORE_THREE_THREE_MAXIMUM = 75;
+	private static final int SCORE_THREE_FOUR_MAXIMUM = 150;
+	private static final int SCORE_THREE_FIVE_MAXIMUM = 200;	
+
+	private static final int SCORE_TWO_TWO_MAXIMUM = 25;
+	private static final int SCORE_TWO_THREE_MAXIMUM = 50;
+	private static final int SCORE_TWO_FOUR_MAXIMUM = 75;
+	private static final int SCORE_TWO_FIVE_MAXIMUM = 100;
+	private static final int SCORE_TWO_SIX_MAXIMUM = 125;
+	
+	protected static final int ACTUAL_0_5_0 = SCORE_WIN;	// xPPPPPx, x.PPPPPx, xPPPPP.x, x..PPPPP.x, x.PPPPP..x, x..PPPPP..x		LETHAL_0
+
+	protected static final int ACTUAL_0_4_0 = SCORE_FOUR_FOUR_MAXIMUM;		// xPPPPx
+	protected static final int ACTUAL_0_4_1 = SCORE_FOUR_SINGLE_BOUNDED;	// xPPPP.x		FORCING_1
+	protected static final int ACTUAL_1_4_0 = SCORE_FOUR_SINGLE_BOUNDED;	// x.PPPPx		FORCING_1
+	protected static final int ACTUAL_1_4_1 = SCORE_FOUR_UNBOUNDED;			// x.PPPP.x		LETHAL_1
+	protected static final int ACTUAL_2_4_0 = SCORE_FOUR_SINGLE_BOUNDED;	// x..PPPPx		FORCING_1
+	protected static final int ACTUAL_2_4_1 = SCORE_FOUR_UNBOUNDED;			// x..PPPP.x	LETHAL_1
+	protected static final int ACTUAL_0_4_2 = SCORE_FOUR_SINGLE_BOUNDED;	// xPPPP..x		FORCING_1
+	protected static final int ACTUAL_1_4_2 = SCORE_FOUR_UNBOUNDED;			// x.PPPP..x	LETHAL_1
+	protected static final int ACTUAL_2_4_2 = SCORE_FOUR_UNBOUNDED;			// x..PPPP..x	LETHAL_1
+
+	protected static final int ACTUAL_0_3_0 = SCORE_THREE_THREE_MAXIMUM;	// xPPPx
+	protected static final int ACTUAL_0_3_1 = SCORE_THREE_FOUR_MAXIMUM;		// xPPP.x
+	protected static final int ACTUAL_1_3_0 = SCORE_THREE_FOUR_MAXIMUM;		// x.PPPx
+	protected static final int ACTUAL_1_3_1 = SCORE_THREE_FIVE_MAXIMUM;		// x.PPP.x
+	protected static final int ACTUAL_2_3_0 = SCORE_THREE_FIVE_MAXIMUM;		// x..PPPx
+	protected static final int ACTUAL_0_3_2 = SCORE_THREE_FIVE_MAXIMUM;		// xPPP..x
+	protected static final int ACTUAL_2_3_1 = SCORE_THREE_SINGLE_BOUNDED;	// x..PPP.x		FORCING_1
+	protected static final int ACTUAL_1_3_2 = SCORE_THREE_SINGLE_BOUNDED;	// x.PPP..x		FORCING_1
+	protected static final int ACTUAL_2_3_2 = SCORE_THREE_UNBOUNDED;		// x..PPP..x	FORCING_2
+
+	protected static final int ACTUAL_0_2_0 = SCORE_TWO_TWO_MAXIMUM;		// xPPx
+	protected static final int ACTUAL_1_2_0 = SCORE_TWO_THREE_MAXIMUM;		// x.PPx
+	protected static final int ACTUAL_0_2_1 = SCORE_TWO_THREE_MAXIMUM;		// xPP.x
+	protected static final int ACTUAL_1_2_1 = SCORE_TWO_FOUR_MAXIMUM;		// x.PP.x
+	protected static final int ACTUAL_2_2_0 = SCORE_TWO_FOUR_MAXIMUM;		// x..PPx
+	protected static final int ACTUAL_2_2_1 = SCORE_TWO_FIVE_MAXIMUM;		// x..PP.x
+	protected static final int ACTUAL_0_2_2 = SCORE_TWO_FOUR_MAXIMUM;		// xPP..x
+	protected static final int ACTUAL_1_2_2 = SCORE_TWO_FIVE_MAXIMUM;		// x.PP..x
+	protected static final int ACTUAL_2_2_2 = SCORE_TWO_SIX_MAXIMUM;		// x..PP..x	
+
+
+	private static final int SCORE_GROUP_TWO_THREE_0 = 100;
+	private static final int SCORE_GROUP_TWO_THREE_1 = 105;
+	private static final int SCORE_GROUP_TWO_THREE_2 = 110;
+	private static final int SCORE_GROUP_TWO_THREE_3 = 115;
+	protected static final int GROUP_1_2_3_1 = SCORE_GROUP_TWO_THREE_0;	// x.P.P.x
+	protected static final int GROUP_2_2_3_1 = SCORE_GROUP_TWO_THREE_1;	// x..P.P.x
+	protected static final int GROUP_1_2_3_2 = SCORE_GROUP_TWO_THREE_2;	// x.P.P..x
+	protected static final int GROUP_2_2_3_2 = SCORE_GROUP_TWO_THREE_3;	// x..P.P..x
+
+	private static final int SCORE_GROUP_THREE_FOUR_0 = 300;
+	private static final int SCORE_GROUP_THREE_FOUR_1 = 300;
+	private static final int SCORE_GROUP_THREE_FOUR_2 = 900;
+	private static final int SCORE_GROUP_THREE_FOUR_3 = 905;
+	private static final int SCORE_GROUP_THREE_FOUR_4 = 910;
+	private static final int SCORE_GROUP_THREE_FOUR_5 = 915;
+	protected static final int GROUP_0_3_4_2 = SCORE_GROUP_THREE_FOUR_0;	// xP.PP..x, xPP.P..x
+	protected static final int GROUP_2_3_4_0 = SCORE_GROUP_THREE_FOUR_1;	// x..P.PPx, x..PP.Px
+	protected static final int GROUP_1_3_4_1 = SCORE_GROUP_THREE_FOUR_2;	// x.P.PP.x, x.PP.P.x		FORCING_1
+	protected static final int GROUP_2_3_4_1 = SCORE_GROUP_THREE_FOUR_3;	// x..P.PP.x, x..PP.P.x		FORCING_1
+	protected static final int GROUP_1_3_4_2 = SCORE_GROUP_THREE_FOUR_4;	// x.P.PP..x, x.PP.P..x		FORCING_1
+	protected static final int GROUP_2_3_4_2 = SCORE_GROUP_THREE_FOUR_5;	// x..P.PP..x, x..PP.P..x	FORCING_1
+
+	private static final int SCORE_GROUP_THREE_FIVE_0 = 300;
+	private static final int SCORE_GROUP_THREE_FIVE_1 = 305;
+	private static final int SCORE_GROUP_THREE_FIVE_2 = 310;
+	private static final int SCORE_GROUP_THREE_FIVE_3 = 315;
+	protected static final int GROUP_1_3_5_1 = SCORE_GROUP_THREE_FIVE_0;	// x.P.P.P.x
+	protected static final int GROUP_2_3_5_1 = SCORE_GROUP_THREE_FIVE_1;	// x..P.P.P.x
+	protected static final int GROUP_1_3_5_2 = SCORE_GROUP_THREE_FIVE_2;	// x.P.P.P..x
+	protected static final int GROUP_2_3_5_2 = SCORE_GROUP_THREE_FIVE_3;	// x..P.P.P..x
+
+	private static final int SCORE_GROUP_FOUR_FORCING_0 = 1250;
+	private static final int SCORE_GROUP_FOUR_FORCING_1 = 1255;
+	private static final int SCORE_GROUP_FOUR_FORCING_2 = 1260;
+	private static final int SCORE_GROUP_FOUR_FORCING_3 = 1265;
+	private static final int SCORE_GROUP_FOUR_FORCING_4 = 1270;
+	private static final int SCORE_GROUP_FOUR_FORCING_5 = 1275;
+	protected static final int GROUP_0_4_5_0 = SCORE_GROUP_FOUR_FORCING_0;	// xPP.PPx,	 xP.PPPx,  xPPP.Px			FORCING_1
+	protected static final int GROUP_0_4_5_1 = SCORE_GROUP_FOUR_FORCING_1;	// xPP.PP.x, xP.PPP.x, xPPP.P.x			FORCING_1
+	protected static final int GROUP_0_4_5_2 = SCORE_GROUP_FOUR_FORCING_2;	// xPP.pP.x, xP.PPP.x, xPPP.P..x		FORCING_1
+	
+	protected static final int GROUP_1_4_5_0 = SCORE_GROUP_FOUR_FORCING_1;	// x.PP.PPx,   x.P.PPPx,   x.PPP.Px			FORCING_1
+	protected static final int GROUP_1_4_5_1 = SCORE_GROUP_FOUR_FORCING_3;	// x.PP.PP.x,  x.P.PPP.x,  x.PPP.P.x		FORCING_1
+	protected static final int GROUP_1_4_5_2 = SCORE_GROUP_FOUR_FORCING_4;	// x.PP.PP..x, x.P.PPP..x, x.PPP.P..x		FORCING_1
+
+	protected static final int GROUP_2_4_5_0 = SCORE_GROUP_FOUR_FORCING_2;	// x..PP.PP.x,	x..P.PPP.x, x..PPP.Px		FORCING_1
+	protected static final int GROUP_2_4_5_1 = SCORE_GROUP_FOUR_FORCING_4;	// x..PP.PP.x,	x..P.PPP.x, x..PPP.P.x		FORCING_1
+	protected static final int GROUP_2_4_5_2 = SCORE_GROUP_FOUR_FORCING_5;	// x..PP.PP..x, x..P.PPP.., x..PPP.P..x		FORCING_1
+
+/*
+
+Notice that where the pattern is forcing, another pattern that is forcing is triggered.
+
+Thus, these patterns do not need to support forcing.
+
+GROUP_0_4_6_0:
+	xPPP..Px
+	xP..PPPx
+	xPP.P.Px
+	xP.P.PPx
+	xPP..PPx
+	xP.PP.Px
+
+GROUP_0_4_6_1:
+	xPPP..P.x
+	xP..PPP.x
+	xPP.P.P.x
+	xP.P.PP.x		FORCING_1;  G_1_3_4_1 which is forcing.
+	xPP..PP.x
+	xP.PP.P.x		FORCING_1;	G_1_3_4_1 which is forcing.
+
+GROUP_0_4_6_2:
+	xPPP..P..x
+	xP..PPP..x		FORCING_1; A_2_3_2 which is forcing.
+	xPP.P.P..x
+	xP.P.PP..x		FORCING_1; G_1_3_4_2 which is forcing.
+	xPP..PP..x
+	xP.PP.P..x		FORCING_1; G_1_3_4_2 which is forcing.
+
+GROUP_1_4_6_0:
+	x.PPP..Px		FORCING_1; A_1_3_2 which is forcing.
+	x.P..PPPx
+	x.PP.P.Px		FORCING_1; G_1_3_4_1 which is forcing.
+	x.P.P.PPx
+	x.PP..PPx
+	x.P.PP.Px		FORCING_1; G_1_3_4_1 which is forcing.
+
+GROUP_1_4_6_1:
+	x.PPP..P.x		FORCING_1; A_1_3_2 which is forcing.
+	x.P..PPP.x		FORCING_1; A_2_3_1 which is forcing.
+	x.PP.P.P.x		FORCING_1; G_1_3_4_1 which is forcing.
+	x.P.P.PP.x		FORCING_1; G_1_3_4_1 which is forcing.
+	x.PP..PP.x
+	x.P.PP.P.x		FORCING_1; G_1_3_4_1 which is forcing.
+
+GROUP_1_4_6_2:
+	x.PPP..P..x		FORCING_1; A_1_3_2 which is forcing.
+	x.P..PPP..x		FORCING_1; A_2_3_2 which is forcing.
+	x.PP.P.P..x		FORCING_1; G_1_3_4_1 which is forcing.
+	x.P.P.PP..x		FORCING_1; G_1_3_4_2 which is forcing.
+	x.PP..PP..x
+	x.P.PP.P..x		FORCING_1; G_1_3_4_2 which is forcing.
+
+GROUP_2_4_6_0:
+	x..PPP..Px		FORCING_1; A_2_3_2 which is forcing.
+	x..P..PPPx
+	x..PP.P.Px		FORCING_1; G_2_3_4_1 which is forcing.
+	x..P.P.PPx
+	x..PP..PPx
+	x..P.PP.Px		FORCING_1; G_2_3_4_1 which is forcing.
+	
+GROUP_2_4_6_1:
+	x..PPP..P.x		FORCING_1; A_2_3_2 which is forcing.
+	x..P..PPP.x		FORCING_1; A_2_3_2 which is forcing.
+	x..PP.P.P.x		FORCING_1; G_2_3_4_1 which is forcing.
+	x..P.P.PP.x		FORCING_1; G_1_3_4_1 which is forcing.
+	x..PP..PP.x
+	x..P.PP.P.x		FORCING_1; G_2_3_4_1 which is forcing.
+
+GROUP_2_4_6_2:
+	x..PPP..P..x	FORCING_1; A_2_3_2 which is forcing.
+	x..P..PPP..x	FORCING_1; A_2_3_2 which is forcing.
+	x..PP.P.P..x	FORCING_1; G_1_3_4_1 which is forcing.
+	x..P.P.PP..x	FORCING_1; G_1_3_4_2 which is forcing.
+	x..PP..PP..x
+	x..P.PP.P..x	FORCING_1; G_1_3_4_2 which is forcing.
+ */
+
+	private static final int SCORE_GROUP_FOUR_SIX_0 = 300;
+	private static final int SCORE_GROUP_FOUR_SIX_1 = 305;
+	private static final int SCORE_GROUP_FOUR_SIX_2 = 310;
+	private static final int SCORE_GROUP_FOUR_SIX_3 = 315;
+	private static final int SCORE_GROUP_FOUR_SIX_4 = 320;
+	private static final int SCORE_GROUP_FOUR_SIX_5 = 325;
+	protected static final int GROUP_0_4_6_0 = SCORE_GROUP_FOUR_SIX_0;	// xPPP..Px, xP..PPPx, xPP.P.Px, xP.P.PPx, xPP..PPx, xP.PP.Px
+	protected static final int GROUP_0_4_6_1 = SCORE_GROUP_FOUR_SIX_1;	// xPPP..P.x, xP..PPP.x, xPP.P.P.x, xP.P.PP.x, xPP..PP.x, xP.PP.P.x
+	protected static final int GROUP_0_4_6_2 = SCORE_GROUP_FOUR_SIX_3;	// xPPP..P..x, xP..PPP..x, xPP.P.P..x, xP.P.PP..x, xPP..PP..x, xP.PP.P..x
+
+	protected static final int GROUP_1_4_6_0 = SCORE_GROUP_FOUR_SIX_1;	// x.PPP..Px, x.P..PPPx, x.PP.P.Px, x.P.P.PPx, x.PP..PPx, x.P.PP.Px
+	protected static final int GROUP_1_4_6_1 = SCORE_GROUP_FOUR_SIX_2;	// x.PPP..P.x, x.P..PPP.x, x.PP.P.P.x, x.P.P.PP.x, x.PP..PP.x, x.P.PP.P.x
+	protected static final int GROUP_1_4_6_2 = SCORE_GROUP_FOUR_SIX_4;	// x.PPP..P..x, x.P..PPP..x, x.PP.P.P..x, x.P.P.PP..x, x.PP..PP..x, x.P.PP.P..x
+
+	protected static final int GROUP_2_4_6_0 = SCORE_GROUP_FOUR_SIX_3;	// x..PPP..Px, x..P..PPPx, x..PP.P.Px, x..P.P.PPx, x..PP..PPx, x..P.PP.Px
+	protected static final int GROUP_2_4_6_1 = SCORE_GROUP_FOUR_SIX_4;	// x..PPP..P.x, x..P..PPP.x, x..PP.P.P.x, x..P.P.PP.x, x..PP..PP.x, x..P.PP.P.x
+	protected static final int GROUP_2_4_6_2 = SCORE_GROUP_FOUR_SIX_5;	// x..PPP..P..x, x..P..PPP..x, x..PP.P.P..x, x..P.P.PP..x, x..PP..PP..x, x..P.PP.P..x
+	
+	// TODO; the special cases scores need to be recalculated.
+	
+	protected static final int SCORE_SPECIAL_CASE_1 = 4000;		// lethal in 2 or more
+	protected static final int SCORE_SPECIAL_CASE_2 = 3000;		// lethal in 1 or more
+	protected static final int SCORE_SPECIAL_CASE_3 = 3100;		// lethal in 1 or more, probably already high score anyway
+	protected static final int SCORE_SPECIAL_CASE_4 = 5000;		// lethal in 1 or more, probably already high score anyway
+	protected static final int SCORE_SPECIAL_CASE_5 = 5100;		// lethal in 1 or more, probably already high score anyway
+}
+
+
+/*
+ * 	public static final int SCORE_POSSIBLE_ONE = 1;
+	public static final int SCORE_POSSIBLE_TWO = 5;
+	public static final int SCORE_POSSIBLE_THREE = 7;
+	public static final int SCORE_POSSIBLE_FOUR = 10;
+	public static final int SCORE_POSSIBLE_FIVE = 14;
+	public static final int SCORE_POSSIBLE_SIX = 19;
+	public static final int SCORE_POSSIBLE_SEVEN = 25;
+	public static final int SCORE_POSSIBLE_EIGHT = 32;
+	public static final int SCORE_POSSIBLE_NINE = 40;
+ */
+/*
+	public static final int SCORE_WIN_OTHER = 75000;
+	public static final int SCORE_FOUR_OTHER = 7500;
+	public static final int SCORE_THREE_OTHER = 125;
+	public static final int SCORE_TWO_OTHER = 75;
+
+	public static final int SCORE_FOUR_OTHER_BOUNDED = 750;
+	public static final int SCORE_THREE_OTHER_BOUNDED = 50;
+	public static final int SCORE_TWO_OTHER_BOUNDED = 25;
+ */
+//total *= scoring_multiplier;
+
+//switch (possible) {
+//case 9:
+//	total += SCORE_POSSIBLE_NINE;
+//	break;
+//case 8:
+//	total += SCORE_POSSIBLE_EIGHT;
+//	break;
+//case 7:
+//	total += SCORE_POSSIBLE_SEVEN;
+//	break;
+//case 6:
+//	total += SCORE_POSSIBLE_SIX;
+//	break;
+//case 5:
+//	total += SCORE_POSSIBLE_FIVE;
+//	break;
+//case 4:
+//	total += SCORE_POSSIBLE_FOUR;
+//	break;
+//case 3:
+//	total += SCORE_POSSIBLE_THREE;
+//	break;
+//case 2:
+//	total += SCORE_POSSIBLE_TWO;
+//	break;
+//case 1:
+//	total += SCORE_POSSIBLE_ONE;
+//	break;
+//default:
+//	if (possible > 9) total += (possible - 9) * SCORE_POSSIBLE_NINE;
+//	break;
+//}
+ 

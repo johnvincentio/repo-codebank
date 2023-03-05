@@ -1,0 +1,112 @@
+package io.johnvincent.gomoku.server.rest.gomoku;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+
+import io.johnvincent.gomoku.library.game.Coordinate;
+import io.johnvincent.gomoku.library.game.Game;
+import io.johnvincent.gomoku.library.players.Players;
+import io.johnvincent.gomoku.library.totals.TotalsInfo;
+import io.johnvincent.gomoku.library.winner.WinnerList;
+
+@JsonPropertyOrder({
+	"row", "column", "gameOver", "whiteVictory", "blackVictory", "tie", "winnerlist",
+	"whiteTotal", "blackTotal", "whiteCounts", "blackCounts", "whiteScores", "blackScores"
+})
+public class Result implements ResultType {
+
+	@JsonProperty("row")
+	private int row;
+	
+	@JsonProperty("column")
+	private int column;
+	
+	@JsonProperty("gameOver")
+	private boolean gameOver;
+	
+	@JsonProperty("whiteVictory")
+	private boolean whiteVictory;
+	
+	@JsonProperty("blackVictory")
+	private boolean blackVictory;
+
+	@JsonProperty("tie")
+	private boolean tie;
+
+	@JsonProperty("winnerlist")
+	private WinnerList winnerList = null;
+	
+	@JsonProperty("whiteTotal")
+	private int whiteTotal;
+	
+	@JsonProperty("blackTotal")
+	private int blackTotal;
+	
+	@JsonProperty("whiteCounts")
+	private String whiteCounts;
+	
+	@JsonProperty("blackCounts")
+	private String blackCounts;
+	
+	@JsonProperty("whiteScores")
+	private String whiteScores;
+	
+	@JsonProperty("blackScores")
+	private String blackScores;
+
+	public int getRow() {return row;}
+	public int getColumn() {return column;}
+	public boolean isGameOver() {return gameOver;}
+	public boolean isWhiteVictory() {return whiteVictory;}
+	public boolean isBlackVictory() {return blackVictory;}
+	public boolean isTie() {return tie;}
+	
+	public WinnerList getWinnerList() {return winnerList;}
+	
+	public int getWhiteTotal() {return whiteTotal;}
+	public int getBlackTotal() {return blackTotal;}
+	public String getWhiteCounts() {return whiteCounts;}
+	public String getBlackCounts() {return blackCounts;}
+	public String getWhiteScores() {return whiteScores;}
+	public String getBlackScores() {return blackScores;}
+
+	public void setCoordinate(Coordinate coordinate) {
+		if (coordinate != null) {
+			this.row = coordinate.getRow() + 1;
+			this.column = coordinate.getCol() + 1;
+		}
+	}
+
+	public void processFromGame(Game game) {
+		gameOver = game.isGameOver();
+		tie = game.isTie();
+		whiteVictory = game.isVictory(Players.PLAYER1);
+		blackVictory = game.isVictory(Players.PLAYER2);
+	}
+	
+	public void processFromTotalsInfo(TotalsInfo totalsInfo) {
+		whiteTotal = totalsInfo.getTotal(Players.PLAYER1);
+		blackTotal = totalsInfo.getTotal(Players.PLAYER2);
+		whiteCounts = totalsInfo.getCounts(Players.PLAYER1);
+		blackCounts = totalsInfo.getCounts(Players.PLAYER2);
+		whiteScores = totalsInfo.getScores(Players.PLAYER1);
+		blackScores = totalsInfo.getScores(Players.PLAYER2);
+	}
+	
+	public void setWinnerList(final WinnerList list) {
+		System.out.println("Result::setWinnerList; list "+list);
+		if (list != null) {
+			this.winnerList = list;
+		}
+	}
+
+	public String toString() {
+		return "("+getRow()+","+getColumn()+","+
+				isGameOver()+","+
+				isWhiteVictory()+","+isBlackVictory()+","+isTie()+","+
+				getWhiteTotal()+","+getBlackTotal()+","+
+				getWhiteCounts()+","+getBlackCounts()+","+
+				getWhiteScores()+","+getBlackScores()+","+
+				"["+getWinnerList()+"])";
+	}
+}

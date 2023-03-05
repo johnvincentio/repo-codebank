@@ -1,0 +1,32 @@
+
+package io.johnvincent.gomoku.library.rates;
+
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+
+@JsonPropertyOrder({ "key", "rate", "currentPlayer", "otherPlayer" })
+public class FlagsItem {
+
+	private String key;
+	private int rate;
+	private PlayerFlagsItem currentPlayerFlagsItem;
+	private PlayerFlagsItem otherPlayerFlagsItem;
+
+	public FlagsItem (String key, int rate, PlayerFlagsItem currentPlayerFlagsItem, PlayerFlagsItem otherPlayerFlagsItem) {
+		assert rate > 0;
+
+		this.key = key;
+		this.rate = rate;
+		this.currentPlayerFlagsItem = currentPlayerFlagsItem;
+		this.otherPlayerFlagsItem = otherPlayerFlagsItem;
+	}
+
+	public String getKey() {return key;}
+	public int getRate() {return rate;}
+	public PlayerFlagsItem getCurrentPlayer() {return currentPlayerFlagsItem;}
+	public PlayerFlagsItem getOtherPlayer() {return otherPlayerFlagsItem;}
+	
+	
+	public String toString() {
+		return "["+getKey()+","+","+getRate()+","+getCurrentPlayer()+","+getOtherPlayer()+"]";
+	}
+}

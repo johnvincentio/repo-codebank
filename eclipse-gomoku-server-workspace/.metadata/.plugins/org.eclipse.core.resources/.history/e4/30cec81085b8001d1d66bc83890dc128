@@ -1,0 +1,172 @@
+package io.johnvincent.gomoku.library.scoring;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+
+import io.johnvincent.gomoku.library.game.Coordinate;
+import io.johnvincent.gomoku.library.players.Players;
+
+@JsonPropertyOrder({ "player", "squareScoresList", "filteredSquareScoresList", "lethalMovesList", "forcingMovesList", "buildingMove" })
+public class ScoringListsItem {
+
+	@JsonProperty("player")
+	final private int m_player;
+
+	@JsonProperty("squareScoresList")
+	private SquareScoresList m_squareScoresList = new SquareScoresList();
+
+	@JsonProperty("filteredSquareScoresList")
+	private SquareScoresList m_filteredSquareScoresList = new SquareScoresList();
+
+	@JsonProperty("lethalMovesList")
+	private SquareLethalScoresList m_lethalMovesList = new SquareLethalScoresList();
+
+	@JsonProperty("forcingMovesList")
+	private SquareForcingScoresList m_forcingMovesList = new SquareForcingScoresList();
+
+	@JsonProperty("buildingMove")
+	private Coordinate m_buildingMove = null;
+	
+	public ScoringListsItem(final int player,
+			final SquareScoresList squareScoresList, 
+			final SquareLethalScoresList lethalMovesList,
+			final SquareForcingScoresList forcingMovesList) {
+		assert Players.isValidPlayer(player);
+		assert squareScoresList != null;
+		assert lethalMovesList != null;
+		assert forcingMovesList != null;
+
+		m_player = player;
+
+		m_squareScoresList = squareScoresList;
+		m_lethalMovesList = lethalMovesList;
+		m_forcingMovesList = forcingMovesList;
+		
+		m_filteredSquareScoresList = createFilteredSquareScoresList(player);
+	
+		m_buildingMove = calculateBestBuildingMove(player);
+	}
+
+	@JsonIgnore
+	public int getPlayer() {return m_player;}
+
+	@JsonIgnore
+	public SquareScoresList getSquareScoresList() {return m_squareScoresList;}
+	
+	@JsonIgnore
+	public SquareScoresList getFilteredSquareScoresList() {return m_filteredSquareScoresList;}
+	
+	@JsonIgnore
+	public SquareLethalScoresList getSquareLethalScoresList() {return m_lethalMovesList;}
+	
+	@JsonIgnore
+	public SquareForcingScoresList getSquareForcingScoresList() {return m_forcingMovesList;}
+	
+	@JsonIgnore
+	public Coordinate getBuildingMove() {return m_buildingMove;}
+
+	@JsonIgnore
+	public Coordinate calculateBestLethal(final int cnt) {	
+		SquareLethalScoresList squareLethalScoresList = getSquareLethalScoresList();
+		SquareLethalScoresItem item = squareLethalScoresList.getFirstLethalItem(cnt);
+		if (item != null) {
+			return new Coordinate(item.getRow(), item.getColumn());
+		}
+		return null;
+	}
+
+	@JsonIgnore
+	public Coordinate calculateBestPossibleWin(final int cnt) {
+		SquareForcingScoresList squareForcingScoresList = getSquareForcingScoresList();
+		SquareForcingScoresItem item = squareForcingScoresList.getFirstPossibleWinItem(cnt);
+		if (item != null) {
+			return new Coordinate(item.getRow(), item.getColumn());
+		}
+		return null;
+	}
+
+	@JsonIgnore
+	public Coordinate calculateBestForcingMove(final int cnt) {
+		SquareForcingScoresList squareForcingScoresList = getSquareForcingScoresList();
+		SquareForcingScoresItem item = squareForcingScoresList.getFirstForcingMoveItem(cnt);
+		if (item != null) {
+			return new Coordinate(item.getRow(), item.getColumn());
+		}
+		return null;
+	}
+
+	@JsonIgnore
+	public Coordinate calculateBestForcingMove() {
+		SquareForcingScoresList squareForcingScoresList = getSquareForcingScoresList();
+		SquareForcingScoresItem item1 = squareForcingScoresList.getFirstForcingMoveItem(1);
+		SquareForcingScoresItem item2 = squareForcingScoresList.getFirstForcingMoveItem(2);
+		
+		if (item1 == null && item2 == null) return null;
+		if (item1 != null && item2 == null) {
+			return new Coordinate(item1.getRow(), item1.getColumn());
+		}
+		if (item1 == null && item2 != null) {
+			return new Coordinate(item2.getRow(), item2.getColumn());
+		}
+		if (item1.getTotalScore() > item2.getTotalScore()) {
+			return new Coordinate(item1.getRow(), item1.getColumn());
+		}
+		return new Coordinate(item2.getRow(), item2.getColumn());
+	}
+
+	@JsonIgnore
+	private SquareScoresList createFilteredSquareScoresList(final int player) {
+		assert Players.isValidPlayer(player);
+
+		SquareScoresList result = new SquareScoresList();
+	
+		SquareLethalScoresList squareLethalScoresList = getSquareLethalScoresList();
+		SquareForcingScoresList squareForcingScoresList = getSquareForcingScoresList();
+		
+		SquareScoresList squareScoresList = getSquareScoresList();
+		for (int i = 0; i < squareScoresList.getSize(); i++) {
+			SquareScoresItem squareScoresItem = squareScoresList.getItem(i);
+			
+			int row = squareScoresItem.getRow();
+			int col = squareScoresItem.getColumn();
+			
+			if (squareLethalScoresList.isFound(player, row, col)) continue;		
+			
+			if (squareForcingScoresList.isFound(player, row, col)) continue;
+			
+			result.add(squareScoresItem);
+		}
+		return result;
+	}
+
+	@JsonIgnore
+	private Coordinate calculateBestBuildingMove(final int player) {
+		assert Players.isValidPlayer(player);
+		
+		SquareScoresList filteredSquareScoresList = createFilteredSquareScoresList(player);
+
+		if (filteredSquareScoresList != null && filteredSquareScoresList.getSize() > 0) {
+			SquareScoresItem item = filteredSquareScoresList.getItem(0);
+			if (item != null) {
+				return new Coordinate(item.getRow(), item.getColumn());
+			}
+		}
+		return null;
+	}
+
+	@JsonIgnore
+	public void show(String message) {
+		System.out.println(">>> ScoringListsItem; m_player "+m_player);
+		
+		m_lethalMovesList.show("Lethal; "+message);
+		m_forcingMovesList.show("Forcing; "+message);
+		
+		m_squareScoresList.show("Highest Scores; "+message);
+		m_filteredSquareScoresList.show("Highest Filtered Scores; "+message);
+
+		System.out.println("Building Move "+m_buildingMove);
+		
+		System.out.println("<<< ScoringListsItem; m_player "+m_player);
+	}
+}

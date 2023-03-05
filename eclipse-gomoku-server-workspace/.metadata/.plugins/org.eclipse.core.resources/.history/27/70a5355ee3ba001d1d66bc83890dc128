@@ -1,0 +1,40 @@
+
+package io.johnvincent.gomoku.library.rates;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+public class GroupCollection {
+
+	@JsonProperty("map")
+	private Map<String, GroupRatesItem> m_map = new HashMap<String, GroupRatesItem>();
+
+	private static String createGroupRatesKey(int before, int find, int of, int after) { return "G_" + before + "_" + find + "_" + of + "_" + after; }
+
+	public void add(int before, int find, int of, int after, int rate) {
+		add(before, find, of, after, rate, new PlayerFlagsItem(), new PlayerFlagsItem());
+	}
+
+	public void add(int before, int find, int of, int after, int rate, PlayerFlagsItem currentPlayerFlagsItem) {
+		add(before, find, of, after, rate, currentPlayerFlagsItem, currentPlayerFlagsItem);
+	}
+	
+	public void add(int before, int find, int of, int after, int rate, PlayerFlagsItem currentPlayerFlagsItem, PlayerFlagsItem otherPlayerFlagsItem) {
+		String key = createGroupRatesKey(before, find, of, after);
+		m_map.put(key, new GroupRatesItem (key, before, find, of, after, rate, currentPlayerFlagsItem, otherPlayerFlagsItem));
+	}	
+
+	public GroupRatesItem get(final int before, final int find, final int of, final int after) {
+		assert before >= 0;
+		assert find >= 0;
+		assert of >= 0;
+		assert after >= 0;
+
+		int num1 = before > 2 ? 2 : before;
+		int num3 = after > 2 ? 2 : after;
+
+		return m_map.get(createGroupRatesKey(num1, find, of, num3));
+	}
+}

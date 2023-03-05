@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;gomoku-library/add-to-rep&apos; to &apos;add-to-repo&apos;" description="Rename resource &apos;add-to-rep&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="add-to-rep" name="add-to-repo" stamp="1588799173678" updateReferences="true"/>
+</session>

@@ -1,0 +1,33 @@
+
+package io.johnvincent.gomoku.library.rates;
+
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+
+@JsonPropertyOrder({ "key", "rate", "forcingMove", "possibleWin", "lethal", "alwaysUsed" })
+public class FlagsItem {
+
+	private String key;
+	private int rate;
+	private PlayerFlagsItem currentPlayerFlagsItem;
+	private PlayerFlagsItem otherPlayerFlagsItem;
+
+	public FlagsItem (String key, int rate, PlayerFlagsItem currentPlayerFlagsItem, PlayerFlagsItem otherPlayerFlagsItem) {
+		assert rate > 0;
+
+		this.key = key;
+		this.rate = rate;
+		this.currentPlayerFlagsItem = currentPlayerFlagsItem;
+		this.otherPlayerFlagsItem = otherPlayerFlagsItem;
+	}
+
+	public String getKey() {return key;}
+	public int getRate() {return rate;}
+//	public int getForcingMove() {return forcingMove;}
+//	public int getPossibleWin() {return possibleWin;}
+//	public int getLethal() {return lethal;}
+//	
+//	public String toString() {
+//		return "["+getKey()+","+","+getRate()+","+
+//				getForcingMove()+","+getPossibleWin()+","+getLethal()+","+"]";
+//	}
+}

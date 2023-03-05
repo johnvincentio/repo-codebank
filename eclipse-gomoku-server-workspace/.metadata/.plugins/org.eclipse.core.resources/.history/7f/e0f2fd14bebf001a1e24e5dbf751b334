@@ -1,0 +1,46 @@
+-- 
+-- players,isPlayerComputer(1),isPlayerComputer(2) --
+-- 
+players,true,false
+
+-- 
+-- board,board.getRows(),board.getColumns() --
+-- 
+board,20,20
+
+-- 
+-- initialize --
+-- 
+initialize
+
+-- 
+-- move,move_number,player,row,column --
+-- 
+move,0,1,9,9
+move,1,2,9,8
+move,2,1,10,9
+move,3,2,8,9
+move,4,1,10,8
+move,5,2,10,7
+move,6,1,7,10
+move,7,2,11,6
+move,8,1,12,5
+move,9,2,11,8
+move,10,1,11,7
+move,11,2,12,6
+move,12,1,8,10
+move,13,2,7,11
+move,14,1,9,10
+move,15,2,10,10
+move,16,1,6,10
+move,17,2,5,10
+move,18,1,6,11
+move,19,2,9,6
+move,20,1,10,6
+move,21,2,12,9
+move,22,1,13,10
+move,23,2,8,5
+
+-- 
+-- end --
+-- 

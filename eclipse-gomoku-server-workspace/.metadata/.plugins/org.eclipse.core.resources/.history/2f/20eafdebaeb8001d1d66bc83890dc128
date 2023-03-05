@@ -1,0 +1,78 @@
+package io.johnvincent.gomoku.library.counter;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import io.johnvincent.gomoku.library.rates.GroupRatesItem;
+import io.johnvincent.gomoku.library.rates.SummaryRatesItem;
+
+@JsonIgnoreProperties(value = { "groupsSummaryRatesItem" })
+public class CounterGroups {
+
+	@JsonProperty("map")
+	private Map<String, CounterGroupsItem> m_groups = new HashMap<String, CounterGroupsItem>();
+	
+	public void add(final GroupRatesItem groupRatesItem, final int count) {
+		assert groupRatesItem != null;
+		
+		String key = groupRatesItem.getKey();
+		int score = groupRatesItem.getRate();
+		assert key != null;
+		assert score > 0;
+
+		if (count > 0) {
+//			System.out.println("CounterGroups::add; key "+key+" count "+count+" score "+score);
+			m_groups.put(key, new CounterGroupsItem(groupRatesItem, count, score));
+		}
+	}
+	public int getCount(final String key) {
+		assert key != null;
+		CounterGroupsItem groupItem = m_groups.get(key);
+		if (groupItem == null) return 0;
+		return m_groups.get(key).getCount();
+	}
+
+	public boolean isExist(final String key) {
+		assert key != null;
+		CounterGroupsItem groupItem = m_groups.get(key);
+		return groupItem != null;
+	}
+
+	public int getSize() {return m_groups.size();}
+
+	public int getGroupsScore() {
+		int total = 0;
+		for (Map.Entry<String, CounterGroupsItem> entry : m_groups.entrySet()) {
+//		    System.out.println(entry.getKey() + " = " + entry.getValue().toString());
+			total += entry.getValue().getScore();
+		}
+		return total;
+	}
+
+	public SummaryRatesItem JVgetGroupsSummaryRatesItem(final boolean currentPlayer) {
+		SummaryRatesItem summaryRatesItem = new SummaryRatesItem(currentPlayer);
+		for (Map.Entry<String, CounterGroupsItem> entry : m_groups.entrySet()) {
+			CounterGroupsItem counterGroupsItem = entry.getValue();
+			if (counterGroupsItem == null) continue;
+
+			GroupRatesItem groupRatesItem = counterGroupsItem.getGroupRatesItem();
+			if (groupRatesItem == null) continue;
+			summaryRatesItem.add(groupRatesItem);
+		}
+		return summaryRatesItem.isUseful() ? summaryRatesItem : null;
+	}
+
+	public String toString() {
+		StringBuffer buf = new StringBuffer();
+		buf.append("[");
+		for (Map.Entry<String, CounterGroupsItem> entry : m_groups.entrySet()) {
+			buf.append("(").append(entry.getKey().toString()).append(",").append(entry.getValue().toString()).append(")");
+//		    System.out.println(entry.getKey() + " = " + entry.getValue().toString());
+		}
+		buf.append("]");
+		return buf.toString();
+	}
+}

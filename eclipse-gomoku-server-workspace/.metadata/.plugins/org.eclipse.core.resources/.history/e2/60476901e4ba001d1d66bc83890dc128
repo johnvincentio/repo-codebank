@@ -1,0 +1,40 @@
+
+package io.johnvincent.gomoku.library.rates;
+
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+
+@JsonPropertyOrder({ "key", "before", "find", "of", "after" })
+public class GroupRatesItem extends FlagsItem {
+	
+	private String key;
+	private int before;
+	private int find;
+	private int of;
+	private int after;
+
+	public GroupRatesItem (String key, int before, int find, int of, int after, int rate,
+			PlayerFlagsItem currentPlayerFlagsItem, PlayerFlagsItem otherPlayerFlagsItem) {
+		super(key, rate, currentPlayerFlagsItem, otherPlayerFlagsItem);
+
+		assert before >= 0;
+		assert find >= 0;
+		assert of >= 0;
+		assert after >= 0;
+
+		this.key = key;
+		this.before = before;
+		this.find = find;
+		this.of = of;
+		this.after = after;
+	}
+	
+	public String getKey() {return key;}
+	public int getBefore() {return before;}
+	public int getOf() {return of;}
+	public int getFind() {return find;}
+	public int getAfter() {return after;}
+	
+	public String toString() {
+		return "("+getKey()+","+getBefore()+","+getFind()+","+getOf()+","+getAfter()+","+super.toString();
+	}
+}
